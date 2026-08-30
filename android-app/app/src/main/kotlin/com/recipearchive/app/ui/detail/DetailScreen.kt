@@ -27,11 +27,15 @@ import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.StickyNote2
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Warning
@@ -66,6 +70,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.organization.RecipeCategories
+import com.recipearchive.app.data.companion.IngredientAvailabilityUi
+import com.recipearchive.app.data.companion.PantryStatus
+import com.recipearchive.app.data.companion.RecipeCompanionUi
+import com.recipearchive.app.data.local.entity.CookingSessionEntity
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,9 +85,11 @@ fun DetailScreen(
     viewModel: DetailViewModel,
     widthSizeClass: WindowWidthSizeClass,
     onBack: () -> Unit,
+    onCookingStarted: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val detail by viewModel.uiState.collectAsState()
+    val companion by viewModel.companionState.collectAsState()
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
@@ -111,6 +125,11 @@ fun DetailScreen(
                 onCategoryChanged = viewModel::updateCategory,
                 onCollectionChanged = viewModel::updateCollection,
                 onCollectionCreated = viewModel::createCollection,
+                companion = companion,
+                onStartCooking = { viewModel.startCooking(onCookingStarted) },
+                onPantryStatusChanged = viewModel::setPantryStatus,
+                onAddUnavailableToShopping = viewModel::addUnavailableToShopping,
+                onAddToMealPlan = viewModel::addToMealPlan,
                 useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
@@ -129,6 +148,11 @@ fun DetailContent(
     onCategoryChanged: (String?) -> Unit = {},
     onCollectionChanged: (String, Boolean) -> Unit = { _, _ -> },
     onCollectionCreated: (String) -> Unit = {},
+    companion: RecipeCompanionUi = RecipeCompanionUi(),
+    onStartCooking: () -> Unit = {},
+    onPantryStatusChanged: (String, String, PantryStatus, Boolean) -> Unit = { _, _, _, _ -> },
+    onAddUnavailableToShopping: () -> Unit = {},
+    onAddToMealPlan: (LocalDate) -> Unit = {},
     useTwoColumns: Boolean = false,
 ) {
     LazyColumn(
@@ -143,6 +167,9 @@ fun DetailContent(
                 onCategoryChanged = onCategoryChanged,
                 onCollectionChanged = onCollectionChanged,
                 onCollectionCreated = onCollectionCreated,
+                companion = companion,
+                onStartCooking = onStartCooking,
+                onAddToMealPlan = onAddToMealPlan,
             )
         }
         if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
@@ -150,12 +177,14 @@ fun DetailContent(
         if (useTwoColumns) {
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
-                    Box(modifier = Modifier.weight(0.42f)) { IngredientsCard(detail) }
+                    Box(modifier = Modifier.weight(0.42f)) {
+                        IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping)
+                    }
                     Box(modifier = Modifier.weight(0.58f)) { InstructionsCard(detail) }
                 }
             }
         } else {
-            item { IngredientsCard(detail) }
+            item { IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping) }
             item { InstructionsCard(detail) }
         }
 
@@ -163,6 +192,7 @@ fun DetailContent(
             item { HandwrittenNotesCard(detail) }
         }
         if (detail.pages.isNotEmpty()) item { ScanPagesCard(detail) }
+        if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
         item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
         item { SourceDetailsSection(detail) }
         item { RawOcrSection(detail.recipe.rawText) }
@@ -176,8 +206,12 @@ private fun RecipeHero(
     onCategoryChanged: (String?) -> Unit,
     onCollectionChanged: (String, Boolean) -> Unit,
     onCollectionCreated: (String) -> Unit,
+    companion: RecipeCompanionUi,
+    onStartCooking: () -> Unit,
+    onAddToMealPlan: (LocalDate) -> Unit,
 ) {
     var showOrganizer by remember { mutableStateOf(false) }
+    var showPlanDialog by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
@@ -195,13 +229,33 @@ private fun RecipeHero(
                 )
                 RatingRow(detail.appState?.personalRating, onRatingChanged)
             }
-            TextButton(
-                onClick = { showOrganizer = true },
-                modifier = Modifier.padding(top = 2.dp),
+            if (companion.sessions.isNotEmpty()) {
+                val lastMade = companion.sessions.first().finishedAt?.let(::formatSessionDate).orEmpty()
+                Text(
+                    "Made ${companion.madeCount} ${if (companion.madeCount == 1) "time" else "times"}${if (lastMade.isBlank()) "" else " · Last made $lastMade"}",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.82f),
+                    modifier = Modifier.padding(top = 7.dp),
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                val category = detail.appState?.category ?: "Choose category"
-                val collectionCount = detail.collectionIds.size
-                Text("$category · $collectionCount ${if (collectionCount == 1) "collection" else "collections"} · Organize")
+                TextButton(onClick = { showOrganizer = true }) {
+                    val category = detail.appState?.category ?: "Choose category"
+                    val collectionCount = detail.collectionIds.size
+                    Text("$category · $collectionCount ${if (collectionCount == 1) "collection" else "collections"} · Organize")
+                }
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = { showPlanDialog = true }) {
+                    Icon(Icons.Filled.CalendarMonth, contentDescription = "Add to meal plan")
+                }
+                Button(onClick = onStartCooking) {
+                    Icon(Icons.Filled.PlayArrow, contentDescription = null)
+                    Spacer(Modifier.width(4.dp))
+                    Text(if (companion.activeSession == null) "Start cooking" else "Resume cooking")
+                }
             }
         }
     }
@@ -212,6 +266,37 @@ private fun RecipeHero(
             onCategoryChanged = onCategoryChanged,
             onCollectionChanged = onCollectionChanged,
             onCollectionCreated = onCollectionCreated,
+        )
+    }
+    if (showPlanDialog) {
+        AlertDialog(
+            onDismissRequest = { showPlanDialog = false },
+            title = { Text("Add to meal plan") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Choose a day in the coming week.", style = MaterialTheme.typography.bodyMedium)
+                    (0L..6L).forEach { offset ->
+                        val date = LocalDate.now().plusDays(offset)
+                        TextButton(
+                            onClick = {
+                                onAddToMealPlan(date)
+                                showPlanDialog = false
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text(
+                                when (offset) {
+                                    0L -> "Today · ${date.format(DateTimeFormatter.ofPattern("MMM d"))}"
+                                    1L -> "Tomorrow · ${date.format(DateTimeFormatter.ofPattern("MMM d"))}"
+                                    else -> date.format(DateTimeFormatter.ofPattern("EEEE · MMM d"))
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showPlanDialog = false }) { Text("Cancel") } },
         )
     }
 }
@@ -314,7 +399,13 @@ private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
 }
 
 @Composable
-private fun IngredientsCard(detail: RecipeDetailUi) {
+private fun IngredientsCard(
+    detail: RecipeDetailUi,
+    companion: RecipeCompanionUi,
+    onStatusChanged: (String, String, PantryStatus, Boolean) -> Unit,
+    onAddUnavailableToShopping: () -> Unit,
+) {
+    var showAvailability by remember { mutableStateOf(false) }
     ContentCard(title = "Ingredients", icon = Icons.Filled.RestaurantMenu) {
         if (detail.ingredients.isEmpty()) {
             Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
@@ -337,9 +428,104 @@ private fun IngredientsCard(detail: RecipeDetailUi) {
                             .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
                     )
                 }
+                if (companion.ingredients.isNotEmpty()) {
+                    Spacer(Modifier.height(6.dp))
+                    Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.secondaryContainer) {
+                        Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
+                            Text(
+                                "${companion.availableCount} of ${companion.ingredients.size} available",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            )
+                            Text(
+                                buildList {
+                                    if (companion.lowCount > 0) add("${companion.lowCount} low")
+                                    if (companion.neededCount > 0) add("${companion.neededCount} needed")
+                                    if (companion.unknownCount > 0) add("${companion.unknownCount} unchecked")
+                                }.joinToString(" · ").ifBlank { "Everything is ready" },
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            )
+                            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                TextButton(onClick = { showAvailability = true }) { Text("Check ingredients") }
+                                Spacer(Modifier.weight(1f))
+                                if (companion.availableCount < companion.ingredients.size) {
+                                    TextButton(onClick = onAddUnavailableToShopping) {
+                                        Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(18.dp))
+                                        Spacer(Modifier.width(4.dp))
+                                        Text("Add unavailable")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+    if (showAvailability) {
+        AvailabilityDialog(
+            ingredients = companion.ingredients,
+            onDismiss = { showAvailability = false },
+            onStatusChanged = onStatusChanged,
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AvailabilityDialog(
+    ingredients: List<IngredientAvailabilityUi>,
+    onDismiss: () -> Unit,
+    onStatusChanged: (String, String, PantryStatus, Boolean) -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Ingredient availability") },
+        text = {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().heightIn(max = 560.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                items(ingredients, key = { it.ingredient.id }) { ingredient ->
+                    Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+                        Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
+                            Text(ingredient.displayName, style = MaterialTheme.typography.titleSmall)
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                PantryStatus.entries.forEach { status ->
+                                    FilterChip(
+                                        selected = ingredient.status == status,
+                                        onClick = {
+                                            onStatusChanged(
+                                                ingredient.ingredientKey,
+                                                ingredient.displayName,
+                                                status,
+                                                ingredient.isStaple,
+                                            )
+                                        },
+                                        label = { Text(status.label) },
+                                    )
+                                }
+                                FilterChip(
+                                    selected = ingredient.isStaple,
+                                    onClick = {
+                                        onStatusChanged(
+                                            ingredient.ingredientKey,
+                                            ingredient.displayName,
+                                            ingredient.status,
+                                            !ingredient.isStaple,
+                                        )
+                                    },
+                                    label = { Text("Staple") },
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+    )
 }
 
 @Composable
@@ -478,6 +664,47 @@ private fun ScanPagesCard(detail: RecipeDetailUi) {
             }
         }
     }
+}
+
+@Composable
+private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
+    ContentCard(title = "Cooking history", icon = Icons.Filled.History) {
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            sessions.take(8).forEach { session ->
+                Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+                    Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(formatSessionDate(session.finishedAt ?: session.startedAt), style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                formatDuration(session.durationMillis ?: 0),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            if (session.notes.isNotBlank()) Text(session.notes, style = MaterialTheme.typography.bodyMedium)
+                        }
+                        session.rating?.let { rating ->
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(18.dp))
+                                Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun formatSessionDate(timestamp: Long): String = Instant.ofEpochMilli(timestamp)
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate()
+    .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
+
+private fun formatDuration(milliseconds: Long): String {
+    val minutes = (milliseconds / 60_000).coerceAtLeast(0)
+    val hours = minutes / 60
+    val remaining = minutes % 60
+    return if (hours > 0) "${hours} hr ${remaining} min" else "$minutes min"
 }
 
 @Composable

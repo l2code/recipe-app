@@ -1,6 +1,7 @@
 package com.recipearchive.app.ui.detail
 
 import com.recipearchive.app.data.import.ImportService
+import com.recipearchive.app.data.companion.CookingCompanionRepository
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.repository.RecipeRepository
 import com.recipearchive.app.testutil.MainDispatcherRule
@@ -32,12 +33,14 @@ class DetailViewModelTest {
 
     private lateinit var database: RecipeDatabase
     private lateinit var repository: RecipeRepository
+    private lateinit var companionRepository: CookingCompanionRepository
 
     @Before
     fun setUp() {
         database = TestDatabaseFactory.create()
         val importService = ImportService(database)
         repository = RecipeRepository(database, importService)
+        companionRepository = CookingCompanionRepository(database)
         val bundle = TestBundleFixtures.envelope(recipesJson = TestBundleFixtures.chickenSoup)
         runTest(testDispatcher) { importService.import(bundle) }
     }
@@ -49,13 +52,13 @@ class DetailViewModelTest {
 
     @Test
     fun `detail state is null until the recipe loads`() = runTest(testDispatcher) {
-        val viewModel = DetailViewModel(repository, "R0001")
+        val viewModel = DetailViewModel(repository, companionRepository, "R0001")
         assertNull(viewModel.uiState.value)
     }
 
     @Test
     fun `detail loads recipe with ingredients and instructions`() = runTest(testDispatcher) {
-        val viewModel = DetailViewModel(repository, "R0001")
+        val viewModel = DetailViewModel(repository, companionRepository, "R0001")
         val job = launch { viewModel.uiState.collect { } }
         advanceUntilIdle()
 
@@ -69,7 +72,7 @@ class DetailViewModelTest {
 
     @Test
     fun `toggling favorite updates app state`() = runTest(testDispatcher) {
-        val viewModel = DetailViewModel(repository, "R0001")
+        val viewModel = DetailViewModel(repository, companionRepository, "R0001")
         val job = launch { viewModel.uiState.collect { } }
         advanceUntilIdle()
 

@@ -177,7 +177,7 @@ rebuild.
 
 ### Database/schema overview
 
-Room database `RecipeDatabase` (schema version 3, exported to `android-app/app/schemas/`
+Room database `RecipeDatabase` (schema version 4, exported to `android-app/app/schemas/`
 for migration testing):
 
 - **Import-owned** (fully replaced per recipe on every import): `recipes`,
@@ -186,7 +186,9 @@ for migration testing):
   (`recipe_search_documents` / `recipe_search_fts`).
 - **App-owned** (preserved across imports): `recipe_app_state` — favorite, personal
   rating, personal notes, review completion, and editable category;
-  `collections` / `recipe_collection_cross_ref` — user-created recipe collections.
+  `collections` / `recipe_collection_cross_ref` — user-created recipe collections;
+  `cooking_sessions`, `pantry_items`, `shopping_items` /
+  `shopping_item_sources`, and `meal_plan_entries` — the persistent cooking workflow.
 - **Audit**: `import_runs` — one row per import attempt with counts and status.
 
 Recipes are upserted by their stable `id` using an explicit insert-or-update (not
@@ -199,9 +201,9 @@ delete-then-insert that would cascade-delete every foreign-key child row — inc
 - Scan images and PDFs stay on the NAS; only their path references are stored. The
   app does not copy or display scan imagery yet (see "Original OCR" and "Scan pages"
   in the detail screen for the text-only provenance that is shown).
-- No cooking mode, meal planning, shopping lists, pantry, recommendations, multi-user
-  profiles, sync, auth, or nutrition calculation — intentionally out of scope for
-  this phase.
+- Cooking-session inference, recommendations, multi-user profiles, sync, auth, and
+  nutrition calculation are not implemented. Cooking sessions currently start
+  manually and only confirmed sessions count toward history.
 - Two-pane (list + detail) tablet layout was not built; the detail screen is
   full-screen even on large tablets, reached via standard back/forward navigation.
 - Compose UI tests were only run against `connectedDebugAndroidTest` on a single
@@ -209,9 +211,6 @@ delete-then-insert that would cascade-delete every foreign-key child row — inc
 
 ### Future phases
 
-`recipe_app_state` and `import_runs` establish the pattern for further app-owned
-data: cooking mode can add a `cook_history` table keyed by `recipeId`; meal planning
-can add `meal_plans` / `meal_plan_entries` referencing `recipeId`; shopping lists can
-add `shopping_lists` / `shopping_list_items` optionally derived from a recipe's
-ingredients. None of these should ever be written to by the importer, following the
-same ownership boundary as favorites/notes today.
+Future work can add confirmed inferred-session detection, per-step timers, richer
+calendar planning, nutrition, and optional sync. These features must continue to
+respect the same importer/app-owned boundary as sessions, pantry, and planning data.

@@ -22,6 +22,12 @@ interface IngredientDao {
 
     @Query("SELECT * FROM ingredients WHERE recipeId = :recipeId ORDER BY displayOrder ASC")
     fun observeForRecipe(recipeId: String): Flow<List<IngredientEntity>>
+
+    @Query("SELECT * FROM ingredients WHERE recipeId = :recipeId ORDER BY displayOrder ASC")
+    suspend fun getForRecipe(recipeId: String): List<IngredientEntity>
+
+    @Query("SELECT * FROM ingredients ORDER BY recipeId, displayOrder")
+    fun observeAll(): Flow<List<IngredientEntity>>
 }
 
 @Dao

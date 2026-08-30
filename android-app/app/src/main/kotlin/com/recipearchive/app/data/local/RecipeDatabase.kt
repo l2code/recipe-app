@@ -8,21 +8,28 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.recipearchive.app.data.local.dao.CollectionDao
+import com.recipearchive.app.data.local.dao.CookingSessionDao
 import com.recipearchive.app.data.local.dao.HandwrittenNoteDao
 import com.recipearchive.app.data.local.dao.ImportRunDao
 import com.recipearchive.app.data.local.dao.IngredientDao
 import com.recipearchive.app.data.local.dao.InstructionDao
+import com.recipearchive.app.data.local.dao.MealPlanDao
+import com.recipearchive.app.data.local.dao.PantryDao
 import com.recipearchive.app.data.local.dao.RecipeAppStateDao
 import com.recipearchive.app.data.local.dao.RecipeDao
 import com.recipearchive.app.data.local.dao.RecipePageDao
 import com.recipearchive.app.data.local.dao.RecipeReviewFlagDao
 import com.recipearchive.app.data.local.dao.RecipeSearchDao
+import com.recipearchive.app.data.local.dao.ShoppingDao
 import com.recipearchive.app.data.local.dao.SourceEvidenceDao
 import com.recipearchive.app.data.local.entity.HandwrittenNoteEntity
 import com.recipearchive.app.data.local.entity.CollectionEntity
+import com.recipearchive.app.data.local.entity.CookingSessionEntity
 import com.recipearchive.app.data.local.entity.ImportRunEntity
 import com.recipearchive.app.data.local.entity.IngredientEntity
 import com.recipearchive.app.data.local.entity.InstructionEntity
+import com.recipearchive.app.data.local.entity.MealPlanEntryEntity
+import com.recipearchive.app.data.local.entity.PantryItemEntity
 import com.recipearchive.app.data.local.entity.RecipeAppStateEntity
 import com.recipearchive.app.data.local.entity.RecipeCollectionCrossRef
 import com.recipearchive.app.data.local.entity.RecipeEntity
@@ -31,6 +38,8 @@ import com.recipearchive.app.data.local.entity.RecipeReviewFlagEntity
 import com.recipearchive.app.data.local.entity.RecipeSearchDocumentEntity
 import com.recipearchive.app.data.local.entity.RecipeSearchFts
 import com.recipearchive.app.data.local.entity.SourceEvidenceEntity
+import com.recipearchive.app.data.local.entity.ShoppingItemEntity
+import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
 
 @Database(
     entities = [
@@ -47,8 +56,13 @@ import com.recipearchive.app.data.local.entity.SourceEvidenceEntity
         RecipeSearchFts::class,
         CollectionEntity::class,
         RecipeCollectionCrossRef::class,
+        CookingSessionEntity::class,
+        PantryItemEntity::class,
+        ShoppingItemEntity::class,
+        ShoppingItemSourceEntity::class,
+        MealPlanEntryEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -64,6 +78,10 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun recipeAppStateDao(): RecipeAppStateDao
     abstract fun recipeSearchDao(): RecipeSearchDao
     abstract fun collectionDao(): CollectionDao
+    abstract fun cookingSessionDao(): CookingSessionDao
+    abstract fun pantryDao(): PantryDao
+    abstract fun shoppingDao(): ShoppingDao
+    abstract fun mealPlanDao(): MealPlanDao
 
     companion object {
         private const val DATABASE_NAME = "recipe-archive.db"
@@ -117,6 +135,87 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS cooking_sessions (
+                        id TEXT NOT NULL,
+                        recipeId TEXT NOT NULL,
+                        startedAt INTEGER NOT NULL,
+                        finishedAt INTEGER,
+                        durationMillis INTEGER,
+                        notes TEXT NOT NULL,
+                        origin TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        rating INTEGER,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(id),
+                        FOREIGN KEY(recipeId) REFERENCES recipes(id) ON UPDATE NO ACTION ON DELETE CASCADE
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_cooking_sessions_recipeId ON cooking_sessions(recipeId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_cooking_sessions_status ON cooking_sessions(status)")
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS pantry_items (
+                        ingredientKey TEXT NOT NULL,
+                        displayName TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        isStaple INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(ingredientKey)
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS shopping_items (
+                        ingredientKey TEXT NOT NULL,
+                        displayName TEXT NOT NULL,
+                        isChecked INTEGER NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(ingredientKey)
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS shopping_item_sources (
+                        ingredientKey TEXT NOT NULL,
+                        recipeId TEXT NOT NULL,
+                        quantity TEXT NOT NULL,
+                        unit TEXT NOT NULL,
+                        rawText TEXT NOT NULL,
+                        PRIMARY KEY(ingredientKey, recipeId),
+                        FOREIGN KEY(ingredientKey) REFERENCES shopping_items(ingredientKey) ON UPDATE NO ACTION ON DELETE CASCADE,
+                        FOREIGN KEY(recipeId) REFERENCES recipes(id) ON UPDATE NO ACTION ON DELETE CASCADE
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_shopping_item_sources_recipeId ON shopping_item_sources(recipeId)")
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS meal_plan_entries (
+                        id TEXT NOT NULL,
+                        recipeId TEXT NOT NULL,
+                        plannedDate TEXT NOT NULL,
+                        mealSlot TEXT NOT NULL,
+                        servings INTEGER,
+                        createdAt INTEGER NOT NULL,
+                        PRIMARY KEY(id),
+                        FOREIGN KEY(recipeId) REFERENCES recipes(id) ON UPDATE NO ACTION ON DELETE CASCADE
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_meal_plan_entries_recipeId ON meal_plan_entries(recipeId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_meal_plan_entries_plannedDate ON meal_plan_entries(plannedDate)")
+            }
+        }
+
         @Volatile private var instance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase =
@@ -126,7 +225,7 @@ abstract class RecipeDatabase : RoomDatabase() {
 
         private fun build(context: Context): RecipeDatabase =
             Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build()
     }
 }

@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.repository.RecipeRepository
+import com.recipearchive.app.data.companion.CookingCompanionRepository
+import com.recipearchive.app.data.companion.PantryStatus
+import com.recipearchive.app.data.companion.RecipeCompanionUi
+import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -12,11 +16,15 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val repository: RecipeRepository,
+    private val companionRepository: CookingCompanionRepository,
     private val recipeId: String,
 ) : ViewModel() {
 
     val uiState: StateFlow<RecipeDetailUi?> = repository.observeRecipeDetail(recipeId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    val companionState: StateFlow<RecipeCompanionUi> = companionRepository.observeRecipe(recipeId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), RecipeCompanionUi())
 
     fun toggleFavorite(currentlyFavorite: Boolean) {
         viewModelScope.launch { repository.setFavorite(recipeId, !currentlyFavorite) }
@@ -46,14 +54,31 @@ class DetailViewModel(
         }
     }
 
+    fun startCooking(onStarted: (String) -> Unit) {
+        viewModelScope.launch { onStarted(companionRepository.startCooking(recipeId)) }
+    }
+
+    fun setPantryStatus(key: String, displayName: String, status: PantryStatus, isStaple: Boolean = false) {
+        viewModelScope.launch { companionRepository.setPantryStatus(key, displayName, status, isStaple) }
+    }
+
+    fun addUnavailableToShopping() {
+        viewModelScope.launch { companionRepository.addUnavailableToShopping(recipeId) }
+    }
+
+    fun addToMealPlan(date: LocalDate) {
+        viewModelScope.launch { companionRepository.addMealPlan(recipeId, date) }
+    }
+
     class Factory(
         private val repository: RecipeRepository,
+        private val companionRepository: CookingCompanionRepository,
         private val recipeId: String,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass.isAssignableFrom(DetailViewModel::class.java))
-            return DetailViewModel(repository, recipeId) as T
+            return DetailViewModel(repository, companionRepository, recipeId) as T
         }
     }
 }
