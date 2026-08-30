@@ -26,6 +26,10 @@ class DetailViewModel(
         viewModelScope.launch { repository.setPersonalNotes(recipeId, notes) }
     }
 
+    fun updateRating(rating: Int?) {
+        viewModelScope.launch { repository.setPersonalRating(recipeId, rating) }
+    }
+
     class Factory(
         private val repository: RecipeRepository,
         private val recipeId: String,

@@ -1,18 +1,28 @@
 package com.recipearchive.app.ui.library
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
@@ -22,11 +32,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,6 +47,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeSummary
 
@@ -49,8 +63,21 @@ fun LibraryScreen(
     val state by viewModel.uiState.collectAsState()
     Scaffold(
         modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            TopAppBar(title = { Text("Recipe Archive") })
+            TopAppBar(
+                title = {
+                    Column {
+                        Text("My Recipe Box", style = MaterialTheme.typography.titleLarge)
+                        Text(
+                            "Family favorites, notes and discoveries",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+            )
         },
     ) { padding ->
         LibraryContent(
@@ -76,44 +103,60 @@ fun LibraryContent(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        SearchField(
-            query = state.query,
-            onQueryChange = onQueryChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-        )
-
+        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+            SearchField(query = state.query, onQueryChange = onQueryChange, modifier = Modifier.fillMaxWidth())
+            if (state.recipes.isNotEmpty()) {
+                Spacer(Modifier.height(12.dp))
+                ResultSummary(count = state.recipes.size, isSearching = state.query.isNotBlank())
+            }
+        }
         when {
             state.isImporting && !state.hasImportedOnce -> LoadingState(modifier = Modifier.fillMaxSize())
-            state.importError != null && state.recipes.isEmpty() -> ImportErrorState(
-                message = state.importError,
-                onRetry = onRetryImport,
-                modifier = Modifier.fillMaxSize(),
-            )
+            state.importError != null && state.recipes.isEmpty() -> ImportErrorState(state.importError, onRetryImport, Modifier.fillMaxSize())
             state.recipes.isEmpty() && state.query.isBlank() -> EmptyLibraryState(modifier = Modifier.fillMaxSize())
-            state.recipes.isEmpty() -> NoResultsState(query = state.query, modifier = Modifier.fillMaxSize())
-            else -> RecipeResults(
-                recipes = state.recipes,
-                widthSizeClass = widthSizeClass,
-                onRecipeClick = onRecipeClick,
-                onToggleFavorite = onToggleFavorite,
-                modifier = Modifier.fillMaxSize(),
-            )
+            state.recipes.isEmpty() -> NoResultsState(state.query, Modifier.fillMaxSize())
+            else -> RecipeResults(state.recipes, widthSizeClass, onRecipeClick, onToggleFavorite, Modifier.fillMaxSize())
         }
     }
 }
 
 @Composable
 private fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier: Modifier = Modifier) {
-    TextField(
+    OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier.semantics { contentDescription = "Search recipes" },
-        placeholder = { Text("Search titles, ingredients, instructions...") },
+        placeholder = { Text("Search recipes, ingredients or notes") },
         leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+        trailingIcon = {
+            if (query.isNotBlank()) IconButton(onClick = { onQueryChange("") }) {
+                Icon(Icons.Filled.Close, contentDescription = "Clear search")
+            }
+        },
+        shape = RoundedCornerShape(22.dp),
         singleLine = true,
     )
+}
+
+@Composable
+private fun ResultSummary(count: Int, isSearching: Boolean) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
+            Icon(
+                Icons.AutoMirrored.Filled.MenuBook,
+                contentDescription = null,
+                modifier = Modifier.padding(7.dp).size(18.dp),
+                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+        }
+        Spacer(Modifier.width(10.dp))
+        Text(
+            if (isSearching) "$count matching ${if (count == 1) "recipe" else "recipes"}"
+            else "$count ${if (count == 1) "recipe" else "recipes"} in your collection",
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
 }
 
 @Composable
@@ -126,73 +169,74 @@ private fun RecipeResults(
 ) {
     if (widthSizeClass == WindowWidthSizeClass.Expanded) {
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 280.dp),
+            columns = GridCells.Adaptive(minSize = 300.dp),
             modifier = modifier,
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            gridItems(recipes, key = { it.id }) { recipe ->
-                RecipeCard(recipe, onRecipeClick, onToggleFavorite)
-            }
+            gridItems(recipes, key = { it.id }) { RecipeCard(it, onRecipeClick, onToggleFavorite) }
         }
     } else {
         LazyColumn(
             modifier = modifier,
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            items(recipes, key = { it.id }) { recipe ->
-                RecipeCard(recipe, onRecipeClick, onToggleFavorite)
-            }
+            items(recipes, key = { it.id }) { RecipeCard(it, onRecipeClick, onToggleFavorite) }
         }
     }
 }
 
 @Composable
-private fun RecipeCard(
-    recipe: RecipeSummary,
-    onRecipeClick: (String) -> Unit,
-    onToggleFavorite: (String, Boolean) -> Unit,
-) {
+private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, onToggleFavorite: (String, Boolean) -> Unit) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics { contentDescription = "Recipe: ${recipe.title}" },
-        tonalElevation = 1.dp,
+        modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Recipe: ${recipe.title}" },
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 2.dp,
+        shadowElevation = 1.dp,
         shape = MaterialTheme.shapes.medium,
         onClick = { onRecipeClick(recipe.id) },
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            androidx.compose.foundation.layout.Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+        Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier.size(46.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = recipe.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.weight(1f),
+                    recipe.title.firstOrNull()?.uppercase() ?: "R",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    fontWeight = FontWeight.Bold,
                 )
-                if (recipe.hasReviewFlags) {
-                    Icon(
-                        Icons.Filled.Warning,
-                        contentDescription = "Needs review",
-                        tint = MaterialTheme.colorScheme.tertiary,
-                    )
-                }
-                IconButton(onClick = { onToggleFavorite(recipe.id, recipe.isFavorite) }) {
-                    Icon(
-                        imageVector = if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                        contentDescription = if (recipe.isFavorite) "Remove from favorites" else "Add to favorites",
-                    )
-                }
             }
-            if (recipe.sourcePublisher.isNotBlank()) {
+            Spacer(Modifier.width(14.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(recipe.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Spacer(Modifier.height(4.dp))
                 Text(
-                    text = recipe.sourcePublisher,
+                    recipe.sourcePublisher.ifBlank { "Family recipe archive" },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (recipe.hasReviewFlags) {
+                    Spacer(Modifier.height(8.dp))
+                    Surface(shape = CircleShape, color = MaterialTheme.colorScheme.tertiaryContainer) {
+                        Row(modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Filled.Warning, contentDescription = null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.onTertiaryContainer)
+                            Spacer(Modifier.width(5.dp))
+                            Text("Check details", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
+                        }
+                    }
+                }
+            }
+            IconButton(onClick = { onToggleFavorite(recipe.id, recipe.isFavorite) }) {
+                Icon(
+                    if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = if (recipe.isFavorite) "Remove from favorites" else "Add to favorites",
+                    tint = if (recipe.isFavorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -204,7 +248,7 @@ private fun LoadingState(modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CircularProgressIndicator()
-            Text("Importing recipes…", modifier = Modifier.padding(top = 16.dp))
+            Text("Preparing your recipe box…", modifier = Modifier.padding(top = 16.dp))
         }
     }
 }
@@ -212,16 +256,12 @@ private fun LoadingState(modifier: Modifier = Modifier) {
 @Composable
 private fun ImportErrorState(message: String, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
-            Icon(Icons.Filled.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.error)
-            Text(
-                "Import failed",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = 8.dp),
-            )
-            Text(message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
-            androidx.compose.material3.TextButton(onClick = onRetry, modifier = Modifier.padding(top = 12.dp)) {
-                Text("Retry import")
+        Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.errorContainer) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(28.dp)) {
+                Icon(Icons.Filled.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                Text("We couldn't load your recipes", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 10.dp))
+                Text(message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
+                TextButton(onClick = onRetry, modifier = Modifier.padding(top = 10.dp)) { Text("Retry import") }
             }
         }
     }
@@ -230,21 +270,21 @@ private fun ImportErrorState(message: String, onRetry: () -> Unit, modifier: Mod
 @Composable
 private fun EmptyLibraryState(modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Text(
-            "No recipes yet. Once a bundle is imported, your recipes will appear here.",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(24.dp),
-        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
+            Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = null, modifier = Modifier.size(44.dp), tint = MaterialTheme.colorScheme.primary)
+            Text("Your recipe box is empty", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 12.dp))
+            Text("No recipes yet. Once a bundle is imported, your recipes will appear here.", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
+        }
     }
 }
 
 @Composable
 private fun NoResultsState(query: String, modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Text(
-            "No recipes match \"$query\".",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(24.dp),
-        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
+            Icon(Icons.Filled.Search, contentDescription = null, modifier = Modifier.size(38.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("No recipes match \"$query\".", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 12.dp))
+            Text("Try a recipe name, ingredient or handwritten note.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
     }
 }

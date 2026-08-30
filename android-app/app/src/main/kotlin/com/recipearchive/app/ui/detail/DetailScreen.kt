@@ -1,28 +1,47 @@
 package com.recipearchive.app.ui.detail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.StickyNote2
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.RestaurantMenu
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,56 +52,51 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeDetailUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(
-    viewModel: DetailViewModel,
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun DetailScreen(viewModel: DetailViewModel, onBack: () -> Unit, modifier: Modifier = Modifier) {
     val detail by viewModel.uiState.collectAsState()
     Scaffold(
         modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text(detail?.recipe?.title ?: "Recipe") },
+                title = { Text("Recipe", style = MaterialTheme.typography.titleMedium) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to library")
                     }
                 },
                 actions = {
-                    val current = detail
-                    if (current != null) {
-                        val isFavorite = current.appState?.isFavorite ?: false
-                        IconButton(onClick = { viewModel.toggleFavorite(isFavorite) }) {
+                    detail?.let { current ->
+                        val favorite = current.appState?.isFavorite ?: false
+                        IconButton(onClick = { viewModel.toggleFavorite(favorite) }) {
                             Icon(
-                                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                                contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
+                                if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                contentDescription = if (favorite) "Remove from favorites" else "Add to favorites",
+                                tint = if (favorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
                 },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
             )
         },
     ) { padding ->
-        val current = detail
-        if (current == null) {
-            androidx.compose.foundation.layout.Box(
-                modifier = Modifier.fillMaxSize().padding(padding),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
+        detail?.let { current ->
             DetailContent(
                 detail = current,
                 onNotesChanged = viewModel::updateNotes,
+                onRatingChanged = viewModel::updateRating,
                 modifier = Modifier.padding(padding),
             )
+        } ?: Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
     }
 }
@@ -92,159 +106,213 @@ fun DetailContent(
     detail: RecipeDetailUi,
     onNotesChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
+    onRatingChanged: (Int?) -> Unit = {},
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValuesAll16,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.fillMaxSize().wrapContentWidth(Alignment.CenterHorizontally).widthIn(max = 940.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
-        item { SourceSection(detail) }
+        item { RecipeHero(detail, onRatingChanged) }
+        if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
 
-        if (detail.reviewFlags.isNotEmpty()) {
-            item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
-        }
-
-        item { SectionHeader("Ingredients") }
-        if (detail.ingredients.isEmpty()) {
-            item { Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium) }
-        } else {
-            items(detail.ingredients, key = { "ingredient-${it.id}" }) { ingredient ->
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = listOf(ingredient.quantity, ingredient.unit, ingredient.item)
-                            .filter { it.isNotBlank() }
-                            .joinToString(" ")
-                            .ifBlank { ingredient.rawText },
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.weight(1f),
-                    )
-                    if (ingredient.parseStatus == "needs_review") {
-                        Text(
-                            "needs review",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.tertiary,
+        item { ContentCard(title = "Ingredients", icon = Icons.Filled.RestaurantMenu) {
+            if (detail.ingredients.isEmpty()) {
+                Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    detail.ingredients.forEach { ingredient ->
+                        IngredientRow(
+                            text = listOf(ingredient.quantity, ingredient.unit, ingredient.item)
+                                .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
+                            needsReview = ingredient.parseStatus == "needs_review",
                         )
                     }
                 }
             }
-        }
+        } }
 
-        item { SectionHeader("Instructions") }
-        if (detail.instructions.isEmpty()) {
-            item { Text("No instructions were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium) }
-        } else {
-            items(detail.instructions, key = { "instruction-${it.id}" }) { instruction ->
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        "${instruction.displayOrder}.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(end = 8.dp),
-                    )
-                    Text(instruction.text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+        item { ContentCard(title = "Instructions", icon = Icons.AutoMirrored.Filled.MenuBook) {
+            if (detail.instructions.isEmpty()) {
+                Text("No instructions were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                    detail.instructions.forEach { instruction ->
+                        InstructionRow(instruction.displayOrder, instruction.text)
+                    }
                 }
             }
-        }
+        } }
 
         if (detail.handwrittenNotes.isNotEmpty()) {
-            item { SectionHeader("Handwritten notes") }
-            items(detail.handwrittenNotes, key = { it.pageId }) { note ->
-                Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                    if (note.transcription.isNotBlank()) {
-                        Text(note.transcription, style = MaterialTheme.typography.bodyLarge)
-                    } else {
-                        Text("(transcription pending, status: ${note.status})", style = MaterialTheme.typography.bodyMedium)
-                    }
-                    if (note.ocrDraft.isNotBlank() && note.ocrDraft != note.transcription) {
-                        Text(
-                            "OCR draft: ${note.ocrDraft}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
+            item { HandwrittenNotesCard(detail) }
         }
-
-        if (detail.pages.isNotEmpty()) {
-            item { SectionHeader("Scan pages") }
-            item {
-                Text(
-                    detail.pages.joinToString("\n") { page ->
-                        val scan = page.scanFilename ?: page.pageRef
-                        val pageNum = page.pageNumber?.let { " (page $it)" }.orEmpty()
-                        "$scan$pageNum"
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
-        }
-
+        if (detail.pages.isNotEmpty()) item { ScanPagesCard(detail) }
         item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
-
         item { RawOcrSection(detail.recipe.rawText) }
     }
 }
 
-private val PaddingValuesAll16 = androidx.compose.foundation.layout.PaddingValues(16.dp)
+@Composable
+private fun RecipeHero(detail: RecipeDetailUi, onRatingChanged: (Int?) -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.primaryContainer,
+    ) {
+        Column(modifier = Modifier.padding(26.dp)) {
+            Text(detail.recipe.title, style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Spacer(Modifier.height(10.dp))
+            SourceSection(detail)
+            Spacer(Modifier.height(18.dp))
+            Text("Your rating", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            RatingRow(detail.appState?.personalRating, onRatingChanged)
+        }
+    }
+}
 
 @Composable
 private fun SourceSection(detail: RecipeDetailUi) {
-    Column {
-        val publisher = detail.recipe.sourcePublisher
-        val url = detail.recipe.sourceUrl
-        if (publisher.isBlank() && url.isBlank()) {
-            Text("Source: unknown", style = MaterialTheme.typography.bodyMedium)
-        } else {
-            if (publisher.isNotBlank()) Text(publisher, style = MaterialTheme.typography.bodyMedium)
-            if (url.isNotBlank()) {
-                Text(url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-            }
-        }
-        if (detail.sourceEvidence.isNotEmpty()) {
-            detail.sourceEvidence.forEach { evidence ->
-                Text(
-                    "• ${evidence.evidenceText}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+    val publisher = detail.recipe.sourcePublisher
+    val url = detail.recipe.sourceUrl
+    Text(
+        if (publisher.isBlank()) "Source not yet identified" else publisher,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+    )
+    if (url.isNotBlank()) Text(url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+    detail.sourceEvidence.take(2).forEach { evidence ->
+        Text(
+            evidence.evidenceText,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.72f),
+        )
+    }
+}
+
+@Composable
+private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
+    Row(modifier = Modifier.semantics { contentDescription = "Recipe rating" }) {
+        (1..5).forEach { value ->
+            IconButton(onClick = { onRatingChanged(if (rating == value) null else value) }) {
+                Icon(
+                    if ((rating ?: 0) >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
+                    contentDescription = "$value stars",
+                    tint = MaterialTheme.colorScheme.tertiary,
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun ContentCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector, content: @Composable () -> Unit) {
+    Surface(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
+        Column(modifier = Modifier.padding(22.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
+                    Icon(icon, contentDescription = null, modifier = Modifier.padding(8.dp).size(20.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(title, style = MaterialTheme.typography.titleLarge)
+            }
+            Spacer(Modifier.height(18.dp))
+            content()
+        }
+    }
+}
+
+@Composable
+private fun IngredientRow(text: String, needsReview: Boolean) {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+        Box(Modifier.padding(top = 9.dp).size(7.dp).background(MaterialTheme.colorScheme.secondary, CircleShape))
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+        if (needsReview) {
+            Spacer(Modifier.width(8.dp))
+            Icon(Icons.Filled.Warning, contentDescription = "Ingredient needs review", modifier = Modifier.size(17.dp), tint = MaterialTheme.colorScheme.tertiary)
+        }
+    }
+}
+
+@Composable
+private fun InstructionRow(order: Int, text: String) {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+        Box(
+            modifier = Modifier.size(34.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(order.toString(), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer, fontWeight = FontWeight.Bold)
+        }
+        Spacer(Modifier.width(14.dp))
+        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
     }
 }
 
 @Composable
 private fun ReviewFlagsSection(flags: List<String>) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .semantics { contentDescription = "Unresolved review items" },
+    Surface(
+        modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Unresolved review items" },
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.tertiaryContainer,
     ) {
-        Text("Needs review", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.tertiary)
-        flags.forEach { flag ->
-            Text("• ${flag.replace('_', ' ')}", style = MaterialTheme.typography.bodySmall)
+        Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.Top) {
+            Icon(Icons.Filled.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.onTertiaryContainer)
+            Spacer(Modifier.width(12.dp))
+            Column {
+                Text("A quick check would help", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onTertiaryContainer)
+                flags.forEach { Text("• ${it.replace('_', ' ')}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer) }
+            }
         }
     }
 }
 
 @Composable
-private fun SectionHeader(title: String) {
-    Text(title, style = MaterialTheme.typography.titleMedium)
-    HorizontalDivider()
+private fun HandwrittenNotesCard(detail: RecipeDetailUi) {
+    ContentCard(title = "Notes from the original", icon = Icons.AutoMirrored.Filled.StickyNote2) {
+        Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            detail.handwrittenNotes.forEach { note ->
+                Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.55f)) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            note.transcription.ifBlank { "Transcription pending" },
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontStyle = if (note.transcription.isBlank()) FontStyle.Italic else FontStyle.Normal,
+                        )
+                        if (note.ocrDraft.isNotBlank() && note.ocrDraft != note.transcription) {
+                            Text("OCR draft: ${note.ocrDraft}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ScanPagesCard(detail: RecipeDetailUi) {
+    ContentCard(title = "Original pages", icon = Icons.Filled.Description) {
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            detail.pages.forEach { page ->
+                val scan = page.scanFilename ?: page.pageRef
+                val pageNum = page.pageNumber?.let { "Page $it" }.orEmpty()
+                Text(if (pageNum.isBlank()) scan else "$pageNum · $scan", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+    }
 }
 
 @Composable
 private fun NotesSection(initialNotes: String, onNotesChanged: (String) -> Unit) {
     var text by remember(initialNotes) { mutableStateOf(initialNotes) }
-    Column {
-        SectionHeader("Your notes")
+    ContentCard(title = "Your notes", icon = Icons.Filled.EditNote) {
         OutlinedTextField(
             value = text,
-            onValueChange = {
-                text = it
-                onNotesChanged(it)
-            },
+            onValueChange = { text = it; onNotesChanged(it) },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Add a personal note...") },
+            placeholder = { Text("What would you change next time?") },
+            minLines = 3,
+            shape = MaterialTheme.shapes.medium,
         )
     }
 }
@@ -252,15 +320,14 @@ private fun NotesSection(initialNotes: String, onNotesChanged: (String) -> Unit)
 @Composable
 private fun RawOcrSection(rawText: String) {
     var expanded by remember { mutableStateOf(false) }
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         TextButton(onClick = { expanded = !expanded }) {
             Text(if (expanded) "Hide original OCR" else "Show original OCR")
         }
         if (expanded) {
-            Text(
-                rawText.ifBlank { "No OCR text available." },
-                style = MaterialTheme.typography.bodySmall,
-            )
+            Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+                Text(rawText.ifBlank { "No OCR text available." }, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(18.dp))
+            }
         }
     }
 }
