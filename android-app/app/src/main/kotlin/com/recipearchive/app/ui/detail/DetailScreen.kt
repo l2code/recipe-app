@@ -4,12 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -23,6 +26,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.StickyNote2
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -31,6 +35,9 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -57,6 +64,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeDetailUi
+import com.recipearchive.app.data.organization.RecipeCategories
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,6 +107,9 @@ fun DetailScreen(
                 detail = current,
                 onNotesChanged = viewModel::updateNotes,
                 onRatingChanged = viewModel::updateRating,
+                onCategoryChanged = viewModel::updateCategory,
+                onCollectionChanged = viewModel::updateCollection,
+                onCollectionCreated = viewModel::createCollection,
                 useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
@@ -114,6 +125,9 @@ fun DetailContent(
     onNotesChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
     onRatingChanged: (Int?) -> Unit = {},
+    onCategoryChanged: (String?) -> Unit = {},
+    onCollectionChanged: (String, Boolean) -> Unit = { _, _ -> },
+    onCollectionCreated: (String) -> Unit = {},
     useTwoColumns: Boolean = false,
 ) {
     LazyColumn(
@@ -121,7 +135,15 @@ fun DetailContent(
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { RecipeHero(detail, onRatingChanged) }
+        item {
+            RecipeHero(
+                detail = detail,
+                onRatingChanged = onRatingChanged,
+                onCategoryChanged = onCategoryChanged,
+                onCollectionChanged = onCollectionChanged,
+                onCollectionCreated = onCollectionCreated,
+            )
+        }
         if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
 
         if (useTwoColumns) {
@@ -147,7 +169,14 @@ fun DetailContent(
 }
 
 @Composable
-private fun RecipeHero(detail: RecipeDetailUi, onRatingChanged: (Int?) -> Unit) {
+private fun RecipeHero(
+    detail: RecipeDetailUi,
+    onRatingChanged: (Int?) -> Unit,
+    onCategoryChanged: (String?) -> Unit,
+    onCollectionChanged: (String, Boolean) -> Unit,
+    onCollectionCreated: (String) -> Unit,
+) {
+    var showOrganizer by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
@@ -165,8 +194,103 @@ private fun RecipeHero(detail: RecipeDetailUi, onRatingChanged: (Int?) -> Unit) 
                 )
                 RatingRow(detail.appState?.personalRating, onRatingChanged)
             }
+            TextButton(
+                onClick = { showOrganizer = true },
+                modifier = Modifier.padding(top = 2.dp),
+            ) {
+                val category = detail.appState?.category ?: "Choose category"
+                val collectionCount = detail.collectionIds.size
+                Text("$category · $collectionCount ${if (collectionCount == 1) "collection" else "collections"} · Organize")
+            }
         }
     }
+    if (showOrganizer) {
+        OrganizerDialog(
+            detail = detail,
+            onDismiss = { showOrganizer = false },
+            onCategoryChanged = onCategoryChanged,
+            onCollectionChanged = onCollectionChanged,
+            onCollectionCreated = onCollectionCreated,
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun OrganizerDialog(
+    detail: RecipeDetailUi,
+    onDismiss: () -> Unit,
+    onCategoryChanged: (String?) -> Unit,
+    onCollectionChanged: (String, Boolean) -> Unit,
+    onCollectionCreated: (String) -> Unit,
+) {
+    var newCollectionName by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Organize recipe") },
+        text = {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().heightIn(max = 520.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                item {
+                    Text("Category", style = MaterialTheme.typography.titleSmall)
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(7.dp),
+                    ) {
+                        RecipeCategories.all.forEach { category ->
+                            FilterChip(
+                                selected = detail.appState?.category == category,
+                                onClick = { onCategoryChanged(category) },
+                                label = { Text(category) },
+                            )
+                        }
+                    }
+                }
+                item {
+                    Text("Collections", style = MaterialTheme.typography.titleSmall)
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(7.dp),
+                    ) {
+                        detail.collections.forEach { collection ->
+                            val selected = collection.id in detail.collectionIds
+                            FilterChip(
+                                selected = selected,
+                                onClick = { onCollectionChanged(collection.id, !selected) },
+                                label = { Text(collection.name) },
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        OutlinedTextField(
+                            value = newCollectionName,
+                            onValueChange = { newCollectionName = it },
+                            modifier = Modifier.weight(1f),
+                            label = { Text("New collection") },
+                            singleLine = true,
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Button(
+                            onClick = {
+                                onCollectionCreated(newCollectionName)
+                                newCollectionName = ""
+                            },
+                            enabled = newCollectionName.isNotBlank(),
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = null)
+                            Spacer(Modifier.width(4.dp))
+                            Text("Add")
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+    )
 }
 
 @Composable

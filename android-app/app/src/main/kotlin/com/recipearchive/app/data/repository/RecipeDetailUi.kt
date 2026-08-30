@@ -1,6 +1,7 @@
 package com.recipearchive.app.data.repository
 
 import com.recipearchive.app.data.local.entity.HandwrittenNoteEntity
+import com.recipearchive.app.data.local.entity.CollectionEntity
 import com.recipearchive.app.data.local.entity.IngredientEntity
 import com.recipearchive.app.data.local.entity.InstructionEntity
 import com.recipearchive.app.data.local.entity.RecipeAppStateEntity
@@ -18,4 +19,6 @@ data class RecipeDetailUi(
     val sourceEvidence: List<SourceEvidenceEntity>,
     val reviewFlags: List<RecipeReviewFlagEntity>,
     val appState: RecipeAppStateEntity?,
+    val collections: List<CollectionEntity> = emptyList(),
+    val collectionIds: Set<String> = emptySet(),
 )

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,15 @@ private data class ImportPhase(
     val error: String? = null,
 )
 
+private data class LibraryFilters(val category: String?, val collectionId: String?)
+
+private data class LibraryData(
+    val recipes: List<com.recipearchive.app.data.repository.RecipeSummary>,
+    val collections: List<com.recipearchive.app.data.local.entity.CollectionEntity>,
+    val filters: LibraryFilters,
+)
+
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class LibraryViewModel(
     private val repository: RecipeRepository,
     private val applicationContext: Context,
@@ -30,21 +40,48 @@ class LibraryViewModel(
 
     private val queryState = MutableStateFlow("")
     private val importPhase = MutableStateFlow(ImportPhase())
+    private val selectedCategory = MutableStateFlow<String?>(null)
+    private val selectedCollectionId = MutableStateFlow<String?>(null)
 
-    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
-    private val recipesFlow = queryState
+    private val filters = combine(selectedCategory, selectedCollectionId, ::LibraryFilters)
+
+    private val debouncedQuery = queryState
         .debounce(250)
         .distinctUntilChanged()
-        .flatMapLatest { query -> repository.observeLibrary(query) }
+
+    private val recipesFlow = combine(
+        combine(debouncedQuery, filters) { query, filters -> query to filters },
+        importPhase,
+    ) { queryAndFilters, phase -> queryAndFilters to phase.isImporting }
+        .distinctUntilChanged()
+        .flatMapLatest { (queryAndFilters, isImporting) ->
+            val (query, filters) = queryAndFilters
+            if (isImporting) flowOf(emptyList())
+            else repository.observeLibrary(query, filters.category, filters.collectionId)
+        }
+
+    private val collectionsFlow = importPhase.flatMapLatest { phase ->
+        if (phase.isImporting) flowOf(emptyList()) else repository.observeCollections()
+    }
+
+    private val libraryData = combine(
+        recipesFlow,
+        collectionsFlow,
+        filters,
+        ::LibraryData,
+    )
 
     val uiState: StateFlow<LibraryUiState> = combine(
         queryState,
-        recipesFlow,
+        libraryData,
         importPhase,
-    ) { query, recipes, phase ->
+    ) { query, data, phase ->
         LibraryUiState(
             query = query,
-            recipes = recipes,
+            recipes = data.recipes,
+            selectedCategory = data.filters.category,
+            collections = data.collections,
+            selectedCollectionId = data.filters.collectionId,
             isImporting = phase.isImporting,
             hasImportedOnce = phase.hasCompletedOnce,
             importError = phase.error,
@@ -57,6 +94,14 @@ class LibraryViewModel(
 
     fun updateQuery(newQuery: String) {
         queryState.value = newQuery
+    }
+
+    fun selectCategory(category: String?) {
+        selectedCategory.value = category
+    }
+
+    fun selectCollection(collectionId: String?) {
+        selectedCollectionId.value = collectionId
     }
 
     fun retryImport() = runImport()

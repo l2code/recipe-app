@@ -26,6 +26,9 @@ interface RecipeAppStateDao {
     @Query("SELECT recipeId FROM recipe_app_state WHERE isFavorite = 1")
     fun observeFavoriteRecipeIds(): Flow<List<String>>
 
+    @Query("SELECT * FROM recipe_app_state")
+    fun observeAll(): Flow<List<RecipeAppStateEntity>>
+
     @Query("UPDATE recipe_app_state SET isFavorite = :isFavorite, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setFavorite(recipeId: String, isFavorite: Boolean, updatedAt: Long)
 
@@ -34,6 +37,12 @@ interface RecipeAppStateDao {
 
     @Query("UPDATE recipe_app_state SET personalRating = :rating, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setRating(recipeId: String, rating: Int?, updatedAt: Long)
+
+    @Query("UPDATE recipe_app_state SET category = :category, categoryIsUserSet = 1, updatedAt = :updatedAt WHERE recipeId = :recipeId")
+    suspend fun setCategory(recipeId: String, category: String?, updatedAt: Long)
+
+    @Query("UPDATE recipe_app_state SET category = :category WHERE recipeId = :recipeId AND categoryIsUserSet = 0")
+    suspend fun setInferredCategory(recipeId: String, category: String)
 
     @Query("UPDATE recipe_app_state SET reviewCompleted = :completed, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setReviewCompleted(recipeId: String, completed: Boolean, updatedAt: Long)

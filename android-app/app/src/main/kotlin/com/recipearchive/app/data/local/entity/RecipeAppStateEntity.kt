@@ -25,5 +25,7 @@ data class RecipeAppStateEntity(
     val personalRating: Int? = null,
     val personalNotes: String = "",
     val reviewCompleted: Boolean = false,
+    val category: String? = null,
+    val categoryIsUserSet: Boolean = false,
     val updatedAt: Long = 0,
 )

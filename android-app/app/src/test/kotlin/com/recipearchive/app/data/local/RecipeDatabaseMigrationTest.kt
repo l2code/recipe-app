@@ -3,19 +3,13 @@ package com.recipearchive.app.data.local
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-/**
- * Scaffold for schema migrations: the database is version 1 today, so there is
- * nothing to migrate yet, but this wires up [MigrationTestHelper] against the
- * exported schema JSON (see `room.schemaLocation` in app/build.gradle.kts and
- * app/schemas/). When a version 2 is introduced, add a real `Migration(1, 2)`
- * object to [RecipeDatabase] and a test here that creates v1, inserts rows,
- * runs the migration, and asserts the data + new columns look right.
- */
 @RunWith(RobolectricTestRunner::class)
 class RecipeDatabaseMigrationTest {
 
@@ -28,8 +22,51 @@ class RecipeDatabaseMigrationTest {
     )
 
     @Test
-    fun `version 1 schema creates successfully from the exported schema file`() {
-        helper.createDatabase(TEST_DB_NAME, 1).close()
+    fun `migration from version 1 preserves app state and seeds collections`() {
+        helper.createDatabase(TEST_DB_NAME, 1).apply {
+            execSQL(
+                """
+                INSERT INTO recipes VALUES(
+                    'R1', 'Test recipe', '', 0, '', '', '', '', '', '', 1, '', 1, 1
+                )
+                """.trimIndent(),
+            )
+            execSQL(
+                """
+                INSERT INTO recipe_app_state VALUES(
+                    'R1', 1, 4, 'Keep this note', 1, 123
+                )
+                """.trimIndent(),
+            )
+            close()
+        }
+
+        val migrated = helper.runMigrationsAndValidate(
+            TEST_DB_NAME,
+            3,
+            true,
+            RecipeDatabase.MIGRATION_1_2,
+            RecipeDatabase.MIGRATION_2_3,
+        )
+
+        migrated.query(
+            "SELECT isFavorite, personalRating, personalNotes, reviewCompleted, category, categoryIsUserSet FROM recipe_app_state WHERE recipeId = 'R1'",
+        ).use { cursor ->
+            assertTrue(cursor.moveToFirst())
+            assertEquals(1, cursor.getInt(0))
+            assertEquals(4, cursor.getInt(1))
+            assertEquals("Keep this note", cursor.getString(2))
+            assertEquals(1, cursor.getInt(3))
+            assertTrue(cursor.isNull(4))
+            assertEquals(0, cursor.getInt(5))
+        }
+        migrated.query("SELECT name FROM collections ORDER BY sortOrder").use { cursor ->
+            assertTrue(cursor.moveToFirst())
+            assertEquals("Easter Sunday", cursor.getString(0))
+            assertTrue(cursor.moveToNext())
+            assertEquals("Christmas Dinner", cursor.getString(0))
+        }
+        migrated.close()
     }
 
     companion object {

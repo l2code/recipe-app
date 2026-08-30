@@ -30,6 +30,22 @@ class DetailViewModel(
         viewModelScope.launch { repository.setPersonalRating(recipeId, rating) }
     }
 
+    fun updateCategory(category: String?) {
+        viewModelScope.launch { repository.setCategory(recipeId, category) }
+    }
+
+    fun updateCollection(collectionId: String, selected: Boolean) {
+        viewModelScope.launch { repository.setRecipeCollection(recipeId, collectionId, selected) }
+    }
+
+    fun createCollection(name: String) {
+        viewModelScope.launch {
+            repository.createCollection(name)?.let { collectionId ->
+                repository.setRecipeCollection(recipeId, collectionId, true)
+            }
+        }
+    }
+
     class Factory(
         private val repository: RecipeRepository,
         private val recipeId: String,

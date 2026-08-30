@@ -177,16 +177,16 @@ rebuild.
 
 ### Database/schema overview
 
-Room database `RecipeDatabase` (schema version 1, exported to `android-app/app/schemas/`
+Room database `RecipeDatabase` (schema version 3, exported to `android-app/app/schemas/`
 for migration testing):
 
 - **Import-owned** (fully replaced per recipe on every import): `recipes`,
   `ingredients`, `instructions`, `recipe_pages`, `handwritten_notes`,
   `source_evidence`, `recipe_review_flags`, and the FTS4 search index
   (`recipe_search_documents` / `recipe_search_fts`).
-- **App-owned** (never touched by import beyond creating a default row for new
-  recipes): `recipe_app_state` — favorite, personal rating, personal notes, review
-  completion.
+- **App-owned** (preserved across imports): `recipe_app_state` — favorite, personal
+  rating, personal notes, review completion, and editable category;
+  `collections` / `recipe_collection_cross_ref` — user-created recipe collections.
 - **Audit**: `import_runs` — one row per import attempt with counts and status.
 
 Recipes are upserted by their stable `id` using an explicit insert-or-update (not

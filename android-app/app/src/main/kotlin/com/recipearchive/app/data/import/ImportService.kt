@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.withTransaction
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.local.entity.HandwrittenNoteEntity
+import com.recipearchive.app.data.local.entity.CollectionEntity
 import com.recipearchive.app.data.local.entity.ImportRunEntity
 import com.recipearchive.app.data.local.entity.ImportStatus
 import com.recipearchive.app.data.local.entity.IngredientEntity
@@ -14,6 +15,7 @@ import com.recipearchive.app.data.local.entity.RecipePageEntity
 import com.recipearchive.app.data.local.entity.RecipeReviewFlagEntity
 import com.recipearchive.app.data.local.entity.RecipeSearchDocumentEntity
 import com.recipearchive.app.data.local.entity.SourceEvidenceEntity
+import com.recipearchive.app.data.organization.RecipeCategories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -79,6 +81,7 @@ class ImportService(
 
         try {
             database.withTransaction {
+                database.collectionDao().insertAll(defaultCollections(now))
                 for (dto in validRecipes) {
                     val isNew = writeRecipe(dto, envelope, now)
                     if (isNew) insertedCount++ else updatedCount++
@@ -243,9 +246,14 @@ class ImportService(
             ),
         )
 
-        database.recipeAppStateDao().insertDefaultIfMissing(
-            RecipeAppStateEntity(recipeId = dto.id, updatedAt = now),
+        val inferredCategory = RecipeCategories.infer(
+            title = dto.title.orEmpty(),
+            ingredientText = dto.ingredients.joinToString(" ") { listOfNotNull(it.item, it.rawText).joinToString(" ") },
         )
+        database.recipeAppStateDao().insertDefaultIfMissing(
+            RecipeAppStateEntity(recipeId = dto.id, category = inferredCategory, updatedAt = now),
+        )
+        database.recipeAppStateDao().setInferredCategory(dto.id, inferredCategory)
 
         return existing == null
     }
@@ -289,5 +297,10 @@ class ImportService(
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
                 .distinct()
+
+        internal fun defaultCollections(now: Long): List<CollectionEntity> = listOf(
+            CollectionEntity("easter-sunday", "Easter Sunday", 0, now),
+            CollectionEntity("christmas-dinner", "Christmas Dinner", 1, now),
+        )
     }
 }

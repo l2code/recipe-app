@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,8 +28,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -84,6 +89,8 @@ fun LibraryScreen(
             state = state,
             widthSizeClass = widthSizeClass,
             onQueryChange = viewModel::updateQuery,
+            onCategorySelected = viewModel::selectCategory,
+            onCollectionSelected = viewModel::selectCollection,
             onRecipeClick = onRecipeClick,
             onToggleFavorite = viewModel::toggleFavorite,
             onRetryImport = viewModel::retryImport,
@@ -97,6 +104,8 @@ fun LibraryContent(
     state: LibraryUiState,
     widthSizeClass: WindowWidthSizeClass,
     onQueryChange: (String) -> Unit,
+    onCategorySelected: (String?) -> Unit = {},
+    onCollectionSelected: (String?) -> Unit = {},
     onRecipeClick: (String) -> Unit,
     onToggleFavorite: (String, Boolean) -> Unit,
     onRetryImport: () -> Unit,
@@ -105,17 +114,67 @@ fun LibraryContent(
     Column(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
             SearchField(query = state.query, onQueryChange = onQueryChange, modifier = Modifier.fillMaxWidth())
+            Spacer(Modifier.height(10.dp))
+            FilterRow(
+                label = "Collections",
+                options = state.collections.map { it.id to it.name },
+                selected = state.selectedCollectionId,
+                onSelected = onCollectionSelected,
+            )
+            Spacer(Modifier.height(6.dp))
+            FilterRow(
+                label = "Categories",
+                options = state.categories.map { it to it },
+                selected = state.selectedCategory,
+                onSelected = onCategorySelected,
+            )
             if (state.recipes.isNotEmpty()) {
-                Spacer(Modifier.height(12.dp))
-                ResultSummary(count = state.recipes.size, isSearching = state.query.isNotBlank())
+                Spacer(Modifier.height(8.dp))
+                ResultSummary(
+                    count = state.recipes.size,
+                    isFiltered = state.query.isNotBlank() || state.selectedCategory != null || state.selectedCollectionId != null,
+                )
             }
         }
         when {
             state.isImporting && !state.hasImportedOnce -> LoadingState(modifier = Modifier.fillMaxSize())
             state.importError != null && state.recipes.isEmpty() -> ImportErrorState(state.importError, onRetryImport, Modifier.fillMaxSize())
-            state.recipes.isEmpty() && state.query.isBlank() -> EmptyLibraryState(modifier = Modifier.fillMaxSize())
+            state.recipes.isEmpty() && state.query.isBlank() && state.selectedCategory == null && state.selectedCollectionId == null -> EmptyLibraryState(modifier = Modifier.fillMaxSize())
             state.recipes.isEmpty() -> NoResultsState(state.query, Modifier.fillMaxSize())
             else -> RecipeResults(state.recipes, widthSizeClass, onRecipeClick, onToggleFavorite, Modifier.fillMaxSize())
+        }
+    }
+}
+
+@Composable
+private fun FilterRow(
+    label: String,
+    options: List<Pair<String, String>>,
+    selected: String?,
+    onSelected: (String?) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(end = 2.dp),
+        )
+        FilterChip(
+            selected = selected == null,
+            onClick = { onSelected(null) },
+            label = { Text("All") },
+        )
+        options.forEach { (id, name) ->
+            FilterChip(
+                selected = selected == id,
+                onClick = { onSelected(if (selected == id) null else id) },
+                label = { Text(name) },
+            )
         }
     }
 }
@@ -139,7 +198,7 @@ private fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier
 }
 
 @Composable
-private fun ResultSummary(count: Int, isSearching: Boolean) {
+private fun ResultSummary(count: Int, isFiltered: Boolean) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
             Icon(
@@ -151,7 +210,7 @@ private fun ResultSummary(count: Int, isSearching: Boolean) {
         }
         Spacer(Modifier.width(10.dp))
         Text(
-            if (isSearching) "$count matching ${if (count == 1) "recipe" else "recipes"}"
+            if (isFiltered) "$count matching ${if (count == 1) "recipe" else "recipes"}"
             else "$count ${if (count == 1) "recipe" else "recipes"} in your collection",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -221,6 +280,32 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
+                if (recipe.category != null || recipe.personalRating != null) {
+                    Spacer(Modifier.height(7.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        recipe.category?.let { category ->
+                            Text(
+                                category,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                if (recipe.personalRating == null) Icons.Filled.StarBorder else Icons.Filled.Star,
+                                contentDescription = if (recipe.personalRating == null) "Not rated" else "Rated ${recipe.personalRating} out of 5",
+                                tint = if (recipe.personalRating == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier.size(16.dp),
+                            )
+                            Spacer(Modifier.width(3.dp))
+                            Text(
+                                recipe.personalRating?.toString() ?: "–",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
                 if (recipe.hasReviewFlags) {
                     Spacer(Modifier.height(8.dp))
                     Surface(shape = CircleShape, color = MaterialTheme.colorScheme.tertiaryContainer) {
@@ -283,8 +368,12 @@ private fun NoResultsState(query: String, modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
             Icon(Icons.Filled.Search, contentDescription = null, modifier = Modifier.size(38.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("No recipes match \"$query\".", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 12.dp))
-            Text("Try a recipe name, ingredient or handwritten note.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                if (query.isBlank()) "No recipes match these filters." else "No recipes match \"$query\".",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(top = 12.dp),
+            )
+            Text("Try another search or select All to clear a filter.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
