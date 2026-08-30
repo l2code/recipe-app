@@ -1,6 +1,7 @@
 package com.recipearchive.app.ui.library
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,13 +26,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -48,6 +53,9 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -56,6 +64,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeSummary
+import com.recipearchive.app.data.local.entity.CollectionEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,15 +122,14 @@ fun LibraryContent(
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-            SearchField(query = state.query, onQueryChange = onQueryChange, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(10.dp))
-            FilterRow(
-                label = "Collections",
-                options = state.collections.map { it.id to it.name },
-                selected = state.selectedCollectionId,
-                onSelected = onCollectionSelected,
+            SearchControls(
+                query = state.query,
+                onQueryChange = onQueryChange,
+                collections = state.collections,
+                selectedCollectionId = state.selectedCollectionId,
+                onCollectionSelected = onCollectionSelected,
             )
-            Spacer(Modifier.height(6.dp))
+            Spacer(Modifier.height(10.dp))
             FilterRow(
                 label = "Categories",
                 options = state.categories.map { it to it },
@@ -142,6 +150,75 @@ fun LibraryContent(
             state.recipes.isEmpty() && state.query.isBlank() && state.selectedCategory == null && state.selectedCollectionId == null -> EmptyLibraryState(modifier = Modifier.fillMaxSize())
             state.recipes.isEmpty() -> NoResultsState(state.query, Modifier.fillMaxSize())
             else -> RecipeResults(state.recipes, widthSizeClass, onRecipeClick, onToggleFavorite, Modifier.fillMaxSize())
+        }
+    }
+}
+
+@Composable
+private fun SearchControls(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    collections: List<CollectionEntity>,
+    selectedCollectionId: String?,
+    onCollectionSelected: (String?) -> Unit,
+) {
+    var showCollectionMenu by remember { mutableStateOf(false) }
+    val selectedCollection = collections.firstOrNull { it.id == selectedCollectionId }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SearchField(query = query, onQueryChange = onQueryChange, modifier = Modifier.weight(1f))
+        Box {
+            Surface(
+                modifier = Modifier.size(56.dp).semantics {
+                    contentDescription = selectedCollection?.let { "Filtering by collection ${it.name}" }
+                        ?: "Filter by collection"
+                },
+                shape = RoundedCornerShape(18.dp),
+                color = if (selectedCollection == null) MaterialTheme.colorScheme.surface
+                else MaterialTheme.colorScheme.secondaryContainer,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                onClick = { showCollectionMenu = true },
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        Icons.Filled.Tune,
+                        contentDescription = null,
+                        tint = if (selectedCollection == null) MaterialTheme.colorScheme.onSurfaceVariant
+                        else MaterialTheme.colorScheme.onSecondaryContainer,
+                    )
+                }
+            }
+            DropdownMenu(
+                expanded = showCollectionMenu,
+                onDismissRequest = { showCollectionMenu = false },
+            ) {
+                DropdownMenuItem(
+                    text = { Text("All collections") },
+                    onClick = {
+                        onCollectionSelected(null)
+                        showCollectionMenu = false
+                    },
+                    leadingIcon = if (selectedCollection == null) {
+                        { Icon(Icons.Filled.Check, contentDescription = null) }
+                    } else null,
+                )
+                collections.forEach { collection ->
+                    val selected = collection.id == selectedCollectionId
+                    DropdownMenuItem(
+                        text = { Text(collection.name) },
+                        onClick = {
+                            onCollectionSelected(collection.id)
+                            showCollectionMenu = false
+                        },
+                        leadingIcon = if (selected) {
+                            { Icon(Icons.Filled.Check, contentDescription = null) }
+                        } else null,
+                    )
+                }
+            }
         }
     }
 }
