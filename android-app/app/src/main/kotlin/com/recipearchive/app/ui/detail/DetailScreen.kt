@@ -269,36 +269,93 @@ private fun RecipeHero(
         )
     }
     if (showPlanDialog) {
-        AlertDialog(
-            onDismissRequest = { showPlanDialog = false },
-            title = { Text("Add to meal plan") },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("Choose a day in the coming week.", style = MaterialTheme.typography.bodyMedium)
-                    (0L..6L).forEach { offset ->
-                        val date = LocalDate.now().plusDays(offset)
-                        TextButton(
-                            onClick = {
-                                onAddToMealPlan(date)
-                                showPlanDialog = false
-                            },
+        MealPlanDateDialog(
+            onDismiss = { showPlanDialog = false },
+            onDateSelected = { date ->
+                onAddToMealPlan(date)
+                showPlanDialog = false
+            },
+        )
+    }
+}
+
+@Composable
+private fun MealPlanDateDialog(
+    onDismiss: () -> Unit,
+    onDateSelected: (LocalDate) -> Unit,
+) {
+    val today = remember { LocalDate.now() }
+    var dayCount by remember { mutableStateOf(14) }
+    val dates = remember(today, dayCount) { (0 until dayCount).map { today.plusDays(it.toLong()) } }
+    val rangeLabel = "${today.format(DateTimeFormatter.ofPattern("MMM d"))} – ${dates.last().format(DateTimeFormatter.ofPattern("MMM d"))}"
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Add to meal plan") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(rangeLabel, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                    FilterChip(
+                        selected = dayCount == 7,
+                        onClick = { dayCount = 7 },
+                        label = { Text("7 days") },
+                    )
+                    FilterChip(
+                        selected = dayCount == 14,
+                        onClick = { dayCount = 14 },
+                        label = { Text("14 days") },
+                    )
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    dates.chunked(7).forEach { week ->
+                        Row(
                             modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
-                            Text(
-                                when (offset) {
-                                    0L -> "Today · ${date.format(DateTimeFormatter.ofPattern("MMM d"))}"
-                                    1L -> "Tomorrow · ${date.format(DateTimeFormatter.ofPattern("MMM d"))}"
-                                    else -> date.format(DateTimeFormatter.ofPattern("EEEE · MMM d"))
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                            )
+                            week.forEach { date ->
+                                val isToday = date == today
+                                Surface(
+                                    onClick = { onDateSelected(date) },
+                                    modifier = Modifier.weight(1f).height(76.dp),
+                                    shape = MaterialTheme.shapes.medium,
+                                    color = if (isToday) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(vertical = 8.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center,
+                                    ) {
+                                        Text(
+                                            if (isToday) "Today" else date.format(DateTimeFormatter.ofPattern("EEE")),
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        Text(
+                                            date.dayOfMonth.toString(),
+                                            style = MaterialTheme.typography.titleMedium,
+                                            fontWeight = FontWeight.Bold,
+                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        Text(
+                                            date.format(DateTimeFormatter.ofPattern("MMM")),
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            },
-            confirmButton = { TextButton(onClick = { showPlanDialog = false }) { Text("Cancel") } },
-        )
-    }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
