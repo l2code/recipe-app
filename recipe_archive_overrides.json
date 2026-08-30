@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "scan_overrides": {
+    "BRW5CF370D986CA_01012026_013703_000021.pdf": {
+      "status": "superseded",
+      "canonical_scan": "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf",
+      "reason": "Single-sheet setup scan included in the final 38-page PreBatch rescan."
+    },
+    "BRW5CF370D986CA_08282026_201727_000023.pdf": {
+      "status": "superseded",
+      "canonical_scan": "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf",
+      "reason": "Five-sheet setup batch included in the final 38-page PreBatch rescan."
+    },
+    "BRW5CF370D986CA_08282026_203150_000033.pdf": {
+      "status": "superseded",
+      "canonical_scan": "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf",
+      "reason": "300 dpi scan superseded by the 600 dpi rescan, which was then included in PreBatch."
+    },
+    "BRW5CF370D986CA_08282026_204304_000057.pdf": {
+      "status": "superseded",
+      "canonical_scan": "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf",
+      "reason": "Twelve-sheet 600 dpi setup batch included in the final 38-page PreBatch rescan."
+    }
+  },
+  "confirmed_page_order": {
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-005": [
+      10,
+      9
+    ],
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-014": [
+      28,
+      27
+    ],
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-006": [
+      12,
+      11
+    ],
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-006": [
+      12,
+      11
+    ]
+  },
+  "confirmed_group_merges": {
+    "blood-orange-upside-down-olive-oil-cake": {
+      "title": "Blood Orange Upside-Down Olive Oil Cake",
+      "members": [
+        "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-014",
+        "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-015"
+      ]
+    },
+    "seafood-pancakes": {
+      "title": "Seafood Pancakes",
+      "members": [
+        "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-014",
+        "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-015"
+      ]
+    },
+    "braised-mushrooms-and-vegetables": {
+      "title": "Braised Mushrooms and Vegetables",
+      "members": [
+        "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-003",
+        "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-004"
+      ]
+    },
+    "unknown-three-page-chicken-recipe": {
+      "title": "Unidentified Chicken Recipe (Pages 2-3)",
+      "members": [
+        "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-007",
+        "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-008"
+      ]
+    },
+    "beer-cheese-recipe": {
+      "title": "Beer Cheese Recipe",
+      "members": [
+        "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-003",
+        "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-004"
+      ]
+    },
+    "saag-paneer": {
+      "title": "Saag Paneer: Spinach with Indian Cheese",
+      "members": [
+        "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-002",
+        "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-003"
+      ]
+    },
+    "felicity-cloake-chana-masala": {
+      "title": "Felicity Cloake's Perfect Chana Masala",
+      "members": [
+        "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-002",
+        "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-003"
+      ]
+    },
+    "instant-pot-masoor-dal": {
+      "title": "Instant Pot Masoor Dal",
+      "members": [
+        "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-012",
+        "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-013"
+      ]
+    },
+    "rabokki": {
+      "title": "Rabokki - Ramen and Tteokbokki",
+      "members": [
+        "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-001",
+        "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-014"
+      ]
+    },
+    "kerala-style-pepper-chicken": {
+      "title": "Kerala Style Pepper Chicken",
+      "members": [
+        "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-012",
+        "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-014"
+      ]
+    },
+    "mughlai-karahi-gosht": {
+      "title": "Mughlai Karahi Gosht",
+      "members": [
+        "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-006",
+        "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-015"
+      ]
+    },
+    "dhaba-chicken-curry": {
+      "title": "Dhaba Chicken Curry",
+      "members": [
+        "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-014",
+        "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-002",
+        "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-001"
+      ]
+    },
+    "christmas-fruit-cake": {
+      "title": "Christmas Fruit Cake With Rum-Soaked Dry Fruit",
+      "members": [
+        "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-001",
+        "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-002"
+      ]
+    },
+    "turkey-chili": {
+      "title": "Turkey Chili",
+      "members": [
+        "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-011",
+        "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-004"
+      ]
+    }
+  },
+  "group_overrides": {
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-010": {"title": "Daifuku Mochi", "status": "confirmed_single"},
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-012": {"title": "All-Purpose Biscuits", "status": "confirmed_single"},
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-009": {"title": "Chicken Capsicum Masala", "status": "confirmed_single"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-014": {"title": "Kittencal's Italian Melt-in-Your-Mouth Meatballs (Continuation)", "status": "confirmed_partial"},
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-003": {"title": "Lebanese Shish Tawook Chicken Kabobs", "status": "confirmed_single"},
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-008": {"title": "Kadai Mushroom (Continuation)", "status": "confirmed_partial"},
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-001": {"title": "Palak Paneer and Homemade Paneer (Continuation)", "status": "confirmed_partial"},
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-012": {"title": "Chicken Biryani (Continuation)", "status": "confirmed_partial"},
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-015": {"title": "Lamb Karahi Gosht (Continuation)", "status": "confirmed_partial"},
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-015": {"title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)", "status": "confirmed_partial"},
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-003": {"title": "Galbijjim (Korean Braised Short Ribs)", "status": "confirmed_partial"},
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-004": {"title": "Galbijjim (Korean Braised Short Ribs) (Continuation)", "status": "confirmed_partial"},
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-015": {"title": "Instant Pot Guinness Irish Beef Stew", "status": "confirmed_single"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-007": {"title": "Rava Upma", "status": "confirmed_single"},
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-004": {"title": "Rava Upma", "status": "confirmed_single"},
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-014": {"title": "Restaurant-Style Dal Fry", "status": "confirmed_single"},
+    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-002": {"title": "Skirt Steak", "status": "confirmed_single"},
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-002": {"title": "Beef and Guinness Stew", "status": "confirmed_single"},
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-003": {"title": "Chile Crisp Fried Rice With Tofu and Edamame", "status": "confirmed_single"},
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-004": {"title": "Buttery Gochujang Tofu and Broccoli", "status": "confirmed_single"},
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-005": {"title": "Japanese Cucumber Salad", "status": "confirmed_single"},
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-010": {"title": "Almond Cake With Cardamom and Pistachio", "status": "confirmed_single"},
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-005": {"title": "Aloo Palak (Spinach and Potatoes)", "status": "confirmed_single"},
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-011": {"title": "Xmas Fruit Cake / Kerala Plum Cake", "status": "confirmed_single"},
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-014": {"title": "Chicken Salad With Grapes and Walnuts", "status": "confirmed_single"},
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-015": {"title": "Classic Hash Browns", "status": "confirmed_single"},
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-005": {"title": "Southern Buttermilk Biscuits (Continuation)", "status": "confirmed_partial"},
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-012": {"title": "Supernatural Brownies", "status": "confirmed_single"},
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-014": {"title": "Blood Orange Upside-Down Olive Oil Cake", "status": "confirmed_partial"},
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-015": {"title": "Blood Orange Upside-Down Olive Oil Cake (Continuation)", "status": "confirmed_partial"},
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-005": {"title": "Chef John's Dutch Babies", "status": "confirmed_single"},
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-008": {"title": "Tomato Rice (Continuation)", "status": "confirmed_partial"},
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-015": {"title": "Crispy Pan-Seared Salmon Fillets", "status": "confirmed_single"},
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-002": {"title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)", "status": "confirmed_partial"},
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-003": {"title": "Classic Waffles", "status": "confirmed_single"},
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-005": {"title": "Guacamole", "status": "confirmed_single"},
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-014": {"title": "Apple Crumble Pie", "status": "confirmed_single"},
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-001": {"title": "Kerala Egg Curry", "status": "confirmed_single"},
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-003": {"title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)", "status": "confirmed_single"},
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-012": {"title": "Sweet Red Bean Paste (Tsubuan) (Continuation)", "status": "confirmed_partial"},
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-015": {"title": "Seafood Pancakes (Continuation)", "status": "confirmed_partial"},
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-011": {"title": "Kanda Poha (Onion Poha)", "status": "confirmed_single"},
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-013": {"title": "Lamb Karahi Gosht (Continuation)", "status": "confirmed_partial"},
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-004": {"title": "Crepes", "status": "confirmed_single"},
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-006": {"title": "Basbousa (Coconut Yogurt Semolina Cake)", "status": "confirmed_single"},
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-008": {"title": "Pastry Shop-Style Basbousa (Continuation)", "status": "confirmed_partial"},
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-011": {"title": "Kerala Egg Roast", "status": "confirmed_single"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-001": {"title": "Shrimp With Garlicky Bok Choy (Continuation)", "status": "confirmed_partial"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-002": {"title": "Spam Musubi", "status": "confirmed_single"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-008": {"title": "Punjabi Chole Masala (Continuation)", "status": "confirmed_partial"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-012": {"title": "Caramel Custard (Rotated Scan)", "status": "confirmed_partial"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-015": {"title": "Basil Chicken With Fried Egg", "status": "confirmed_single"},
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-012": {"title": "Kerala Nadan Mutton Curry (Continuation)", "status": "confirmed_partial"},
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-013": {"title": "Kerala Nadan Mutton Curry", "status": "confirmed_single"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-004": {"title": "Chicken Biryani (Continuation)", "status": "confirmed_partial"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-005": {"title": "Spicy Potato Fry (Continuation)", "status": "confirmed_partial"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-007": {"title": "Kerala Vattayappam (Continuation)", "status": "confirmed_partial"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-008": {"title": "Bacon-Tomato Linguine", "status": "confirmed_single"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-009": {"title": "Italian Sausage, Peppers and Onions", "status": "confirmed_single"},
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-012": {"title": "Vegetable Pulao (Pressure Cooker)", "status": "confirmed_single"},
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-004": {"title": "Vietnamese-Style Pork Chops", "status": "confirmed_single"},
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-009": {"title": "Rava Upma (Continuation)", "status": "confirmed_partial"},
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-010": {"title": "Lamb Rogan Josh", "status": "confirmed_partial"},
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-011": {"title": "Lamb Rogan Josh (Continuation)", "status": "confirmed_partial"},
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-005": {"title": "Karela Sabzi (Bitter Gourd Stir-Fry)", "status": "confirmed_single"},
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-011": {"title": "Chocolate Peanut Butter Overnight Oats", "status": "confirmed_single"},
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-001": {"title": "Kerala Plum Cake / Christmas Fruit Cake", "status": "confirmed_single"},
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-008": {"title": "Classic Baked Meatballs", "status": "confirmed_single"},
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-013": {"title": "Spicy Bok Choy in Garlic Sauce", "status": "confirmed_single"},
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-014": {"title": "Mushroom Pork Chops", "status": "confirmed_single"},
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-009": {"title": "Fried Onion Strings", "status": "confirmed_single"},
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-010": {"title": "Pickled Red Onions", "status": "confirmed_single"},
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-013": {"title": "Authentic Saag Paneer", "status": "confirmed_single"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-001": {"title": "Apple Bread Pudding (Continuation)", "status": "confirmed_partial"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-004": {"title": "Slow Cooker Apple-Pear Oatmeal", "status": "confirmed_single"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-006": {"title": "Air Fryer Roasted Sweet Potatoes", "status": "confirmed_single"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-008": {"title": "Kadai Chicken", "status": "confirmed_partial"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-009": {"title": "Kadai Chicken (Continuation)", "status": "confirmed_partial"},
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-014": {"title": "Porchetta Pork Chops (Continuation)", "status": "confirmed_partial"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-003": {"title": "Kerala Fish Curry", "status": "confirmed_single"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-006": {"title": "Steamed Mussels With Garlic and Parsley", "status": "confirmed_single"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-007": {"title": "Crispy and Crunchy Fried Chicken", "status": "confirmed_single"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-009": {"title": "Crispy and Crunchy Fried Chicken (Continuation)", "status": "confirmed_partial"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-011": {"title": "Flank Steak With Chimichurri Sauce", "status": "confirmed_single"},
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-015": {"title": "Unidentified Healthy Italian Recipe (Continuation)", "status": "confirmed_partial"},
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-001": {"title": "Quick Tehina Sauce", "status": "confirmed_single"},
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-007": {"title": "Crispiest Air Fryer Chicken Cutlets", "status": "confirmed_single"},
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-008": {"title": "Unidentified Recipe Fragment (Page 15)", "status": "confirmed_partial"},
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-014": {"title": "Rabokki (Continuation)", "status": "confirmed_partial"},
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-005": {"title": "Miso Salmon", "status": "confirmed_single"},
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-007": {"title": "Mustard and Herb Crusted Rack of Lamb", "status": "confirmed_single"},
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-009": {"title": "Gochugaru Salmon", "status": "confirmed_single"},
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-013": {"title": "Bok Choy and Mushroom Stir-Fry", "status": "confirmed_single"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-002": {"title": "Three-Cup Chicken", "status": "confirmed_single"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-003": {"title": "Beer-Braised Chili (Continuation)", "status": "confirmed_partial"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-004": {"title": "Blackstone Philly Cheesesteaks", "status": "confirmed_single"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-012": {"title": "Lemony White Bean Soup With Turkey and Greens", "status": "confirmed_single"},
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-014": {"title": "Kerala Vattayappam", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-001": {"title": "Loaded Nachos", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-004": {"title": "Chinese Cumin Lamb Stir-Fry", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-007": {"title": "Skillet Chicken With Tomatoes, Pancetta and Mozzarella", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-008": {"title": "Toll House Chocolate Chip Cookies", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-011": {"title": "Sticky Cranberry Gingerbread", "status": "confirmed_single"},
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-013": {"title": "Roasted Potatoes and Green Beans", "status": "confirmed_single"},
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-005": {"title": "Mapo Tofu", "status": "confirmed_partial"},
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-008": {"title": "Aarti Sequeira's Aloo Gobi", "status": "confirmed_single"},
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-003": {"title": "Aloo Gobi (Continuation)", "status": "confirmed_partial"},
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-004": {"title": "Turkey Chili (Continuation and Notes)", "status": "confirmed_partial"},
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-007": {"title": "Brandied Pumpkin Pie", "status": "confirmed_single"},
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-008": {"title": "Cabbage Rolls", "status": "confirmed_single"},
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-009": {"title": "Rosemary Rack of Lamb With Potatoes", "status": "confirmed_single"},
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-002": {"title": "Felicity Cloake's Perfect Chana Masala", "status": "confirmed_single"},
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-003": {"title": "Felicity Cloake's Perfect Chana Masala (Continuation)", "status": "confirmed_partial"},
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-014": {"title": "Kerala-Style Pepper Chicken (Continuation)", "status": "confirmed_partial"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-001": {"title": "Dhaba Chicken Curry (Continuation)", "status": "confirmed_partial"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-002": {"title": "Dhaba Chicken Curry", "status": "confirmed_partial"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-003": {"title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)", "status": "confirmed_single"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-010": {"title": "Ginger Rice", "status": "confirmed_single"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-011": {"title": "Aloo Palak (Spinach and Potatoes)", "status": "confirmed_single"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-012": {"title": "Gobi 65", "status": "confirmed_partial"},
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-013": {"title": "Gobi 65 (Continuation)", "status": "confirmed_partial"},
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-006": {"title": "Fluffy French Toast", "status": "confirmed_single"},
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-007": {"title": "The Best Instant Pot Pork Carnitas", "status": "confirmed_single"},
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-008": {"title": "Birria Tacos", "status": "confirmed_partial"},
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-009": {"title": "Birria Tacos (Continuation)", "status": "confirmed_partial"},
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-007": {"title": "Firecracker Grilled Alaska Salmon", "status": "confirmed_single"},
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-008": {"title": "Roasted New Potatoes", "status": "confirmed_single"},
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-012": {"title": "Instant Pot Masoor Dal", "status": "confirmed_single"},
+    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-008": {"title": "Recipe Index (Non-Recipe Page)", "status": "non_recipe"},
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-014": {
+      "title": "Takeout-Style Sesame Noodles",
+      "status": "confirmed_single"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-013": {
+      "title": "Best Chocolate Chip Cookies",
+      "status": "confirmed_single"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-002": {
+      "title": "Lamb Rogan Josh",
+      "status": "confirmed_partial"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-006": {
+      "title": "Lamb Keema Matar: Minced Meat Curry with Peas",
+      "status": "confirmed_single"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-010": {
+      "title": "BA's Best Hot Chocolate",
+      "status": "confirmed_single"
+    },
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-015": {
+      "title": "Maple and Miso Sheet-Pan Salmon With Green Beans",
+      "status": "confirmed_single"
+    },
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-009": {
+      "title": "Guacamole",
+      "status": "confirmed_single"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-009": {
+      "title": "Dhaba Chicken Curry (Duplicate Title Page)",
+      "status": "duplicate_fragment",
+      "canonical_arrangement_key": "merged::dhaba-chicken-curry"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-003": {
+      "title": "Dhaba Chicken Curry (Duplicate Ending)",
+      "status": "duplicate_fragment",
+      "canonical_arrangement_key": "merged::dhaba-chicken-curry"
+    },
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-011": {
+      "title": "Tomato Biryani",
+      "status": "confirmed_partial"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-003": {
+      "title": "Chicken Biryani",
+      "status": "confirmed_partial"
+    },
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-007": {
+      "title": "Classic Shrimp Scampi",
+      "status": "confirmed_single"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-007": {
+      "title": "Sweet Pongal (Ending Only)",
+      "status": "confirmed_partial"
+    },
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-002": {
+      "title": "Zahav's Hummus Tehina",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-003": {
+      "title": "Yakisoba",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-012": {
+      "title": "Simple Broiled Haddock",
+      "status": "confirmed_single"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-014": {
+      "title": "Gobi 65",
+      "status": "confirmed_single"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-002": {
+      "title": "Falafel",
+      "status": "confirmed_single"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-005": {
+      "title": "Christmas Fruit Cake (Duplicate Ending)",
+      "status": "duplicate_fragment",
+      "canonical_arrangement_key": "merged::christmas-fruit-cake"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-007": {
+      "title": "Kerala Pepper Chicken / Nadan Kurumulaku Kozhi Fry",
+      "status": "confirmed_partial"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-005": {
+      "title": "Roberta's Pizza Dough",
+      "status": "confirmed_single"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-009": {
+      "title": "Sheet Pan Kielbasa, Potatoes and Green Beans",
+      "status": "confirmed_single"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-010": {
+      "title": "Szarlotka (Jewish Apple Pie)",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-011": {
+      "title": "Simple Japanese Chicken Curry",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-009": {
+      "title": "Suzanne Collins's Crumb Cake",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-010": {
+      "title": "Hamburger Soup",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-014": {
+      "title": "Soy-Braised Tofu With Bok Choy",
+      "status": "confirmed_single"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-012": {
+      "title": "Smashed Beef Kebab With Cucumber Yogurt",
+      "status": "confirmed_single"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-014": {
+      "title": "Restaurant-Style Mushroom Fry",
+      "status": "confirmed_single"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-013": {
+      "title": "All-Purpose Biscuits",
+      "status": "confirmed_single"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-006": {
+      "title": "Chicken Salad With Grapes and Walnuts",
+      "status": "confirmed_single"
+    }
+  },
+  "confirmed_recipe_duplicates": {
+    "quick-sardine-curry": {
+      "canonical": "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-012",
+      "members": [
+        "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-012",
+        "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-013"
+      ]
+    },
+    "kerala-fish-curry-with-coconut": {
+      "canonical": "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-012",
+      "members": [
+        "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-003",
+        "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-012"
+      ]
+    },
+    "upma": {
+      "canonical": "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-013",
+      "members": [
+        "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-013",
+        "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-007",
+        "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-004"
+      ]
+    },
+    "best-chocolate-chip-cookies": {
+      "canonical": "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-012",
+      "members": [
+        "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-012",
+        "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-013"
+      ]
+    }
+  },
+  "rejected_recipe_duplicates": [
+    [
+      "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-015",
+      "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-009"
+    ]
+  ],
+  "handwriting_transcriptions": {
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p015": "[Margin shopping list]\n- White wine\n- Zin\n- Canola\n- Eggs\n- [Additional entries are cut off or illegible.]",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p002": "12/24 - Bought 5.5 lb boneless leg of lamb. [$33]\n1 large Asian pear\n6 cloves garlic\n- Sauteed the garlic in olive oil and added [possibly 1/2 tbsp] salt.\n- Blended with rosemary, thyme, and Asian pear.\n- Put the lamb in plastic Tupperware and added marinade. Marinated for 24 hours.\n- Seared the lamb. Should have trimmed the fat cap. There was a lot of fat after the roast was done.\n\n12/25 - Took the lamb out 3 hours before cooking.\n- Sliced onions for the roasting pan. Should have added potatoes as well.\n- Heated oven to 450 F and cooked for 30 minutes.\n- Reduced heat to 350 F and cooked for 25 minutes.\n- Took out for 20 minutes.\n- Cooked again for 20 minutes.\n\nNext time:\n- Cook at 450 F for 20 minutes.\n- Cook at 350 F for 50 minutes.\n\nChimichurri sauce came out good.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p001": "Ingredient annotations:\n- Used a 5.5 lb boneless leg of lamb instead of a 10-12 lb bone-in leg.\n- Thyme: dried.\n- Garlic: minced and sauteed.\n- Lemon zest: 1/4 lemon rind.\n- Asian pear: peeled.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p008": "2/16/20 - 4 stars\n- Flavor was good but needed about 1 tsp salt.\n- Also cooked the chicken a bit too much, over 20 minutes. Next time stick to under 20 minutes.\n- Rice cakes were cooked in too much oil. Use less oil.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p009": "Sticky Cranberry Gingerbread annotations:\n- Cranberries: 2 1/2 cups.\n- Granulated sugar: 1/2 cup.\n- Butter: 3/4 stick.\n- Dark brown sugar: 1/2 cup.\n- Ground ginger: 1 tsp.\n- Bake 35 minutes.\n\n1 tsp ground ginger plus 1 tbsp grated ginger is too much ginger. Maybe use 1/2 tsp ground ginger plus 1 tsp grated ginger. Also, 1/8 cup maple syrup is not sweet enough.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p012": "4/4/21 - This was a big hit. 5/5.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p016": "3/5/25 - 3.5 stars\n- Flavor was good; tasted like keema at Pakistani restaurants.\n- Meat was tough even after cooking for 30 minutes. Next time cook in the Instant Pot.\n- Also need to adjust seasoning/spices: less garam masala (added 1 tsp).",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p022": "1/26 - 4.5 stars\n- Came out pretty good; grated carrots on the small holes (3 medium carrots).\n- Made orange glaze since we didn't have a lemon, but it was a good substitute.\n- Didn't have parchment paper, so the loaf didn't come out cleanly.\n- Used the large loaf pan.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p023": "Apple Bread Pudding ingredient changes:\n- Use 3 brioche rolls instead of 1 pound brioche.\n- Use 4 tbsp butter instead of 5 tbsp.\n- Use Ginger Gold apples instead of Granny Smith.\n- Use 3/4 cup sugar instead of 1 cup.\n- Use 3 large eggs instead of 4.\n- Use 2 cups milk instead of 3.\n- Use 1/2 tsp vanilla instead of 1 vanilla bean.",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p025": "[Non-recipe handwriting] 'Meri Jaan' in pink ink.",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p026": "Change of recipe:\n- 1 onion\n- 1/2 cup mushrooms\n- 1 packet tofu, fried in potato starch\n- 2 tbsp light soy sauce\n- 2 tsp dark soy sauce\n- 1/2 tsp brown sugar\n- 1/2 tsp red chili pepper flakes\n- 1/2 tsp black pepper\n- 1/2 tsp ginger-garlic paste",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p026": "[Non-recipe handwriting] 'Meri Jaan' written twice in pink ink; one occurrence is followed by 'B4' or similar.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p005": "- Omit lemon juice and sugar.\n- Reduce potatoes to 4 (used 5), and leave potatoes firmer; boil for less time.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p012": "Apr. 12, 2020 - 4/5\n- Cooked lamb using pear marinade overnight.\n- Cooked a 4.8 lb boneless leg of lamb for 85 minutes; should have cooked an additional 15 minutes to get it really soft.\n- Need to find a better lamb marinade recipe; this was lacking in good flavor.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p013": "Let potatoes boil for at least 50 minutes.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p017": "Aug. 27 - Came out pretty good.\n- Used 1 ciabatta loaf and 1/2 loaf Italian bread.\n- Used 1 lb mixed hot and sweet sausage.\n- Bread was too much; 1 ciabatta loaf was sufficient. Cube it smaller next time.\n- [Cooking-time note partly overwritten: appears to say 28 minutes at 300 F; another line says baked at 350 F for 30 minutes.]\n- Sage and rosemary were a bit overpowering. Reduce quantity by half (about 2 pinches each) next time.\n- Add a bit more salt. Cranberry and walnut quantities were fine.\n- Used about 3 cups chicken broth; this was sufficient.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p019": "Nov. 25, 2021 - Made apple sausage dressing for Thanksgiving dinner. Cranberry version is better.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p022": "12/11/18\n- 2 bottles (375 ml) plus 3.5 cups fruit and nuts, soaked for 2 1/2 weeks.\n\nNov. 23, 2019:\n- 1 bottle (375 ml) plus 2 small bottles ([possibly 80 ml]).\n- 3.5 cups fruits and nuts: cashews, raisins, cranberries, apricots.\n- Next time buy a big bottle (750 ml).\n\nDec. 16 - Caramel secrets:\n- Put 1/2 cup sugar plus 1 tbsp water in a saucepan over medium-high heat. Add 1/8 tsp cream of tartar along with the sugar.\n- Twirl as soon as the sugar starts melting and continue until all the dry sugar is dissolved or melted. Take care not to burn it during this step; browning happens after the sugar has melted/dissolved.\n- When the solution starts to become reddish, turn down the flame and move the pan off the heat.\n- Add 1/4 cup warm water to the pan. It will solidify on the bottom; put the pan back on the heat and swirl the liquid to dissolve/release the hardened caramel.\n- Take care not to brown it too much. Take the pan off the heat and pour the liquid caramel into a heatproof container (mason jar or glass measuring cup).\n\nTotal quantity: two 8-inch loaf pans [8 x 2 1/2 x 3 1/2] and one 5-inch loaf pan [5.75 x 3 inches].\n38 oz without fruit mix.\nUsed 1 cup sugar (1/2 white, 1/2 light brown), 1 cup butter, and 4 eggs.\nSpice mix: 3 cloves, 2 cardamom seeds, 1/4 tsp cinnamon, 1/4 tsp nutmeg.\nCooking time: 30 + 10 + 15 minutes (covered with foil sheet).",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p025": "- Used 1 lb ground beef, 80/20.\n- Used Cento San Marzano peeled tomatoes, [quantity written as '1 lb 20 oz'].\n- Used 1 cup Riesling.",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p029": "9/23 - Made it after a long time. 4.5 stars.\n- Used green frying pan with about a 1/8-inch layer of oil.\n- 1/2 onion.\n- 1/4 cup potato starch.\n- 2 large potatoes, peeled, grated, rinsed, and squeezed thoroughly. Makes about 6 pancakes, roughly 4 inches each.\n- Used 1 1/2 tsp salt; reduce to 1 tsp.\n- Used 15 grinds pepper; reduce to 10 grinds.\n- Fry over medium heat for about 4-5 minutes per side.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p003": "Coconut-Miso Salmon Curry annotations:\n- Salmon: skinned.\n- Use a full can of coconut milk.\n- Reduce water to 1 cup.\n- Double the garlic and ginger (if not using Indian ginger).\n- Add sliced jalapeno.\n- Use a combination of salmon and shrimp (1/2 lb each).",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p004": "1/16/22 - 4 stars\n- Used 1/2 lb skinned salmon fillet and 1/2 lb shrimp (not deveined).\n- Used 1 can coconut milk with 1 can water, but it came out too watery. Next time use 1/2 cup water.\n- Used 3 tbsp miso; should have used only 2 tbsp.\n- Onion was not cooked down enough; should have caramelized it a bit longer.\n- Flavor was still mild/bland. Add about 1/4 tsp red chili powder, 1/4 tsp red pepper flakes, and 1/2 tsp curry powder.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p010": "12/26 - 2 stars\n- Biscuits came out too flat and very crumbly.\n- Added 1 1/2 cups buttermilk and baked for 18 minutes at 425 F. Should have used 1 cup as specified in the recipe.\n- Dough was very sticky and not easy to handle.\n- Make taller biscuits.\n- Did not brush the tops with butter, so the biscuits came out white.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p014": "6/9/19 - 4 stars - first attempt\n- Substituted red potatoes for Yukon Gold and scallions for leeks.\n- Used 435 F instead of 425 F.\n- Cooked 20 minutes, then flipped and cooked for 35 minutes.\n\nMarinade:\n- 2 tbsp chili-garlic sauce\n- 3 tbsp olive oil\n- 2 tsp sriracha\n- 2 tsp salt (reduce to 1 1/2 tsp)\n- 1/2 tsp pepper\n- Marinated 4 chicken breasts plus 5 potatoes for 35 minutes.\n\nSauce:\n- Used 1/2 cup Greek yogurt plus 1 tbsp water.\n- Added 2 pinches salt, 4-5 pinches pepper, and 1 grated garlic clove.\n- Was pretty good.\n- Topped with scallion, oil, and salt (skip the salt).\n\n5/19/21 - Replaced sriracha with doubanjiang. Stick with sriracha.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p015": "1/19/21 - 3.5 stars\n- Meatballs were well cooked and not overdone (about 10 minutes on a medium-low flame).\n- Too much pepper; reduce to 1/2 tsp.\n- It would have been better if it was sweeter; add honey or sugar.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p019": "For small ramekins, bake for 14-15 minutes.",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p025": "Best Chocolate Chip Cookies ingredient annotations:\n- Add 1/2 tsp Marmite mixed with water.\n- White sugar: 1/2 cup.\n- Brown sugar: 1/2 cup.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p001": "Rao's Meatballs annotations:\n- Omit the veal and use 1 lb ground pork.\n- Use 1/4 cup parsley.\n- Use milk instead of water [following words unclear].\n- Use panko breadcrumbs, 1 cup or a bit more.\n- Add more garlic, 4-5 cloves.\n- Add a pinch of red pepper flakes.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p002": "1/12/21 - 3.5 stars\n- Made the recipe in a takoyaki pan. Only need about 1.5 lb, or maybe even 1 lb, of meat for 16 meatballs.\n- Using 1.75 lb made 22 meatballs.\n- Used 1 lb ground beef and 1 lb ground pork.\n- Did not add enough salt. Add 1 tsp, or at least 1/2 tsp.\n- The meatballs may need some other flavor-enhancing spices.\n- Cooked the meatballs over high heat and they were a bit too burnt. Next time use a medium-low flame and cook until the edges start to bubble before turning, probably 5-7 minutes total.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p006": "Thai-Style Spare Ribs notes:\n\n5/30/21 - 3.5 stars\n- Long cooking time. Followed the NYT recommendation: 2 hours at 275 F, flipping and basting every 30 minutes. Next time double the marinade.\n- Overall flavor was okay, but it did not come out sweet. It was mostly sour, and the meat was tough/chewy. It would have been better sweeter and falling off the bone.\n- Made the dipping sauce from the NYT comments; it was a good sweet touch to the meat.\n- Bought one rack of baby back ribs, 3.11 lb, and cut it into 3 pieces of about 5 ribs each.\n- Served with rice.\n\n7/11/21 - 3.5 stars\n- Cooked at 300 F for 1.5 hours, basting every 20 minutes.\n- Used the same marinade recipe; should have made it sweeter with more honey/maple sugar. It was too sour. Use less tamarind paste next time.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p011": "Lamb Keema Matar notes:\n- The recipe came out really good. The only complaint was that it was not spicy enough. Should have added more black pepper, or some whole peppercorns to the spice mix at the beginning. Other than that it was excellent.\n\n10/12 - Second attempt came out better than before.\nChanges:\n- Used only 3 cardamom pods, 1 piece cinnamon, and added about 6-8 peppercorns initially.\n- Used 1 tomato, 1 potato, and 1 cup peas.\n- Added 1/4 tsp red chili powder.\n- Not sure what the nutmeg adds to the dish.\n- Added about 3 tbsp yogurt.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p018": "Add 1/2 tbsp fennel seeds.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p019": "12/5 - [rating appears to be 3 stars]\n- Used 1.85 lb stew beef (beef round), sufficient for 3 people.\n- Doubled the recipe for the ground spice mixture.\n- Pressure-cooked the beef for 28 minutes, then cooked uncovered for 7 minutes to dry it out. The beef came out feathered; perhaps cook it for less time. Some cubes were quite large, so cut them smaller.\n- Did not add garam masala.\n- Salt: 1 1/4 tsp.\n- Not too spicy.",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p023": "Feb. 20\n- Made the recipe with flank steak. Scored the meat crosswise, but it was still tough. Should it only have been grilled for 1 minute per side?\n- Grilled for 1 minute, then left it on the cooler side for 1.5 minutes. Skip this step next time.",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p005": "Waffles annotations:\n- Eggs: 2.\n- Flour: 2 cups.\n- Milk: changed to 1 cup.\n- Vegetable oil: 1 tbsp instead of 1/2 cup.\n- White sugar crossed out; use honey.\n- Vanilla extract: 1/4 tsp instead of 1/2 tsp.\n\nModified recipe (Mar. 4, 2017):\n- Used buttermilk pancake recipe.\n- 1 1/2 tsp baking powder.\n- 1/2 tsp baking soda.\n- 1/2 tsp salt plus 1 tbsp sugar.\n- 3 tbsp butter.\n- 2 cups milk.\n\nResult note: Waffles were too soft and didn't have the waffle 'texture.' Skip this next time.",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p024": "4/26 - 2 stars\n- Using the salt-roasted drippings is way too salty.\n- Better off with just chicken stock instead.",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p003": "Kerala Chicken Curry notes:\n7/16/20 - 5 stars\n- Used thighs (bone-in), marinated for 1 hour with [about 1 tsp] red chilli, [about 1 tsp] turmeric, and 1 1/2 tsp salt.\n- Used 2 onions, sliced, and 1 tomato.\n- Used 4 garlic cloves with about the same amount ginger.\n- Used 1/2 green chilli pepper; this made the curry a bit too spicy. Go with 1/4 next time.\n- 1 tsp fennel seed ground up; add after adding chicken so the fennel flavor remains throughout cooking.\n- Didn't dilute the coconut milk; added 1 1/2 cups to the curry after cooking chicken.\n\nIngredient annotations:\n- Use 1 tbsp Kashmiri chilli instead of 2 tbsp red chilli powder.\n- Use 1 tsp ground fennel.\n\n7/21/20 - 4 stars\n- Recipe works with tofu as well.",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p012": "10/1 - 4 stars\n- Next time cook the pork chops on a grill plate or outside.",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p015": "Lamb curry notes:\n- Using 2 lbs neck; marinating with 1 tbsp ginger-garlic paste for 4 hours.\n- Avoid neck next time. It is too bony with very little meat. Can substitute 1/2 lb for [unclear cut] with flavor, but not good for eating.\n- Forgot to add Kashmiri chilli powder. Dish was brownish color rather than red.\n- Also get black cumin for next time.\n\nIngredient annotation:\n- Cumin seeds changed from 1 tsp to 1/2 tsp.",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p016": "Lamb curry continuation:\n2nd attempt - May 17\n- 1.5 kg bone-in neck with boneless meat as well.\n- 5 tsp ginger-garlic paste.\n- Marinating for 5 hours.\n- 2 onions, 3 tomatoes.\n- Added 1 tsp salt; it seemed fine.\n- Added 1 tsp black cumin; was a bit too overpowering. Add 1/2 tsp next time.\n- Need a bit more spiciness; add 1/4 tsp red chilli powder.\n- Meat was tender; cooked for 25 + 40 + 15 + 15 = 95 minutes. Maybe should cook in pressure cooker next time.\n- Added bit of hot broth to yogurt a couple of spoons at a time to prevent it from splitting, then poured it back into the stew.\n\n3rd attempt - Aug. 16\n- 1.5 kg bone-in neck plus 5 tsp ginger-garlic paste. Marinating for 3 hours.\n- 2 onions, 3 tomatoes.\n- Reduced black cumin to 1/2 tsp; still too strong flavor. Next time try 1/4 tsp instead.\n- Also used mostly neck; should have included some shoulder or leg as well.\n- Cooked for 30 + 45 + 10 minutes. Lamb came out soft and tender but took very long. Pressure cooking next time.",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p009": "Mapo Tofu note:\n- Be careful with silken tofu. It is very soft and falls apart easily, but this is fine when eating.",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p020": "Daifuku mochi notes:\n1) Mochi recipe: spot on, 4.5 stars [7/13/19].\n- Used microwave method. Used 100 g shiratamako and followed instructions. Pretty quick; only bad part is the stickiness factor when handling the mochi.\n- Tip: Forget cutting circles; cut squares so it is easier and there is less having to re-roll the dough.\n\n2) Tsubuan: 2 stars.\n- Texture of JFC red beans was still too hard after 3.5 hours cooking in boiling water. Next time pressure cooker only. Also upped the sugar and it came out a bit too sweet.",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p023": "Korean Beef Bowl notes:\n- Reduce ginger next time; used 1/2 tsp.\n- Add more sugar, 2 tbsp more.",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p002": "5/29 - 4 stars\n- Used Bronx City Bakery pizza dough from ShopRite. Thawed overnight in the refrigerator, took it out 1 hour before cooking, stretched it, and rested it for 10 minutes.\n- Made with sausage, mozzarella cheese, Ragu sauce, and 2 cloves minced garlic.\n- Cooked on the stove for 5 minutes.\n- Cooked in the oven at 480 F for 5 minutes, then reduced the temperature to 425 F for 5 minutes.",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p013": "Chairman Mao's Red Braised Pork Belly notes:\n2/28 - 3.5 stars\n- Pork had too much fat on it. Next time trim off at least half the fat cap lengthwise.\n- Reduce water to 3 cups.\n- Simmer for 1 1/4 hours.",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p021": "Kanda poha notes:\n- Soak/wash poha for 15 minutes before marinating.\n- For 1 cup poha, used 1/2 tsp salt, 3/4 tsp sugar, and 1/4 tsp turmeric.\n- Used 1 sliced green chili; should have chopped it and used 2 instead. The poha was not spicy enough.\n- Added 1/2 tbsp cashews fried in ghee.\n- Added 1 1/2 tbsp grated coconut.",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p024": "Apr. 30\n- Cooked in a small stainless-steel saute pan.\n- Used 1 cup basmati rice to 2 cups water.\n- Added 1 cup corn and frozen peas.\n- Added 1/2 tsp salt; increase to 3/4 tsp.\n- Cooked over a low flame for 13 minutes and let the rice rest for 10 minutes. The rice came out a bit soggy; decrease the water to 1 3/4 cups or reduce the cooking time.",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p028": "Kerala Christmas Cake notes - 1/1/23:\n- 1 3/4 sticks butter, warmed for 45 seconds in the microwave.\n- 3 pods cardamom.\n- 3 cloves.\n- 1/2 tsp ground cinnamon.\n- 1 tsp vanilla (ran out).\n- Added 1/4 cup reserved liquid.\n- Added 1/2 cup caramel.\n- Added 3 cups fruit and nuts soaked for 1.5 weeks.\n- Beat butter and sugar for 5 minutes.\n- Made 2 loaf pans, approximately 8 x 3 7/8 x 2 15/32 inches.\n- Baked 35 minutes (25 minutes on top rack, 10 minutes lower), then 10 minutes lower and 5 minutes on top.",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p010": "Authentic Mapo Tofu notes:\n5/30/20 - 3.5 stars\n- Used 250 g ground beef and 1 cup chicken stock.\n- Used firm tofu (450 g).\n- Doubled most of the ingredients. Next time keep the spicy oil to 2 tsp.\n- The flavor was pretty good. Not sure how close it is to restaurant flavor.",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p019": "Egg Roast notes:\n5/16/20 - 4 stars\n- Needed a little more sauce in the onion gravy; a bit more water at the end would have done it.\n- Also added 2 tsp tomato paste; can skip this next time.\n- Did not add the sugar, but should have done so before adding the eggs.",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p023": "Chettinad Egg Curry - 10/17, first attempt: Really good; will make again.\n- Used 4 tsp tomato paste with 1 cup water instead of puree.\n- Used only 1 tbsp ginger-garlic paste; maybe should have used 1.5 tbsp.\n- Next time slice the eggs in half and fry.\n- Interesting flavor of vinegar and roasted coconut; it reminded me of the red chutney for dosa.\n- Reduce Kashmiri chili powder to 1/2 tbsp.\n- Reduce black peppercorn to 1/2 tbsp (used 1 tbsp).\n- Took a long time to make: 1.5 hours.\n- Ingredient annotation: 7 eggs, boiled for 10 minutes.",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p024": "Chettinad Egg Curry continuation:\nAttempt #2 (11/13) - 3/5, not so good.\n1. Boiled eggs starting in cold water for 12 minutes over a medium-hot flame, with a rolling boil toward the end. Did not put the eggs into an ice bath immediately after cooking. Next time start the eggs in rolling boiling water for 12 minutes, ice-bath immediately, and use running water to peel if the shells are too sticky.\n2. Roasted the coconut powder too much. It should only be heated lightly over a low flame for a nice aroma. Also possibly added too much coriander powder.\n3. Added 6 tsp tomato paste to 1 1/2 cups water (possibly too much). Did not cook this down enough to sweeten the dish a bit.\n\nAttempt #3 (11/15) - 3/5, not good.\n1. Boiled 8 eggs in boiling water for 12 minutes and then immersed them in cold water. Peeling the shells was not too difficult.\n2. Used frozen coconut; not sure there was much flavor because it was too wet to get dry enough by roasting. Stick with dry coconut next time.\n3. Worst mistake: used canned tomato sauce. It was too acidic and had a strong vinegary flavor, which ruined the dish. Do not use canned sauce; stick with tomato paste and water.",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p022": "Slow-Roasted Boneless Leg of Lamb notes:\n3/31/24 (Easter) - 3.5 stars\n- Flavor was good. Australian lamb cooked to medium at 130 F; should have taken it out at 125-127 F.\n- Searing at 500 F for 15 minutes was good.\n- Chimichurri was a bit too acidic. Added 1/4 cup lemon juice and 4 tbsp red wine vinegar; should reduce both.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p008": "Black Pepper Tofu notes:\n5/1 - 3.5 stars\n- The sauce makes the tofu very soggy; black pepper tofu is better.\n- Bok choy is a good pairing with tofu, though.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p009": "Instant Pot Pork Carnitas note - 2/18/24:\n- Used about 6 lb pork butt, but added only 2-3 tsp salt and it was not salty enough.\n- Cooked for 1 hour; should have cooked for 1 hour 15 minutes to make it softer.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p010": "Instant Pot Pork Carnitas notes:\n11/30 - 4 stars\n- First time making carnitas; came out pretty good.\n- Bought a 2.36 lb pork butt from ShopRite.\n- Cooked on high pressure in the Instant Pot for 36 minutes. It was falling apart.\n- Trimmed a lot of fat, but still ended up with a lot in the pot afterward.\n- Followed the recipe, but used a bit less salt (about 3/4 tbsp); should have used 1 tbsp.\n- Broiled at 450 F for about 8 minutes. Should have drizzled some fat onto the cooking sheet while broiling; the meat was a bit dry.\n- Also had mango salsa. It was okay, but the mango was not ripe enough. Need to find a better recipe; the first recipe was not great.\n- Also made the pickled onions; they were a good side for the tacos.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p019": "Vinegar Chicken With Crushed Olive Dressing notes:\n[Date unclear] - 2 stars\n- Chicken was good with the pan gravy; cooked at 475 F for 30 minutes.\n- Skip the olive and parsley mixture; it was kind of mediocre.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p025": "Mutton curry annotations and notes:\n- Used 3 lb mutton instead of 1 kg.\n- Used 3 dry red chilies instead of 8.\n- Replaced the ginger and garlic with 2 tbsp ginger-garlic paste.\n- Dry-roasted the spices and ground them.\n- Fried onions with ginger-garlic paste and green chilies.\n- Added tomatoes, sauteed them, and added the ground mixture.\n- Added the meat to the tomato mixture.\n- Cooked over medium-high heat for 1 hour, then simmered for 30 minutes after adding potatoes.\n- Recipe was okay. The rogan josh recipe was better; should try it with goat instead.",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p027": "Mutton Rogan Josh annotation:\n- 3 1/2 tbsp Kashmiri chili powder is way too much; reduce to 1 tbsp.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p001": "Shakshuka With Feta - Kenji menemen notes:\n- 1 green pepper, sliced.\n- 2 tomatoes, pulped without skin.\n- 3 eggs.\n- Salt and pepper.\n- Cook peppers in olive oil until softened and slightly browned.\n- Add tomatoes to the pan and cook for a few minutes.\n- Crack in eggs and scramble slightly.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p004": "Made on 11/25.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p015": "Non-recipe handwriting in pink ink (partly unclear):\n- 'Bengal 05 12-12'\n- 'Money below -10'\n- 'Target 110'\n- 'Correct 110'\n- 'new year 70'\n- 'I:C 11'\n- 'Dream division 3 hr'\n- Additional short words are unclear.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p023": "Vegetable pulao notes:\nAttempt #2 (11/12/18) - 4/5 stars\n- Soaked 1 cup rice for 30 minutes and drained for 10 minutes.\n- Used 1 3/4 cups chicken stock and added 3/4 tsp salt; salt was good.\n- Used 2/3 cup carrots, 1/3 cup peas, 1/2 cup corn, and 3/4 cup tomatoes. The vegetables overpowered the rice; reduce them next time.\n- Whole spices were sufficient: 1 bay leaf, 2 cardamom, about 1/4 tsp mace, 4 cloves, 6 peppercorns, and 1 tsp cumin seed; black cardamom omitted. Mace was overpowering and should not be added.\n- Browned about 1/2 onion, not too dark. Fried cashews carefully.\n- Used 1 Thai chili; it was a bit spicy.\n- Added both mint and coriander; this tempered the flavor.\n\nAttempt #3 - 3.5/5 stars\n- Used 1.5 cups rice and 2 cups water.\n- Used 1/2 cup carrots, 1/2 cup peas, 1/2 cup corn, and 3/4 cup tomatoes.\n- Cooked 12 minutes and left for 5 minutes; the rice was overcooked. Cook for 9 minutes.\n- Salt could have been increased.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p024": "Vegetable pulao - Attempt #1 (Oct. 26), 2.5/5:\n- Rice came out too soggy, as usual.\n- Flavor could have used a bit more salt. Black cardamom was too overpowering. Also needed a bit more ginger-garlic.\n- Used 1.5 cups basmati rice, soaked 30 minutes and drained, with 2 cups vegetable broth plus 1/2 cup water. Next time reduce total liquid to 2 cups.\n- Total cooking time was 12 minutes. Reduce to 10 minutes and immediately depressurize, or cook for 5 minutes and turn off the flame.\n- Added 1/2 potato, 3/4 tomato, 1/3 cup peas, 1/3 cup carrots, and 1/3 cup corn.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p025": "Murg Malai Tikka ingredient annotations:\n- 1.2 lb boneless chicken.\n- 2 tbsp lemon juice.\n- 1 tsp salt plus 1/2 tsp.\n- 4 tsp cashew paste.\n- Skip green cardamom powder.\n- 2 tbsp ginger-garlic paste.\n- 1 green chili, chopped.\n- 2 tbsp cornflour (masa harina).\n- 1.5 tsp cumin powder.\n- 1/2 tsp red chili powder.\n- 1 tsp garam masala.\n- 1/2 tsp salt.\n- 1 cup (7 oz) Fage yogurt.\n- Skip mozzarella.\n- 1 tsp fenugreek.\n- 1 tbsp cilantro.\n- Skip cream.\n- 2 tbsp oil.",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p026": "Murg Malai Tikka notes - 7/18, 4 stars:\n- Marinade was too thick, but flavor was good. Add cream next time.\n- Wipe off excess marinade before skewering.\n- Cooked for 24 minutes at 400 F, turning once halfway, then broiled for 5 minutes; skip the broiling next time.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p002": "General Tso's Chicken notes - 9/27/22, 'Meh,' 2.5 stars:\n- Sauce was too liquidy and not thick like a restaurant's.\n- Chicken was not crispy and the flavor was not right.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p008": "Vietnamese Pork Chops notes:\n5/24/17 - 3 stars; will make again.\n- Cooked four 1/2-inch pork chops for 2 minutes per side over high heat, then 6 minutes over a low flame. Could have reduced the low-flame time to 3 minutes or less; meat was hovering around 165 F.\n- Sauce was not sweet enough or salty enough. Need to try a different recipe.\n\n6/23 - 2 stars\n- Came out too dry; cooked in a grill pan for 4 minutes.\n- Sauce used 2 tbsp rice vinegar, 1 1/2 tbsp fish sauce, 3 tsp brown sugar, 1 tbsp oil, 1/4 tsp ground pepper, and 3/4 tsp salt. It was not sweet enough.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p011": "Slow Cooker Salsa Verde Chicken notes:\n- 15 minutes in the Instant Pot; will make it 20 minutes next time.\n1/3 - 3 stars\n- Chicken came out okay; carnitas was better.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p015": "Philly Cheesesteak note - 7/19, 1 star:\n- Way too bland.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p028": "Spicy and Crunchy Garlic Tofu notes - 5/25/21, 4 stars:\n- Tofu was good, but the sauce was not really great. It had a sweet-and-sour flavor, but seemed to be missing something; it could have been sweet and spicy instead, without the vinegar.",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p029": "Sauteed Scallops notes - 2/8, 3.5 stars:\n- Was okay; did not overcook the scallops.\n- Added 3 cloves garlic and a pinch of red chili pepper for extra flavor.\n- Used bay scallops and did not wait for a sear; cooked for 2 minutes per side.\n- Served with roasted broccoli and rice.",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p002": "Vietnamese pork chop marinade - 3/2 to 3/3:\n- Blended 1 lemongrass stalk, 5 garlic cloves, 1 shallot, 2 tbsp fish sauce, 2 tbsp soy sauce, and 3 tbsp sugar.\n- Marinated 2 large pork chops overnight.",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p005": "Glazed Cod With Bok Choy notes - 4/12:\n- Recipe was good, but a bit salty.\n- Cut bok choy stalks into small dice and the green parts into larger chunks. The green parts were fine, but cooked a bit too much; cook only 1-2 minutes maximum.\n- Cod was perfect, cooked for 3-4 minutes in the oyster/soy sauce mixture.",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p024": "Aug. 28:\n- Made the recipe with mushrooms.\n- Did not come out as good as chicken.",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p027": "S'mores Blondies annotation:\n- Add marshmallows and chocolate at the same time.",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p001": "Porchetta Pork Roast timing notes:\n- 450 F for 35 minutes.\n- 325 F for 75 minutes.\n- 250 F for 125 minutes.\n- 300 F for 15 minutes.\n- Total: 250 minutes.",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p002": "Porchetta Pork Roast notes - 12/25/21:\n- Used a 7.5 lb bone-in pork shoulder.\n- Marinade: fresh sage, 2 tsp dried rosemary, 7 garlic cloves, 1.5 tbsp salt, 1/2 tsp pepper flakes, 1/2 tsp pepper, 1/4 cup olive oil, 1 tsp fennel seeds, and zest of 1.5 lemons. Blended in a food processor; use the blender next time.\n- Marinated 24 hours. Took it out 1.5 hours before cooking; next time take it out in the morning.\n- Started cooking at 1 p.m. and finished at 5:30 p.m.; start at noon or even 11 a.m. next time.\n- Cooked at 450 F for 35 minutes, 325 F for 75 minutes, 250 F for 125 minutes, then 300 F for 15 minutes.\n- Crackling came out too hard. Next time do only 450 F for 35 minutes, then 250 F for 3.5-4 hours.\n- Meat was tender but not butter-knife sliceable. It reached 160 F; take it to 180 F for that texture.",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p005": "Lebanese Shish Tawook notes - 7/10, 2 stars:\n- Too much lemon juice and not enough salt.\n- Grilled for 13 minutes at 450 F, flipping every 5 minutes. Came out overcooked; 10 minutes would have been enough.\n- Use 1/4 cup lemon juice and 1.5 tsp salt.\n- The recipe's 15 garlic cloves are questioned as possibly unnecessary.",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p011": "French Beans Poriyal notes:\n- Salt annotation: 1/2 tsp.\n- Cooked in a 10-inch saute pan using 1 lb green beans.\n- Salt seemed too little when tasting midway.\n- Cooked 4 minutes over medium-low heat; beans were somewhat tender. Kept them for another 4 minutes without adding water, then another 4 minutes; most of the water was still in the pan.\n- Added 2 tbsp grated coconut.",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p027": "Crispy Air Fryer Tofu notes - 12/29/22, 3.75 stars:\n- Cubed and seasoned tofu with soy sauce and potato starch, sprayed oil on it, and cooked in an un-preheated air fryer for 16 minutes at 400 F, then another 5 minutes. It was only partially crispy; should have cooked 5 minutes more.\n- Sauce was too spicy with 1 whole green chili; use only 1/2 chili.",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p022": "Hyderabadi chicken dum biryani notes - Attempt #3, May 17, 3 stars:\n- Recipe was too pasty from the yogurt.\n- Cooked rice in the pressure cooker: 3/4 filled with water for 10 minutes. Immediately strained the rice; use a plastic strainer next time.\n- Fried onions in an All-Clad saute pan for about 10 minutes; fry only until golden brown, not dark.\n- Used 3 cups yogurt; this made the recipe too pasty. Next time dilute the yogurt with 1 cup water and use 1 1/2 cups yogurt.\n- Add salt to marinade.\n- Cooked chicken for 15 minutes over low heat, then added rice and onions and cooked 10 minutes over low heat.",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p030": "Mughlai Karahi Gosht notes:\n5th attempt:\n- Used 4.5 lb lamb neck, which was too much meat; reduce to 3.5 lb so the pressure cooker is not overloaded. Brown the meat in a large pot.\n- Fried onions first, then added the meat to brown.\n- Added 3 tomatoes and let them cook down.\n- Used 4 tbsp yogurt; reduce to 3 tbsp because the sauce was watery.\n- Cooked 45 minutes and rested 5 minutes. Meat was very tender and falling off the bone; perfect cooking time.\n\nDec. 2, 2019 - first Instant Pot attempt, 3.5 stars:\n- Initially used only about 2 tbsp yogurt and about 1/2 cup chicken stock; the Instant Pot gave a burn warning after heating. Added about 3/4 cup water and the machine was fine, but there was much more sauce.\n- Cooked 39 minutes; lamb was still a bit tough. Next time cook 50 minutes, then natural pressure release.\n- Off flavor came from Kashmiri chili pepper; reduce to 1 tsp.\n- Used only 1/2 tsp salt for 2.5 lb meat, which was too little; use 1 1/2 tsp. Add more red chili.",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p003": "Porchetta Pork Chops note:\n- Cook for 4 minutes on one side and 3 minutes on the other.",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p007": "[Non-recipe handwriting] Small colored doodles/ink marks in pink, teal, and brown; no legible words.",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p026": "Porchetta Pork Chops notes:\n4/28 - 3.5 stars:\n- Made 3 pork chops, about 1 inch thick. Slit the middle, salted, and marinated.\n- Marinade: 3 garlic cloves, 1/2 tsp ground fennel, 2 tsp dried rosemary, 1/2 tsp chili pepper, and olive oil.\n- Seared one side for 2-3 minutes, then the other for 2 minutes. Finished in a 350 F oven for 10 minutes, to 140 F internal temperature. Came out nice and juicy, unlike last time.\n\n5/12 - 3.5 stars:\n- Used fresh rosemary (1 tbsp) and fennel fronds (1.5 tbsp).\n- Used 2 smashed garlic cloves, 1/2 tsp red pepper, and 1/2 tsp fennel.\n- Seared 3 minutes on one side and 2 minutes on the other; cooked 10 minutes in a 350 F oven.\n- More flavorful than the dried rosemary/fennel version, but a bit overcooked. Next time use a 2-minute sear or 9 minutes in the oven."
+  },
+  "handwriting_reviews": {
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p020": "reviewed_bleedthrough_only",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p026": "reviewed_no_handwriting",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p008": "reviewed_no_handwriting",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p012": "reviewed_no_handwriting",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p016": "reviewed_no_handwriting",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p020": "reviewed_bleedthrough_only",
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf#p024": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p004": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p012": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p016": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p020": "reviewed_bleedthrough_only",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p022": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p024": "reviewed_bleedthrough_only",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p026": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p029": "reviewed_no_handwriting",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p030": "reviewed_bleedthrough_only",
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf#p032": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p001": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p002": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p005": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p006": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p008": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p009": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p010": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p011": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p016": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p020": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p024": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p027": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p028": "reviewed_no_handwriting",
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf#p030": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p006": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p010": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p013": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p014": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p020": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p024": "reviewed_no_handwriting",
+    "Batch_02__BRW5CF370D986CA_08282026_224304_000111.pdf#p030": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p002": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p008": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p010": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p014": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p018": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p024": "reviewed_no_handwriting",
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf#p030": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p001": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p002": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p004": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p006": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p012": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p020": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p028": "reviewed_no_handwriting",
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf#p030": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p001": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p002": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p005": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p008": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p014": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p018": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p024": "reviewed_no_handwriting",
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf#p026": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p001": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p002": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p006": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p008": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p010": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p012": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p018": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p024": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p026": "reviewed_no_handwriting",
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf#p028": "reviewed_no_handwriting",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p004": "reviewed_no_handwriting",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p014": "reviewed_no_handwriting",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p019": "reviewed_no_handwriting",
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf#p020": "reviewed_stain_only",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p018": "reviewed_no_handwriting",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p020": "reviewed_no_handwriting",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p028": "reviewed_no_handwriting",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p029": "reviewed_stain_only",
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf#p030": "reviewed_stain_only",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p006": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p008": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p009": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p010": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p014": "reviewed_bleedthrough_only",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p016": "reviewed_bleedthrough_only",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p019": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p020": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p024": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p026": "reviewed_no_handwriting",
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf#p029": "reviewed_no_handwriting",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p016": "reviewed_no_handwriting",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p018": "reviewed_no_handwriting",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p020": "reviewed_stain_only",
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf#p030": "reviewed_no_handwriting",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p014": "reviewed_no_handwriting",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p017": "reviewed_stain_only",
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf#p018": "reviewed_stain_only",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p001": "reviewed_bleedthrough_only",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p006": "reviewed_no_handwriting",
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf#p026": "reviewed_no_handwriting",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p004": "reviewed_no_handwriting",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p008": "reviewed_no_handwriting",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p016": "reviewed_no_handwriting",
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf#p028": "reviewed_no_handwriting",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p006": "reviewed_stain_only",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p007": "reviewed_stain_only",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p008": "reviewed_stain_only",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p015": "reviewed_stain_only",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p018": "reviewed_no_handwriting",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p022": "reviewed_no_handwriting",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p023": "reviewed_no_handwriting",
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf#p024": "reviewed_no_handwriting",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p006": "reviewed_no_handwriting",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p009": "reviewed_stain_only",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p026": "reviewed_no_handwriting",
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf#p028": "reviewed_no_handwriting",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p009": "reviewed_stain_only",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p010": "reviewed_stain_only",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p014": "reviewed_stain_only",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p017": "reviewed_stain_only",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p026": "reviewed_no_handwriting",
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf#p028": "reviewed_no_handwriting",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p004": "reviewed_bleedthrough_only",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p005": "reviewed_stain_only",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p006": "reviewed_stain_only",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p010": "reviewed_no_handwriting",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p023": "reviewed_stain_only",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p024": "reviewed_no_handwriting",
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf#p027": "reviewed_no_handwriting",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p002": "reviewed_bleedthrough_only",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p008": "reviewed_bleedthrough_only",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p014": "reviewed_no_handwriting",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p020": "reviewed_stain_only",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p023": "reviewed_no_handwriting",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p024": "reviewed_bleedthrough_only",
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf#p025": "reviewed_no_handwriting"
+  },
+  "source_confirmations": {
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-014": {
+      "source": "NYT Cooking"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-013": {
+      "source": "Allrecipes"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-006": {
+      "source": "Spiced Up Mom",
+      "url": "https://spicedupmom.com/2013/03/27/lamb-keema-matar-minced-meat-curry-with-peas/"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-010": {
+      "source": "Bon Appetit"
+    },
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-015": {
+      "source": "NYT Cooking"
+    },
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-009": {
+      "source": "Allrecipes"
+    },
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-011": {
+      "source": "Yummy Tummy Aarthi"
+    },
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-007": {
+      "source": "NYT Cooking"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-007": {
+      "source": "Dassana's Veg Recipes"
+    },
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-002": {
+      "source": "NYT Cooking"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-001": {
+      "source": "Yummy Tummy Aarthi"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-003": {
+      "source": "Just One Cookbook",
+      "url": "https://www.justonecookbook.com/yakisoba/"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-012": {
+      "source": "Allrecipes"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-014": {
+      "source": "Yummy Tummy Aarthi"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-002": {
+      "source": "NYT Cooking"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-007": {
+      "source": "Kothiyavunu"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-005": {
+      "source": "NYT Cooking"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-009": {
+      "source": "Budget Bytes"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-010": {
+      "source": "NYT Cooking"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-011": {
+      "source": "Just One Cookbook"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-009": {
+      "source": "Personal message from Suzanne Collins"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-010": {
+      "source": "NYT Cooking"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-014": {
+      "source": "NYT Cooking"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-012": {
+      "source": "NYT Cooking"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-014": {
+      "source": "VahRehVah"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-013": {
+      "source": "NYT Cooking"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-006": {
+      "source": "Epicurious"
+    }
+  }
+}

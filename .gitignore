@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local tooling state
+.serena/
+
+# Working/scratch files from scan preprocessing (large, regenerable, not source)
+tmp/
+
+# Android (added when android-app/ is created)
+android-app/local.properties
+android-app/.gradle/
+android-app/**/build/
+android-app/.idea/
+android-app/*.iml
+android-app/**/*.iml
+android-app/captures/
+android-app/.cxx/
