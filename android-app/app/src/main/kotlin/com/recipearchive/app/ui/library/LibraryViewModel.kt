@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.import.ImportOutcome
 import com.recipearchive.app.data.repository.RecipeRepository
+import com.recipearchive.app.data.repository.RecipeSummary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -26,10 +27,20 @@ private data class ImportPhase(
 private data class LibraryFilters(val category: String?, val collectionId: String?)
 
 private data class LibraryData(
-    val recipes: List<com.recipearchive.app.data.repository.RecipeSummary>,
+    val recipes: List<RecipeSummary>,
     val collections: List<com.recipearchive.app.data.local.entity.CollectionEntity>,
     val filters: LibraryFilters,
+    val sort: LibrarySort,
 )
+
+internal fun sortLibraryRecipes(recipes: List<RecipeSummary>, sort: LibrarySort): List<RecipeSummary> =
+    when (sort) {
+        LibrarySort.ALPHABETICAL -> recipes.sortedBy { it.title.lowercase() }
+        LibrarySort.RATING -> recipes.sortedWith(
+            compareByDescending<RecipeSummary> { it.personalRating ?: -1 }
+                .thenBy { it.title.lowercase() },
+        )
+    }
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class LibraryViewModel(
@@ -42,6 +53,7 @@ class LibraryViewModel(
     private val importPhase = MutableStateFlow(ImportPhase())
     private val selectedCategory = MutableStateFlow<String?>(null)
     private val selectedCollectionId = MutableStateFlow<String?>(null)
+    private val selectedSort = MutableStateFlow(LibrarySort.ALPHABETICAL)
 
     private val filters = combine(selectedCategory, selectedCollectionId, ::LibraryFilters)
 
@@ -49,7 +61,7 @@ class LibraryViewModel(
         .debounce(250)
         .distinctUntilChanged()
 
-    private val recipesFlow = combine(
+    private val unsortedRecipesFlow = combine(
         combine(debouncedQuery, filters) { query, filters -> query to filters },
         importPhase,
     ) { queryAndFilters, phase -> queryAndFilters to phase.isImporting }
@@ -60,6 +72,10 @@ class LibraryViewModel(
             else repository.observeLibrary(query, filters.category, filters.collectionId)
         }
 
+    private val recipesFlow = combine(unsortedRecipesFlow, selectedSort) { recipes, sort ->
+        sortLibraryRecipes(recipes, sort)
+    }
+
     private val collectionsFlow = importPhase.flatMapLatest { phase ->
         if (phase.isImporting) flowOf(emptyList()) else repository.observeCollections()
     }
@@ -68,8 +84,8 @@ class LibraryViewModel(
         recipesFlow,
         collectionsFlow,
         filters,
-        ::LibraryData,
-    )
+        selectedSort,
+    ) { recipes, collections, filters, sort -> LibraryData(recipes, collections, filters, sort) }
 
     val uiState: StateFlow<LibraryUiState> = combine(
         queryState,
@@ -82,6 +98,7 @@ class LibraryViewModel(
             selectedCategory = data.filters.category,
             collections = data.collections,
             selectedCollectionId = data.filters.collectionId,
+            selectedSort = data.sort,
             isImporting = phase.isImporting,
             hasImportedOnce = phase.hasCompletedOnce,
             importError = phase.error,
@@ -102,6 +119,10 @@ class LibraryViewModel(
 
     fun selectCollection(collectionId: String?) {
         selectedCollectionId.value = collectionId
+    }
+
+    fun selectSort(sort: LibrarySort) {
+        selectedSort.value = sort
     }
 
     fun retryImport() = runImport()

@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Favorite
@@ -100,6 +101,7 @@ fun LibraryScreen(
             onQueryChange = viewModel::updateQuery,
             onCategorySelected = viewModel::selectCategory,
             onCollectionSelected = viewModel::selectCollection,
+            onSortSelected = viewModel::selectSort,
             onRecipeClick = onRecipeClick,
             onToggleFavorite = viewModel::toggleFavorite,
             onRetryImport = viewModel::retryImport,
@@ -115,6 +117,7 @@ fun LibraryContent(
     onQueryChange: (String) -> Unit,
     onCategorySelected: (String?) -> Unit = {},
     onCollectionSelected: (String?) -> Unit = {},
+    onSortSelected: (LibrarySort) -> Unit = {},
     onRecipeClick: (String) -> Unit,
     onToggleFavorite: (String, Boolean) -> Unit,
     onRetryImport: () -> Unit,
@@ -128,6 +131,8 @@ fun LibraryContent(
                 collections = state.collections,
                 selectedCollectionId = state.selectedCollectionId,
                 onCollectionSelected = onCollectionSelected,
+                selectedSort = state.selectedSort,
+                onSortSelected = onSortSelected,
             )
             Spacer(Modifier.height(10.dp))
             FilterRow(
@@ -161,6 +166,8 @@ private fun SearchControls(
     collections: List<CollectionEntity>,
     selectedCollectionId: String?,
     onCollectionSelected: (String?) -> Unit,
+    selectedSort: LibrarySort,
+    onSortSelected: (LibrarySort) -> Unit,
 ) {
     var showCollectionMenu by remember { mutableStateOf(false) }
     val selectedCollection = collections.firstOrNull { it.id == selectedCollectionId }
@@ -218,6 +225,53 @@ private fun SearchControls(
                         } else null,
                     )
                 }
+            }
+        }
+        SortSelector(selectedSort = selectedSort, onSortSelected = onSortSelected)
+    }
+}
+
+@Composable
+private fun SortSelector(
+    selectedSort: LibrarySort,
+    onSortSelected: (LibrarySort) -> Unit,
+) {
+    var showSortMenu by remember { mutableStateOf(false) }
+    Box {
+        Surface(
+            modifier = Modifier.size(56.dp).semantics {
+                contentDescription = "Sort recipes: ${selectedSort.label}"
+            },
+            shape = RoundedCornerShape(18.dp),
+            color = if (selectedSort == LibrarySort.ALPHABETICAL) MaterialTheme.colorScheme.surface
+            else MaterialTheme.colorScheme.secondaryContainer,
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+            onClick = { showSortMenu = true },
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    Icons.AutoMirrored.Filled.Sort,
+                    contentDescription = null,
+                    tint = if (selectedSort == LibrarySort.ALPHABETICAL) MaterialTheme.colorScheme.onSurfaceVariant
+                    else MaterialTheme.colorScheme.onSecondaryContainer,
+                )
+            }
+        }
+        DropdownMenu(
+            expanded = showSortMenu,
+            onDismissRequest = { showSortMenu = false },
+        ) {
+            LibrarySort.entries.forEach { sort ->
+                DropdownMenuItem(
+                    text = { Text(sort.label) },
+                    onClick = {
+                        onSortSelected(sort)
+                        showSortMenu = false
+                    },
+                    leadingIcon = if (sort == selectedSort) {
+                        { Icon(Icons.Filled.Check, contentDescription = null) }
+                    } else null,
+                )
             }
         }
     }
