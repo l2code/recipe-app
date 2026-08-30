@@ -1,6 +1,7 @@
 package com.recipearchive.app.ui.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -108,12 +109,12 @@ fun DetailScreen(
                             Icon(
                                 if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                                 contentDescription = if (favorite) "Remove from favorites" else "Add to favorites",
-                                tint = if (favorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = if (favorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
         },
     ) { padding ->
@@ -215,16 +216,17 @@ private fun RecipeHero(
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
-            Text(detail.recipe.title, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Text(detail.recipe.title, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
             Spacer(Modifier.height(6.dp))
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     detail.recipe.sourcePublisher.ifBlank { "Source unknown" },
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.78f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
                 )
                 RatingRow(detail.appState?.personalRating, onRatingChanged)
@@ -234,7 +236,7 @@ private fun RecipeHero(
                 Text(
                     "Made ${companion.madeCount} ${if (companion.madeCount == 1) "time" else "times"}${if (lastMade.isBlank()) "" else " · Last made $lastMade"}",
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.82f),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(top = 7.dp),
                 )
             }
@@ -447,7 +449,7 @@ private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
                 Icon(
                     if ((rating ?: 0) >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
                     contentDescription = "$value stars",
-                    tint = MaterialTheme.colorScheme.tertiary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(22.dp),
                 )
             }
@@ -611,7 +613,12 @@ private fun ContentCard(
     headerMeta: String? = null,
     content: @Composable () -> Unit,
 ) {
-    Surface(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
         Column(modifier = Modifier.padding(18.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
@@ -741,7 +748,7 @@ private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
                         }
                         session.rating?.let { rating ->
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(18.dp))
+                                Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                                 Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
                             }
                         }

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Kitchen
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
@@ -86,7 +87,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
     Scaffold(
         bottomBar = {
             if (showMainNavigation && !expanded) {
-                NavigationBar {
+                NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
                     mainDestinations.forEach { destination ->
                         NavigationBarItem(
                             selected = currentRoute == destination.route,
@@ -101,7 +102,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
     ) { outerPadding ->
         Row(modifier = Modifier.fillMaxSize().padding(outerPadding)) {
             if (showMainNavigation && expanded) {
-                NavigationRail {
+                NavigationRail(containerColor = MaterialTheme.colorScheme.surface) {
                     mainDestinations.forEach { destination ->
                         NavigationRailItem(
                             selected = currentRoute == destination.route,

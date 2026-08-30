@@ -1,5 +1,6 @@
 package com.recipearchive.app.ui.cooking
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -78,7 +79,7 @@ fun CookingScreen(
                     }
                 },
                 actions = { TextButton(onClick = { showDiscardDialog = true }) { Text("Discard") } },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
         },
         bottomBar = {
@@ -111,8 +112,9 @@ fun CookingScreen(
                 item {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        shape = MaterialTheme.shapes.large,
+                        color = MaterialTheme.colorScheme.surface,
+                        shape = MaterialTheme.shapes.medium,
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 22.dp, vertical = 18.dp),
@@ -125,7 +127,7 @@ fun CookingScreen(
                             Text(
                                 formatElapsed(now - currentSession.startedAt),
                                 style = MaterialTheme.typography.headlineLarge,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                         }
                     }
@@ -135,8 +137,8 @@ fun CookingScreen(
                         Surface(
                             modifier = Modifier.fillMaxWidth(),
                             color = MaterialTheme.colorScheme.surface,
-                            shape = MaterialTheme.shapes.large,
-                            tonalElevation = 1.dp,
+                            shape = MaterialTheme.shapes.medium,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                         ) {
                             Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.Top) {
                                 Box(
@@ -194,7 +196,7 @@ private fun FinishCookingDialog(onDismiss: () -> Unit, onConfirm: (String, Int?)
                             Icon(
                                 if (rating >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
                                 contentDescription = "$value stars",
-                                tint = MaterialTheme.colorScheme.tertiary,
+                                tint = MaterialTheme.colorScheme.primary,
                             )
                         }
                     }

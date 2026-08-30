@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.filled.Sort
@@ -91,7 +90,7 @@ fun LibraryScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
         },
     ) { padding ->
@@ -183,7 +182,7 @@ private fun SearchControls(
                     contentDescription = selectedCollection?.let { "Filtering by collection ${it.name}" }
                         ?: "Filter by collection"
                 },
-                shape = RoundedCornerShape(18.dp),
+                shape = MaterialTheme.shapes.medium,
                 color = if (selectedCollection == null) MaterialTheme.colorScheme.surface
                 else MaterialTheme.colorScheme.secondaryContainer,
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
@@ -242,7 +241,7 @@ private fun SortSelector(
             modifier = Modifier.size(56.dp).semantics {
                 contentDescription = "Sort recipes: ${selectedSort.label}"
             },
-            shape = RoundedCornerShape(18.dp),
+            shape = MaterialTheme.shapes.medium,
             color = if (selectedSort == LibrarySort.ALPHABETICAL) MaterialTheme.colorScheme.surface
             else MaterialTheme.colorScheme.secondaryContainer,
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
@@ -323,7 +322,7 @@ private fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier
                 Icon(Icons.Filled.Close, contentDescription = "Clear search")
             }
         },
-        shape = RoundedCornerShape(22.dp),
+        shape = MaterialTheme.shapes.medium,
         singleLine = true,
     )
 }
@@ -383,8 +382,9 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
     Surface(
         modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Recipe: ${recipe.title}" },
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 2.dp,
-        shadowElevation = 1.dp,
+        tonalElevation = 0.dp,
+        shadowElevation = 0.dp,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         shape = MaterialTheme.shapes.medium,
         onClick = { onRecipeClick(recipe.id) },
     ) {
@@ -452,7 +452,7 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                 Icon(
                     if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                     contentDescription = if (recipe.isFavorite) "Remove from favorites" else "Add to favorites",
-                    tint = if (recipe.isFavorite) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = if (recipe.isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.recipearchive.app.ui.companion
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -79,7 +80,11 @@ fun ShoppingScreen(viewModel: CompanionViewModel, modifier: Modifier = Modifier)
 
 @Composable
 private fun ShoppingRow(item: ShoppingListItemUi, viewModel: CompanionViewModel) {
-    Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
         Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = item.item.isChecked,
@@ -140,7 +145,11 @@ fun PantryScreen(viewModel: CompanionViewModel, modifier: Modifier = Modifier) {
 
 @Composable
 private fun PantryRow(item: PantryCatalogItemUi, viewModel: CompanionViewModel) {
-    Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
         Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
@@ -172,7 +181,7 @@ fun MealPlanScreen(viewModel: CompanionViewModel, onRecipeClick: (String) -> Uni
     val entries by viewModel.mealPlan.collectAsState()
     CompanionScaffold(title = "Meal Plan", modifier = modifier) { padding ->
         if (entries.isEmpty()) {
-            EmptyCompanionState(Icons.Filled.Restaurant, "Nothing planned yet", "Open a recipe and add it to today or tomorrow.", padding)
+            EmptyCompanionState(Icons.Filled.Restaurant, "Nothing planned yet", "Open a recipe and choose a date in the next 14 days.", padding)
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
@@ -191,9 +200,9 @@ private fun MealPlanRow(item: MealPlanItemUi, viewModel: CompanionViewModel, onR
     val dateText = date?.format(DateTimeFormatter.ofPattern("EEE, MMM d")) ?: item.entry.plannedDate
     Surface(
         onClick = { onRecipeClick(item.entry.recipeId) },
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.Top) {
@@ -237,7 +246,7 @@ private fun CompanionScaffold(
             TopAppBar(
                 title = { Text(title, style = MaterialTheme.typography.titleLarge) },
                 actions = { action() },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
         },
         content = content,
