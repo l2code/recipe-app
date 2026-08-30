@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.RestaurantMenu
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Warning
@@ -343,7 +344,11 @@ private fun IngredientsCard(detail: RecipeDetailUi) {
 
 @Composable
 private fun InstructionsCard(detail: RecipeDetailUi) {
-    ContentCard(title = "Instructions", icon = Icons.AutoMirrored.Filled.MenuBook) {
+    ContentCard(
+        title = "Instructions",
+        icon = Icons.AutoMirrored.Filled.MenuBook,
+        headerMeta = CookingTimeParser.extract(detail.recipe.rawText)?.let { "Cook: $it" },
+    ) {
         if (detail.instructions.isEmpty()) {
             Text("No instructions were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
         } else {
@@ -357,7 +362,12 @@ private fun InstructionsCard(detail: RecipeDetailUi) {
 }
 
 @Composable
-private fun ContentCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector, content: @Composable () -> Unit) {
+private fun ContentCard(
+    title: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    headerMeta: String? = null,
+    content: @Composable () -> Unit,
+) {
     Surface(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
         Column(modifier = Modifier.padding(18.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -365,7 +375,28 @@ private fun ContentCard(title: String, icon: androidx.compose.ui.graphics.vector
                     Icon(icon, contentDescription = null, modifier = Modifier.padding(7.dp).size(18.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
                 }
                 Spacer(Modifier.width(10.dp))
-                Text(title, style = MaterialTheme.typography.titleLarge)
+                Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                headerMeta?.let { meta ->
+                    Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                Icons.Filled.Schedule,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp),
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                            )
+                            Spacer(Modifier.width(5.dp))
+                            Text(
+                                meta,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            )
+                        }
+                    }
+                }
             }
             Spacer(Modifier.height(14.dp))
             content()
