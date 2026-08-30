@@ -42,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -59,7 +60,12 @@ import com.recipearchive.app.data.repository.RecipeDetailUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(viewModel: DetailViewModel, onBack: () -> Unit, modifier: Modifier = Modifier) {
+fun DetailScreen(
+    viewModel: DetailViewModel,
+    widthSizeClass: WindowWidthSizeClass,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val detail by viewModel.uiState.collectAsState()
     Scaffold(
         modifier = modifier,
@@ -93,6 +99,7 @@ fun DetailScreen(viewModel: DetailViewModel, onBack: () -> Unit, modifier: Modif
                 detail = current,
                 onNotesChanged = viewModel::updateNotes,
                 onRatingChanged = viewModel::updateRating,
+                useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
         } ?: Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
@@ -107,58 +114,34 @@ fun DetailContent(
     onNotesChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
     onRatingChanged: (Int?) -> Unit = {},
+    useTwoColumns: Boolean = false,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize().wrapContentWidth(Alignment.CenterHorizontally).widthIn(max = 940.dp),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item { RecipeHero(detail, onRatingChanged) }
         if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
 
-        item { ContentCard(title = "Ingredients", icon = Icons.Filled.RestaurantMenu) {
-            if (detail.ingredients.isEmpty()) {
-                Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
-            } else {
-                val reviewCount = detail.ingredients.count { it.parseStatus == "needs_review" }
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    if (reviewCount > 0) {
-                        Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.tertiaryContainer) {
-                            Text(
-                                "$reviewCount ${if (reviewCount == 1) "line may" else "lines may"} need cleanup",
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            )
-                        }
-                    }
-                    detail.ingredients.forEach { ingredient ->
-                        IngredientRow(
-                            text = listOf(ingredient.quantity, ingredient.unit, ingredient.item)
-                                .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
-                        )
-                    }
+        if (useTwoColumns) {
+            item {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
+                    Box(modifier = Modifier.weight(0.42f)) { IngredientsCard(detail) }
+                    Box(modifier = Modifier.weight(0.58f)) { InstructionsCard(detail) }
                 }
             }
-        } }
-
-        item { ContentCard(title = "Instructions", icon = Icons.AutoMirrored.Filled.MenuBook) {
-            if (detail.instructions.isEmpty()) {
-                Text("No instructions were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
-            } else {
-                Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                    detail.instructions.forEach { instruction ->
-                        InstructionRow(instruction.displayOrder, instruction.text)
-                    }
-                }
-            }
-        } }
+        } else {
+            item { IngredientsCard(detail) }
+            item { InstructionsCard(detail) }
+        }
 
         if (detail.handwrittenNotes.isNotEmpty()) {
             item { HandwrittenNotesCard(detail) }
         }
         if (detail.pages.isNotEmpty()) item { ScanPagesCard(detail) }
         item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
+        item { SourceDetailsSection(detail) }
         item { RawOcrSection(detail.recipe.rawText) }
     }
 }
@@ -167,41 +150,22 @@ fun DetailContent(
 private fun RecipeHero(detail: RecipeDetailUi, onRatingChanged: (Int?) -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primaryContainer,
     ) {
-        Column(modifier = Modifier.padding(26.dp)) {
-            Text(detail.recipe.title, style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
-            Spacer(Modifier.height(10.dp))
-            SourceSection(detail)
-            Spacer(Modifier.height(18.dp))
-            Text("Your rating", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
-            RatingRow(detail.appState?.personalRating, onRatingChanged)
+        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
+            Text(detail.recipe.title, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onPrimaryContainer)
+            Spacer(Modifier.height(6.dp))
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    detail.recipe.sourcePublisher.ifBlank { "Source unknown" },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.78f),
+                    modifier = Modifier.weight(1f),
+                )
+                RatingRow(detail.appState?.personalRating, onRatingChanged)
+            }
         }
-    }
-}
-
-@Composable
-private fun SourceSection(detail: RecipeDetailUi) {
-    val publisher = detail.recipe.sourcePublisher
-    val url = detail.recipe.sourceUrl
-    Text(
-        if (publisher.isBlank()) "Source not yet identified" else publisher,
-        style = MaterialTheme.typography.bodyLarge,
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
-    )
-    if (url.isNotBlank()) Text(url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-    detail.sourceEvidence
-        .map { it.evidenceText.trim() }
-        .filter { it.isNotBlank() && !it.equals(url, ignoreCase = true) && !it.equals(publisher, ignoreCase = true) }
-        .distinct()
-        .take(2)
-        .forEach { evidence ->
-        Text(
-            evidence,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.72f),
-        )
     }
 }
 
@@ -209,12 +173,60 @@ private fun SourceSection(detail: RecipeDetailUi) {
 private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
     Row(modifier = Modifier.semantics { contentDescription = "Recipe rating" }) {
         (1..5).forEach { value ->
-            IconButton(onClick = { onRatingChanged(if (rating == value) null else value) }) {
+            IconButton(
+                onClick = { onRatingChanged(if (rating == value) null else value) },
+                modifier = Modifier.size(36.dp),
+            ) {
                 Icon(
                     if ((rating ?: 0) >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
                     contentDescription = "$value stars",
                     tint = MaterialTheme.colorScheme.tertiary,
+                    modifier = Modifier.size(22.dp),
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun IngredientsCard(detail: RecipeDetailUi) {
+    ContentCard(title = "Ingredients", icon = Icons.Filled.RestaurantMenu) {
+        if (detail.ingredients.isEmpty()) {
+            Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            val reviewCount = detail.ingredients.count { it.parseStatus == "needs_review" }
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (reviewCount > 0) {
+                    Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.tertiaryContainer) {
+                        Text(
+                            "$reviewCount ${if (reviewCount == 1) "line may" else "lines may"} need cleanup",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        )
+                    }
+                }
+                detail.ingredients.forEach { ingredient ->
+                    IngredientRow(
+                        listOf(ingredient.quantity, ingredient.unit, ingredient.item)
+                            .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun InstructionsCard(detail: RecipeDetailUi) {
+    ContentCard(title = "Instructions", icon = Icons.AutoMirrored.Filled.MenuBook) {
+        if (detail.instructions.isEmpty()) {
+            Text("No instructions were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                detail.instructions.forEach { instruction ->
+                    InstructionRow(instruction.displayOrder, instruction.text)
+                }
             }
         }
     }
@@ -223,15 +235,15 @@ private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
 @Composable
 private fun ContentCard(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector, content: @Composable () -> Unit) {
     Surface(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp) {
-        Column(modifier = Modifier.padding(22.dp)) {
+        Column(modifier = Modifier.padding(18.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
-                    Icon(icon, contentDescription = null, modifier = Modifier.padding(8.dp).size(20.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                    Icon(icon, contentDescription = null, modifier = Modifier.padding(7.dp).size(18.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
                 }
-                Spacer(Modifier.width(12.dp))
+                Spacer(Modifier.width(10.dp))
                 Text(title, style = MaterialTheme.typography.titleLarge)
             }
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(14.dp))
             content()
         }
     }
@@ -250,7 +262,7 @@ private fun IngredientRow(text: String) {
 private fun InstructionRow(order: Int, text: String) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
         Box(
-            modifier = Modifier.size(34.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+            modifier = Modifier.size(32.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             Text(order.toString(), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer, fontWeight = FontWeight.Bold)
@@ -325,6 +337,33 @@ private fun NotesSection(initialNotes: String, onNotesChanged: (String) -> Unit)
             minLines = 3,
             shape = MaterialTheme.shapes.medium,
         )
+    }
+}
+
+@Composable
+private fun SourceDetailsSection(detail: RecipeDetailUi) {
+    var expanded by remember { mutableStateOf(false) }
+    val publisher = detail.recipe.sourcePublisher
+    val url = detail.recipe.sourceUrl
+    Column(modifier = Modifier.fillMaxWidth()) {
+        TextButton(onClick = { expanded = !expanded }) {
+            Text(if (expanded) "Hide source details" else "Source details")
+        }
+        if (expanded) {
+            Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Text(publisher.ifBlank { "Source not yet identified" }, style = MaterialTheme.typography.titleMedium)
+                    if (url.isNotBlank()) Text(url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                    detail.sourceEvidence
+                        .map { it.evidenceText.trim() }
+                        .filter { it.isNotBlank() && !it.equals(url, ignoreCase = true) && !it.equals(publisher, ignoreCase = true) }
+                        .distinct()
+                        .forEach { evidence ->
+                            Text(evidence, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                }
+            }
+        }
     }
 }
 

@@ -46,7 +46,11 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                     key = recipeId,
                     factory = DetailViewModel.Factory(container.recipeRepository, recipeId),
                 )
-                DetailScreen(viewModel = detailViewModel, onBack = { navController.popBackStack() })
+                DetailScreen(
+                    viewModel = detailViewModel,
+                    widthSizeClass = widthSizeClass,
+                    onBack = { navController.popBackStack() },
+                )
             }
         }
     }
