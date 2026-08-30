@@ -83,7 +83,26 @@ def structured_recipe_text(raw_text: str) -> tuple[list[dict[str, Any]], list[di
     return ingredients, instructions
 
 
-def export_bundle(database_path: Path, output_path: Path) -> dict[str, Any]:
+def load_recipe_content_overrides(overrides_path: Path | None) -> dict[str, dict[str, Any]]:
+    """Manually confirmed ingredients/instructions, keyed by recipe id.
+
+    These come from the recipe's original published source (e.g. NYT Cooking)
+    when OCR of a scanned printout produced poor or empty structured data.
+    Never used to overwrite `rawText`; only to supply better `ingredients`,
+    `instructions`, and source confirmation for the app-import bundle.
+    """
+    if overrides_path is None or not overrides_path.exists():
+        return {}
+    data = json.loads(overrides_path.read_text(encoding="utf-8"))
+    return data.get("recipe_content_overrides", {})
+
+
+def export_bundle(
+    database_path: Path,
+    output_path: Path,
+    overrides_path: Path | None = None,
+) -> dict[str, Any]:
+    content_overrides = load_recipe_content_overrides(overrides_path)
     with sqlite3.connect(database_path) as database:
         recipes = rows(
             database,
@@ -131,6 +150,14 @@ def export_bundle(database_path: Path, output_path: Path) -> dict[str, Any]:
             if page_ref in notes_by_page
         ]
         ingredients, instructions = structured_recipe_text(row["text"] or "")
+        override = content_overrides.get(row["recipe_id"], {})
+        if override.get("ingredients"):
+            ingredients = override["ingredients"]
+        if override.get("instructions"):
+            instructions = override["instructions"]
+        evidence = [item["evidence"] for item in source_rows if item["evidence"]]
+        if override.get("note"):
+            evidence = evidence + [override["note"]]
         exported.append(
             {
                 "id": row["recipe_id"],
@@ -147,9 +174,9 @@ def export_bundle(database_path: Path, output_path: Path) -> dict[str, Any]:
                 "source": {
                     "publisher": row["publisher"] or "",
                     "domain": row["domain"] or "",
-                    "url": row["source_url"] or "",
-                    "status": row["source_status"] or "needs_lookup",
-                    "evidence": [item["evidence"] for item in source_rows if item["evidence"]],
+                    "url": override.get("sourceUrl") or row["source_url"] or "",
+                    "status": override.get("sourceStatus") or row["source_status"] or "needs_lookup",
+                    "evidence": evidence,
                 },
                 "handwrittenNotes": [
                     {
@@ -186,10 +213,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("database", type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--overrides",
+        type=Path,
+        default=Path(__file__).with_name("recipe_archive_overrides.json"),
+    )
     args = parser.parse_args()
     database = args.database.expanduser().resolve()
     output = (args.output or database.parent / "recipe-app-import.json").expanduser().resolve()
-    bundle = export_bundle(database, output)
+    bundle = export_bundle(database, output, args.overrides.resolve())
     print(f"Exported {bundle['source']['canonicalRecipeCount']} canonical recipes to {output}")
     return 0
 

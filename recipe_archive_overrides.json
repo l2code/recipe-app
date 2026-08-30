@@ -142,135 +142,522 @@
     }
   },
   "group_overrides": {
-    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-010": {"title": "Daifuku Mochi", "status": "confirmed_single"},
-    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-012": {"title": "All-Purpose Biscuits", "status": "confirmed_single"},
-    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-009": {"title": "Chicken Capsicum Masala", "status": "confirmed_single"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-014": {"title": "Kittencal's Italian Melt-in-Your-Mouth Meatballs (Continuation)", "status": "confirmed_partial"},
-    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-003": {"title": "Lebanese Shish Tawook Chicken Kabobs", "status": "confirmed_single"},
-    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-008": {"title": "Kadai Mushroom (Continuation)", "status": "confirmed_partial"},
-    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-001": {"title": "Palak Paneer and Homemade Paneer (Continuation)", "status": "confirmed_partial"},
-    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-012": {"title": "Chicken Biryani (Continuation)", "status": "confirmed_partial"},
-    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-015": {"title": "Lamb Karahi Gosht (Continuation)", "status": "confirmed_partial"},
-    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-015": {"title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)", "status": "confirmed_partial"},
-    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-003": {"title": "Galbijjim (Korean Braised Short Ribs)", "status": "confirmed_partial"},
-    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-004": {"title": "Galbijjim (Korean Braised Short Ribs) (Continuation)", "status": "confirmed_partial"},
-    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-015": {"title": "Instant Pot Guinness Irish Beef Stew", "status": "confirmed_single"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-007": {"title": "Rava Upma", "status": "confirmed_single"},
-    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-004": {"title": "Rava Upma", "status": "confirmed_single"},
-    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-014": {"title": "Restaurant-Style Dal Fry", "status": "confirmed_single"},
-    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-002": {"title": "Skirt Steak", "status": "confirmed_single"},
-    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-002": {"title": "Beef and Guinness Stew", "status": "confirmed_single"},
-    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-003": {"title": "Chile Crisp Fried Rice With Tofu and Edamame", "status": "confirmed_single"},
-    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-004": {"title": "Buttery Gochujang Tofu and Broccoli", "status": "confirmed_single"},
-    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-005": {"title": "Japanese Cucumber Salad", "status": "confirmed_single"},
-    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-010": {"title": "Almond Cake With Cardamom and Pistachio", "status": "confirmed_single"},
-    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-005": {"title": "Aloo Palak (Spinach and Potatoes)", "status": "confirmed_single"},
-    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-011": {"title": "Xmas Fruit Cake / Kerala Plum Cake", "status": "confirmed_single"},
-    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-014": {"title": "Chicken Salad With Grapes and Walnuts", "status": "confirmed_single"},
-    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-015": {"title": "Classic Hash Browns", "status": "confirmed_single"},
-    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-005": {"title": "Southern Buttermilk Biscuits (Continuation)", "status": "confirmed_partial"},
-    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-012": {"title": "Supernatural Brownies", "status": "confirmed_single"},
-    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-014": {"title": "Blood Orange Upside-Down Olive Oil Cake", "status": "confirmed_partial"},
-    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-015": {"title": "Blood Orange Upside-Down Olive Oil Cake (Continuation)", "status": "confirmed_partial"},
-    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-005": {"title": "Chef John's Dutch Babies", "status": "confirmed_single"},
-    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-008": {"title": "Tomato Rice (Continuation)", "status": "confirmed_partial"},
-    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-015": {"title": "Crispy Pan-Seared Salmon Fillets", "status": "confirmed_single"},
-    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-002": {"title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)", "status": "confirmed_partial"},
-    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-003": {"title": "Classic Waffles", "status": "confirmed_single"},
-    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-005": {"title": "Guacamole", "status": "confirmed_single"},
-    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-014": {"title": "Apple Crumble Pie", "status": "confirmed_single"},
-    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-001": {"title": "Kerala Egg Curry", "status": "confirmed_single"},
-    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-003": {"title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)", "status": "confirmed_single"},
-    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-012": {"title": "Sweet Red Bean Paste (Tsubuan) (Continuation)", "status": "confirmed_partial"},
-    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-015": {"title": "Seafood Pancakes (Continuation)", "status": "confirmed_partial"},
-    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-011": {"title": "Kanda Poha (Onion Poha)", "status": "confirmed_single"},
-    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-013": {"title": "Lamb Karahi Gosht (Continuation)", "status": "confirmed_partial"},
-    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-004": {"title": "Crepes", "status": "confirmed_single"},
-    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-006": {"title": "Basbousa (Coconut Yogurt Semolina Cake)", "status": "confirmed_single"},
-    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-008": {"title": "Pastry Shop-Style Basbousa (Continuation)", "status": "confirmed_partial"},
-    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-011": {"title": "Kerala Egg Roast", "status": "confirmed_single"},
-    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-001": {"title": "Shrimp With Garlicky Bok Choy (Continuation)", "status": "confirmed_partial"},
-    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-002": {"title": "Spam Musubi", "status": "confirmed_single"},
-    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-008": {"title": "Punjabi Chole Masala (Continuation)", "status": "confirmed_partial"},
-    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-012": {"title": "Caramel Custard (Rotated Scan)", "status": "confirmed_partial"},
-    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-015": {"title": "Basil Chicken With Fried Egg", "status": "confirmed_single"},
-    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-012": {"title": "Kerala Nadan Mutton Curry (Continuation)", "status": "confirmed_partial"},
-    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-013": {"title": "Kerala Nadan Mutton Curry", "status": "confirmed_single"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-004": {"title": "Chicken Biryani (Continuation)", "status": "confirmed_partial"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-005": {"title": "Spicy Potato Fry (Continuation)", "status": "confirmed_partial"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-007": {"title": "Kerala Vattayappam (Continuation)", "status": "confirmed_partial"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-008": {"title": "Bacon-Tomato Linguine", "status": "confirmed_single"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-009": {"title": "Italian Sausage, Peppers and Onions", "status": "confirmed_single"},
-    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-012": {"title": "Vegetable Pulao (Pressure Cooker)", "status": "confirmed_single"},
-    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-004": {"title": "Vietnamese-Style Pork Chops", "status": "confirmed_single"},
-    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-009": {"title": "Rava Upma (Continuation)", "status": "confirmed_partial"},
-    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-010": {"title": "Lamb Rogan Josh", "status": "confirmed_partial"},
-    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-011": {"title": "Lamb Rogan Josh (Continuation)", "status": "confirmed_partial"},
-    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-005": {"title": "Karela Sabzi (Bitter Gourd Stir-Fry)", "status": "confirmed_single"},
-    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-011": {"title": "Chocolate Peanut Butter Overnight Oats", "status": "confirmed_single"},
-    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-001": {"title": "Kerala Plum Cake / Christmas Fruit Cake", "status": "confirmed_single"},
-    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-008": {"title": "Classic Baked Meatballs", "status": "confirmed_single"},
-    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-013": {"title": "Spicy Bok Choy in Garlic Sauce", "status": "confirmed_single"},
-    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-014": {"title": "Mushroom Pork Chops", "status": "confirmed_single"},
-    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-009": {"title": "Fried Onion Strings", "status": "confirmed_single"},
-    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-010": {"title": "Pickled Red Onions", "status": "confirmed_single"},
-    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-013": {"title": "Authentic Saag Paneer", "status": "confirmed_single"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-001": {"title": "Apple Bread Pudding (Continuation)", "status": "confirmed_partial"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-004": {"title": "Slow Cooker Apple-Pear Oatmeal", "status": "confirmed_single"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-006": {"title": "Air Fryer Roasted Sweet Potatoes", "status": "confirmed_single"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-008": {"title": "Kadai Chicken", "status": "confirmed_partial"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-009": {"title": "Kadai Chicken (Continuation)", "status": "confirmed_partial"},
-    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-014": {"title": "Porchetta Pork Chops (Continuation)", "status": "confirmed_partial"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-003": {"title": "Kerala Fish Curry", "status": "confirmed_single"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-006": {"title": "Steamed Mussels With Garlic and Parsley", "status": "confirmed_single"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-007": {"title": "Crispy and Crunchy Fried Chicken", "status": "confirmed_single"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-009": {"title": "Crispy and Crunchy Fried Chicken (Continuation)", "status": "confirmed_partial"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-011": {"title": "Flank Steak With Chimichurri Sauce", "status": "confirmed_single"},
-    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-015": {"title": "Unidentified Healthy Italian Recipe (Continuation)", "status": "confirmed_partial"},
-    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-001": {"title": "Quick Tehina Sauce", "status": "confirmed_single"},
-    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-007": {"title": "Crispiest Air Fryer Chicken Cutlets", "status": "confirmed_single"},
-    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-008": {"title": "Unidentified Recipe Fragment (Page 15)", "status": "confirmed_partial"},
-    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-014": {"title": "Rabokki (Continuation)", "status": "confirmed_partial"},
-    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-005": {"title": "Miso Salmon", "status": "confirmed_single"},
-    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-007": {"title": "Mustard and Herb Crusted Rack of Lamb", "status": "confirmed_single"},
-    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-009": {"title": "Gochugaru Salmon", "status": "confirmed_single"},
-    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-013": {"title": "Bok Choy and Mushroom Stir-Fry", "status": "confirmed_single"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-002": {"title": "Three-Cup Chicken", "status": "confirmed_single"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-003": {"title": "Beer-Braised Chili (Continuation)", "status": "confirmed_partial"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-004": {"title": "Blackstone Philly Cheesesteaks", "status": "confirmed_single"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-012": {"title": "Lemony White Bean Soup With Turkey and Greens", "status": "confirmed_single"},
-    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-014": {"title": "Kerala Vattayappam", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-001": {"title": "Loaded Nachos", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-004": {"title": "Chinese Cumin Lamb Stir-Fry", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-007": {"title": "Skillet Chicken With Tomatoes, Pancetta and Mozzarella", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-008": {"title": "Toll House Chocolate Chip Cookies", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-011": {"title": "Sticky Cranberry Gingerbread", "status": "confirmed_single"},
-    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-013": {"title": "Roasted Potatoes and Green Beans", "status": "confirmed_single"},
-    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-005": {"title": "Mapo Tofu", "status": "confirmed_partial"},
-    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-008": {"title": "Aarti Sequeira's Aloo Gobi", "status": "confirmed_single"},
-    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-003": {"title": "Aloo Gobi (Continuation)", "status": "confirmed_partial"},
-    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-004": {"title": "Turkey Chili (Continuation and Notes)", "status": "confirmed_partial"},
-    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-007": {"title": "Brandied Pumpkin Pie", "status": "confirmed_single"},
-    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-008": {"title": "Cabbage Rolls", "status": "confirmed_single"},
-    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-009": {"title": "Rosemary Rack of Lamb With Potatoes", "status": "confirmed_single"},
-    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-002": {"title": "Felicity Cloake's Perfect Chana Masala", "status": "confirmed_single"},
-    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-003": {"title": "Felicity Cloake's Perfect Chana Masala (Continuation)", "status": "confirmed_partial"},
-    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-014": {"title": "Kerala-Style Pepper Chicken (Continuation)", "status": "confirmed_partial"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-001": {"title": "Dhaba Chicken Curry (Continuation)", "status": "confirmed_partial"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-002": {"title": "Dhaba Chicken Curry", "status": "confirmed_partial"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-003": {"title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)", "status": "confirmed_single"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-010": {"title": "Ginger Rice", "status": "confirmed_single"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-011": {"title": "Aloo Palak (Spinach and Potatoes)", "status": "confirmed_single"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-012": {"title": "Gobi 65", "status": "confirmed_partial"},
-    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-013": {"title": "Gobi 65 (Continuation)", "status": "confirmed_partial"},
-    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-006": {"title": "Fluffy French Toast", "status": "confirmed_single"},
-    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-007": {"title": "The Best Instant Pot Pork Carnitas", "status": "confirmed_single"},
-    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-008": {"title": "Birria Tacos", "status": "confirmed_partial"},
-    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-009": {"title": "Birria Tacos (Continuation)", "status": "confirmed_partial"},
-    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-007": {"title": "Firecracker Grilled Alaska Salmon", "status": "confirmed_single"},
-    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-008": {"title": "Roasted New Potatoes", "status": "confirmed_single"},
-    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-012": {"title": "Instant Pot Masoor Dal", "status": "confirmed_single"},
-    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-008": {"title": "Recipe Index (Non-Recipe Page)", "status": "non_recipe"},
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-010": {
+      "title": "Daifuku Mochi",
+      "status": "confirmed_single"
+    },
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-012": {
+      "title": "All-Purpose Biscuits",
+      "status": "confirmed_single"
+    },
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-009": {
+      "title": "Chicken Capsicum Masala",
+      "status": "confirmed_single"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-014": {
+      "title": "Kittencal's Italian Melt-in-Your-Mouth Meatballs (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-003": {
+      "title": "Lebanese Shish Tawook Chicken Kabobs",
+      "status": "confirmed_single"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-008": {
+      "title": "Kadai Mushroom (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-001": {
+      "title": "Palak Paneer and Homemade Paneer (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-012": {
+      "title": "Chicken Biryani (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_17__BRW5CF370D986CA_08292026_075428_000563.pdf::recipe-015": {
+      "title": "Lamb Karahi Gosht (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-015": {
+      "title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-003": {
+      "title": "Galbijjim (Korean Braised Short Ribs)",
+      "status": "confirmed_partial"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-004": {
+      "title": "Galbijjim (Korean Braised Short Ribs) (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-015": {
+      "title": "Instant Pot Guinness Irish Beef Stew",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-007": {
+      "title": "Rava Upma",
+      "status": "confirmed_single"
+    },
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-004": {
+      "title": "Rava Upma",
+      "status": "confirmed_single"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-014": {
+      "title": "Restaurant-Style Dal Fry",
+      "status": "confirmed_single"
+    },
+    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-002": {
+      "title": "Skirt Steak",
+      "status": "confirmed_single"
+    },
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-002": {
+      "title": "Beef and Guinness Stew",
+      "status": "confirmed_single"
+    },
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-003": {
+      "title": "Chile Crisp Fried Rice With Tofu and Edamame",
+      "status": "confirmed_single"
+    },
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-004": {
+      "title": "Buttery Gochujang Tofu and Broccoli",
+      "status": "confirmed_single"
+    },
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-005": {
+      "title": "Japanese Cucumber Salad",
+      "status": "confirmed_single"
+    },
+    "Batch_01__BRW5CF370D986CA_08282026_223036_000081.pdf::recipe-010": {
+      "title": "Almond Cake With Cardamom and Pistachio",
+      "status": "confirmed_single"
+    },
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-005": {
+      "title": "Aloo Palak (Spinach and Potatoes)",
+      "status": "confirmed_single"
+    },
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-011": {
+      "title": "Xmas Fruit Cake / Kerala Plum Cake",
+      "status": "confirmed_single"
+    },
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-014": {
+      "title": "Chicken Salad With Grapes and Walnuts",
+      "status": "confirmed_single"
+    },
+    "Batch_03__BRW5CF370D986CA_08282026_225803_000141.pdf::recipe-015": {
+      "title": "Classic Hash Browns",
+      "status": "confirmed_single"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-005": {
+      "title": "Southern Buttermilk Biscuits (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-012": {
+      "title": "Supernatural Brownies",
+      "status": "confirmed_single"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-014": {
+      "title": "Blood Orange Upside-Down Olive Oil Cake",
+      "status": "confirmed_partial"
+    },
+    "Batch_04__BRW5CF370D986CA_08282026_230314_000171.pdf::recipe-015": {
+      "title": "Blood Orange Upside-Down Olive Oil Cake (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-005": {
+      "title": "Chef John's Dutch Babies",
+      "status": "confirmed_single"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-008": {
+      "title": "Tomato Rice (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_05__BRW5CF370D986CA_08282026_230708_000201.pdf::recipe-015": {
+      "title": "Crispy Pan-Seared Salmon Fillets",
+      "status": "confirmed_single"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-002": {
+      "title": "Xmas Fruit Cake / Kerala Plum Cake (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-003": {
+      "title": "Classic Waffles",
+      "status": "confirmed_single"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-005": {
+      "title": "Guacamole",
+      "status": "confirmed_single"
+    },
+    "Batch_06__BRW5CF370D986CA_08282026_231128_000233.pdf::recipe-014": {
+      "title": "Apple Crumble Pie",
+      "status": "confirmed_single"
+    },
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-001": {
+      "title": "Kerala Egg Curry",
+      "status": "confirmed_single"
+    },
+    "Batch_07__BRW5CF370D986CA_08282026_231527_000263.pdf::recipe-003": {
+      "title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)",
+      "status": "confirmed_single"
+    },
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-012": {
+      "title": "Sweet Red Bean Paste (Tsubuan) (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_08__BRW5CF370D986CA_08282026_232019_000293.pdf::recipe-015": {
+      "title": "Seafood Pancakes (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-011": {
+      "title": "Kanda Poha (Onion Poha)",
+      "status": "confirmed_single"
+    },
+    "Batch_09__BRW5CF370D986CA_08282026_232343_000323.pdf::recipe-013": {
+      "title": "Lamb Karahi Gosht (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-004": {
+      "title": "Crepes",
+      "status": "confirmed_single"
+    },
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-006": {
+      "title": "Basbousa (Coconut Yogurt Semolina Cake)",
+      "status": "confirmed_single"
+    },
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-008": {
+      "title": "Pastry Shop-Style Basbousa (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_10__BRW5CF370D986CA_08282026_233352_000353.pdf::recipe-011": {
+      "title": "Kerala Egg Roast",
+      "status": "confirmed_single"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-001": {
+      "title": "Shrimp With Garlicky Bok Choy (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-002": {
+      "title": "Spam Musubi",
+      "status": "confirmed_single"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-008": {
+      "title": "Punjabi Chole Masala (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-012": {
+      "title": "Caramel Custard (Rotated Scan)",
+      "status": "confirmed_partial"
+    },
+    "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-015": {
+      "title": "Basil Chicken With Fried Egg",
+      "status": "confirmed_single"
+    },
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-012": {
+      "title": "Kerala Nadan Mutton Curry (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_12__BRW5CF370D986CA_08292026_073210_000413.pdf::recipe-013": {
+      "title": "Kerala Nadan Mutton Curry",
+      "status": "confirmed_single"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-004": {
+      "title": "Chicken Biryani (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-005": {
+      "title": "Spicy Potato Fry (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-007": {
+      "title": "Kerala Vattayappam (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-008": {
+      "title": "Bacon-Tomato Linguine",
+      "status": "confirmed_single"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-009": {
+      "title": "Italian Sausage, Peppers and Onions",
+      "status": "confirmed_single"
+    },
+    "Batch_13__BRW5CF370D986CA_08292026_073758_000443.pdf::recipe-012": {
+      "title": "Vegetable Pulao (Pressure Cooker)",
+      "status": "confirmed_single"
+    },
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-004": {
+      "title": "Vietnamese-Style Pork Chops",
+      "status": "confirmed_single"
+    },
+    "Batch_14__BRW5CF370D986CA_08292026_074235_000473.pdf::recipe-009": {
+      "title": "Rava Upma (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-010": {
+      "title": "Lamb Rogan Josh",
+      "status": "confirmed_partial"
+    },
+    "Batch_15__BRW5CF370D986CA_08292026_074627_000503.pdf::recipe-011": {
+      "title": "Lamb Rogan Josh (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-005": {
+      "title": "Karela Sabzi (Bitter Gourd Stir-Fry)",
+      "status": "confirmed_single"
+    },
+    "Batch_16__BRW5CF370D986CA_08292026_075044_000533.pdf::recipe-011": {
+      "title": "Chocolate Peanut Butter Overnight Oats",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-001": {
+      "title": "Kerala Plum Cake / Christmas Fruit Cake",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-008": {
+      "title": "Classic Baked Meatballs",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-013": {
+      "title": "Spicy Bok Choy in Garlic Sauce",
+      "status": "confirmed_single"
+    },
+    "Batch_18__BRW5CF370D986CA_08292026_090457_000593.pdf::recipe-014": {
+      "title": "Mushroom Pork Chops",
+      "status": "confirmed_single"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-009": {
+      "title": "Fried Onion Strings",
+      "status": "confirmed_single"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-010": {
+      "title": "Pickled Red Onions",
+      "status": "confirmed_single"
+    },
+    "Batch_19__BRW5CF370D986CA_08292026_090917_000623.pdf::recipe-013": {
+      "title": "Authentic Saag Paneer",
+      "status": "confirmed_single"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-001": {
+      "title": "Apple Bread Pudding (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-004": {
+      "title": "Slow Cooker Apple-Pear Oatmeal",
+      "status": "confirmed_single"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-006": {
+      "title": "Air Fryer Roasted Sweet Potatoes",
+      "status": "confirmed_single"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-008": {
+      "title": "Kadai Chicken",
+      "status": "confirmed_partial"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-009": {
+      "title": "Kadai Chicken (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_20__BRW5CF370D986CA_08292026_092701_000653.pdf::recipe-014": {
+      "title": "Porchetta Pork Chops (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-003": {
+      "title": "Kerala Fish Curry",
+      "status": "confirmed_single"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-006": {
+      "title": "Steamed Mussels With Garlic and Parsley",
+      "status": "confirmed_single"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-007": {
+      "title": "Crispy and Crunchy Fried Chicken",
+      "status": "confirmed_single"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-009": {
+      "title": "Crispy and Crunchy Fried Chicken (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-011": {
+      "title": "Flank Steak With Chimichurri Sauce",
+      "status": "confirmed_single"
+    },
+    "Batch_21__BRW5CF370D986CA_08292026_104703_000683.pdf::recipe-015": {
+      "title": "Unidentified Healthy Italian Recipe (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-001": {
+      "title": "Quick Tehina Sauce",
+      "status": "confirmed_single"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-007": {
+      "title": "Crispiest Air Fryer Chicken Cutlets",
+      "status": "confirmed_single"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-008": {
+      "title": "Unidentified Recipe Fragment (Page 15)",
+      "status": "confirmed_partial"
+    },
+    "Batch_22__BRW5CF370D986CA_08292026_105219_000713.pdf::recipe-014": {
+      "title": "Rabokki (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-005": {
+      "title": "Miso Salmon",
+      "status": "confirmed_single"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-007": {
+      "title": "Mustard and Herb Crusted Rack of Lamb",
+      "status": "confirmed_single"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-009": {
+      "title": "Gochugaru Salmon",
+      "status": "confirmed_single"
+    },
+    "Batch_23__BRW5CF370D986CA_08292026_105637_000743.pdf::recipe-013": {
+      "title": "Bok Choy and Mushroom Stir-Fry",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-002": {
+      "title": "Three-Cup Chicken",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-003": {
+      "title": "Beer-Braised Chili (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-004": {
+      "title": "Blackstone Philly Cheesesteaks",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-012": {
+      "title": "Lemony White Bean Soup With Turkey and Greens",
+      "status": "confirmed_single"
+    },
+    "Batch_24__BRW5CF370D986CA_08292026_110350_000773.pdf::recipe-014": {
+      "title": "Kerala Vattayappam",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-001": {
+      "title": "Loaded Nachos",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-004": {
+      "title": "Chinese Cumin Lamb Stir-Fry",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-007": {
+      "title": "Skillet Chicken With Tomatoes, Pancetta and Mozzarella",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-008": {
+      "title": "Toll House Chocolate Chip Cookies",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-011": {
+      "title": "Sticky Cranberry Gingerbread",
+      "status": "confirmed_single"
+    },
+    "Batch_25__BRW5CF370D986CA_08292026_110847_000803.pdf::recipe-013": {
+      "title": "Roasted Potatoes and Green Beans",
+      "status": "confirmed_single"
+    },
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-005": {
+      "title": "Mapo Tofu",
+      "status": "confirmed_partial"
+    },
+    "Batch_26__BRW5CF370D986CA_08292026_111221_000833.pdf::recipe-008": {
+      "title": "Aarti Sequeira's Aloo Gobi",
+      "status": "confirmed_single"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-003": {
+      "title": "Aloo Gobi (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-004": {
+      "title": "Turkey Chili (Continuation and Notes)",
+      "status": "confirmed_partial"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-007": {
+      "title": "Brandied Pumpkin Pie",
+      "status": "confirmed_single"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-008": {
+      "title": "Cabbage Rolls",
+      "status": "confirmed_single"
+    },
+    "Batch_27__BRW5CF370D986CA_08292026_111831_000863.pdf::recipe-009": {
+      "title": "Rosemary Rack of Lamb With Potatoes",
+      "status": "confirmed_single"
+    },
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-002": {
+      "title": "Felicity Cloake's Perfect Chana Masala",
+      "status": "confirmed_single"
+    },
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-003": {
+      "title": "Felicity Cloake's Perfect Chana Masala (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_28__BRW5CF370D986CA_08292026_112233_000891.pdf::recipe-014": {
+      "title": "Kerala-Style Pepper Chicken (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-001": {
+      "title": "Dhaba Chicken Curry (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-002": {
+      "title": "Dhaba Chicken Curry",
+      "status": "confirmed_partial"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-003": {
+      "title": "Cabbage Thoran (Kerala-Style Cabbage Stir-Fry)",
+      "status": "confirmed_single"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-010": {
+      "title": "Ginger Rice",
+      "status": "confirmed_single"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-011": {
+      "title": "Aloo Palak (Spinach and Potatoes)",
+      "status": "confirmed_single"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-012": {
+      "title": "Gobi 65",
+      "status": "confirmed_partial"
+    },
+    "Batch_29__BRW5CF370D986CA_08292026_112709_000921.pdf::recipe-013": {
+      "title": "Gobi 65 (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-006": {
+      "title": "Fluffy French Toast",
+      "status": "confirmed_single"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-007": {
+      "title": "The Best Instant Pot Pork Carnitas",
+      "status": "confirmed_single"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-008": {
+      "title": "Birria Tacos",
+      "status": "confirmed_partial"
+    },
+    "Batch_30__BRW5CF370D986CA_08292026_113028_000951.pdf::recipe-009": {
+      "title": "Birria Tacos (Continuation)",
+      "status": "confirmed_partial"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-007": {
+      "title": "Firecracker Grilled Alaska Salmon",
+      "status": "confirmed_single"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-008": {
+      "title": "Roasted New Potatoes",
+      "status": "confirmed_single"
+    },
+    "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-012": {
+      "title": "Instant Pot Masoor Dal",
+      "status": "confirmed_single"
+    },
+    "PreBatch__BRW5CF370D986CA_08292026_113438_000985.pdf::recipe-008": {
+      "title": "Recipe Index (Non-Recipe Page)",
+      "status": "non_recipe"
+    },
     "Batch_11__BRW5CF370D986CA_08292026_072719_000383.pdf::recipe-014": {
       "title": "Takeout-Style Sesame Noodles",
       "status": "confirmed_single"
@@ -746,6 +1133,2685 @@
     },
     "Batch_32__BRW5CF370D986CA_08292026_113941_001023.pdf::recipe-006": {
       "source": "Epicurious"
+    }
+  },
+  "recipe_content_overrides": {
+    "R0334": {
+      "ingredients": [
+        {
+          "rawText": "153 grams 00 flour (1 cup plus 1 tablespoon)",
+          "quantity": "153",
+          "unit": "grams",
+          "item": "00 flour (1 cup plus 1 tablespoon)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "153 grams all-purpose flour (1 cup plus 1 tablespoon and 2 teaspoons)",
+          "quantity": "153",
+          "unit": "grams",
+          "item": "all-purpose flour (1 cup plus 1 tablespoon and 2 teaspoons)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 grams fine sea salt (1 teaspoon)",
+          "quantity": "8",
+          "unit": "grams",
+          "item": "fine sea salt (1 teaspoon)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 grams active dry yeast (¾ teaspoon)",
+          "quantity": "2",
+          "unit": "grams",
+          "item": "active dry yeast (¾ teaspoon)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 grams extra-virgin olive oil (1 teaspoon)",
+          "quantity": "4",
+          "unit": "grams",
+          "item": "extra-virgin olive oil (1 teaspoon)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine both flours and the salt in a large mixing bowl.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "In a separate bowl, stir together about 200 grams (just under 1 cup) lukewarm water with the yeast and olive oil, then mix into the flour. Knead by hand for about 3 minutes, then let the dough rest for 15 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Knead the rested dough for another 3 minutes, then divide into two equal balls. Place on a floured surface, cover with a damp cloth, and let rise 3-4 hours at room temperature, or 8-24 hours in the refrigerator (bring refrigerated dough back to room temperature for 30-45 minutes before shaping).",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Stretch each dough ball into a round or square on a floured surface using your fingers and hands, then top and bake. Yields two 12-inch pizzas.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1016230-robertas-pizza-dough",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed directly against the recipe's NYT Cooking page (2026-08-30); instructions paraphrased, not copied verbatim."
+    },
+    "R0082": {
+      "ingredients": [
+        {
+          "rawText": "2 tablespoons unsalted butter",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "unsalted butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 1/2 pounds apples, peeled and cored, then cut into wedges (5 large honeycrisps will do it)",
+          "quantity": "2 1/2",
+          "unit": "pounds",
+          "item": "apples, peeled and cored, then cut into wedges (5 large honeycrisps will do it)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon ground allspice",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "ground allspice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon ground cinnamon",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground cinnamon",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon kosher salt",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "kosher salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup plus 1 tablespoon sugar",
+          "quantity": "3/4 cup plus 1",
+          "unit": "tablespoon",
+          "item": "sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons all-purpose flour",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "all-purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons cornstarch",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "cornstarch",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon apple cider vinegar",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "apple cider vinegar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 recipe all-purpose pie dough",
+          "quantity": "1",
+          "unit": "recipe",
+          "item": "all-purpose pie dough",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 egg, lightly beaten",
+          "quantity": "1",
+          "unit": "",
+          "item": "egg, lightly beaten",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Melt the butter in a large skillet over medium-high heat, add the apples, and stir to coat; cook, stirring occasionally.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Meanwhile, whisk together the spices, salt, and 3/4 cup sugar, then stir into the apples. Lower the heat and cook until the apples start to soften, about 5-7 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Sprinkle the flour and cornstarch over the apples and cook 3-5 minutes more. Remove from heat, stir in the cider vinegar, and scrape into a bowl to cool completely (spreading it on a rimmed baking sheet cools it faster).",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Put a large baking sheet on the middle oven rack and preheat to 425°F. Roll one dough disc out on a floured surface into a roughly 12-inch round.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Fit that crust into a 9-inch pie plate leaving a 1/2-inch overhang, then freeze it. Roll the second dough disc into a 10-11 inch round.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Remove the chilled crust from the freezer, add the cooled apple filling, and cover with the second round of dough.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Press the edges together, trim the excess, crimp with a fork, and cut a few steam vents in the top crust.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Brush the top with the beaten egg and sprinkle with the remaining tablespoon of sugar.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 9,
+          "text": "Bake on the hot baking sheet at 425°F for 20 minutes, then lower the oven to 375°F and continue baking 30-40 minutes more, until bubbling and golden brown. Cool on a rack about 2 hours before slicing.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/12320-apple-pie",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Kierin Baldwin, adapted by Sam Sifton), 2026-08-30; instructions paraphrased. Uses a separate all-purpose pie dough recipe (see Pie Crust, R0104)."
+    },
+    "R0075": {
+      "ingredients": [
+        {
+          "rawText": "Softened butter, for greasing pan",
+          "quantity": "",
+          "unit": "",
+          "item": "softened butter, for greasing pan",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups/385 grams all-purpose flour",
+          "quantity": "3 cups / 385",
+          "unit": "grams",
+          "item": "all-purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/200 grams sugar",
+          "quantity": "1 cup / 200",
+          "unit": "grams",
+          "item": "sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon fine sea salt",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "fine sea salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 sticks/340 grams cold unsalted butter, cut into cubes",
+          "quantity": "3 sticks / 340",
+          "unit": "grams",
+          "item": "cold unsalted butter, cut into cubes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup/75 grams walnuts, toasted and chopped",
+          "quantity": "3/4 cup / 75",
+          "unit": "grams",
+          "item": "walnuts, toasted and chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon ground cinnamon (for crust)",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground cinnamon (for crust)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon ground cardamom (for crust)",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground cardamom (for crust)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 pounds/680 grams tart apples, such as Granny Smith (about 3 large), peeled, cored and cut into 1/8-inch slices",
+          "quantity": "1 1/2 pounds / 680",
+          "unit": "grams",
+          "item": "tart apples, such as Granny Smith (about 3 large), peeled, cored and cut into 1/8-inch slices",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 pounds/680 grams sweet-tart apples, such as Fuji, Pink Lady or Gala (about 3 large), peeled, cored and cut into 1/8-inch slices",
+          "quantity": "1 1/2 pounds / 680",
+          "unit": "grams",
+          "item": "sweet-tart apples, such as Fuji, Pink Lady or Gala (about 3 large), peeled, cored and cut into 1/8-inch slices",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons lemon juice",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "lemon juice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup/55 grams unsalted butter (1/2 stick)",
+          "quantity": "1/4 cup / 55",
+          "unit": "grams",
+          "item": "unsalted butter (1/2 stick)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon ground cinnamon (for filling)",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "ground cinnamon (for filling)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon freshly grated nutmeg",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "freshly grated nutmeg",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon ground cardamom (for filling)",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground cardamom (for filling)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2/3 cup/135 grams sugar (for filling)",
+          "quantity": "2/3 cup / 135",
+          "unit": "grams",
+          "item": "sugar (for filling)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat oven to 350°F. Line a 9-by-13-inch cake pan with foil, overhanging the sides, and grease lightly with softened butter.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Pulse the flour, sugar and salt in a food processor. Add the cold butter and pulse until it resembles coarse sand. Set aside 1 1/2 cups of this mixture in a bowl and work in the walnuts, cinnamon and cardamom; squeeze together into a rough dough ball (some crumbly bits are fine) and refrigerate.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Press the remaining crust mixture evenly into the bottom of the pan and about 1/2 inch up the sides.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Bake the crust until golden and dry to the touch, 20-25 minutes. Cool on a rack, then raise the oven temperature to 375°F.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "While the crust bakes, toss the apples with the lemon juice. Melt the butter in a large sauté pan over medium-high heat, add the cinnamon, nutmeg and cardamom and cook about 15 seconds, then add the apples and cook, stirring often, until just starting to soften, about 5 minutes. Stir in the sugar and continue cooking, stirring occasionally, until the released juices evaporate and the apples are tender but the pan is dry, 10-15 minutes. Cool completely (spreading on a parchment-lined sheet pan speeds this up).",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Spread the cooled apple filling evenly over the baked crust, pressing gently to close any gaps. Break the reserved walnut topping into pebble-sized pieces and scatter or arrange over the filling.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Bake until the topping is golden brown, 45-50 minutes. Cool completely in the pan on a rack, then lift out using the foil, slide off, and cut into 24 bars (6 strips one way, 4 the other).",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1019543-apple-pie-bars",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased. NYT tip: the unbaked crust/topping can be refrigerated up to 2 days or frozen up to 1 month; the cooked filling can be refrigerated up to 2 days."
+    },
+    "R0074": {
+      "ingredients": [
+        {
+          "rawText": "1/2 cup/114 grams unsalted butter (1 stick), softened, plus more for coating dish",
+          "quantity": "1/2 cup / 114",
+          "unit": "grams",
+          "item": "unsalted butter (1 stick), softened, plus more for coating dish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 tablespoons/50 grams granulated sugar, plus more for coating dish",
+          "quantity": "4 tablespoons / 50",
+          "unit": "grams",
+          "item": "granulated sugar, plus more for coating dish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 ounces/225 grams bittersweet chocolate (60 to 65 percent cacao), finely chopped",
+          "quantity": "8 ounces / 225",
+          "unit": "grams",
+          "item": "bittersweet chocolate (60 to 65 percent cacao), finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "6 eggs, separated, at room temperature",
+          "quantity": "6",
+          "unit": "",
+          "item": "eggs, separated, at room temperature",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Pinch fine sea salt",
+          "quantity": "pinch",
+          "unit": "",
+          "item": "fine sea salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon cream of tartar",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "cream of tartar",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Remove the oven racks and set a baking sheet directly on the oven floor. Heat oven to 400°F. Generously butter a 1 1/2-quart soufflé dish, then coat the bottom and sides with sugar and tap out the excess, making sure sugar covers all the buttered surface for the best rise.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Melt the chocolate and butter together (microwave or over a pot of simmering water). Let cool only slightly, so it's still warm, then whisk in the egg yolks and salt.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "With an electric mixer, beat the egg whites and cream of tartar at medium speed until fluffy with very soft peaks. Add the sugar one tablespoon at a time, beating until the whites hold stiff, glossy peaks.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Whisk about a quarter of the egg whites into the chocolate mixture to lighten it, then fold in the rest in two additions. Transfer to the prepared dish and run a thumb around the inside edge to create a 1/4-inch gap between the dish and the batter.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Set the dish on the hot baking sheet in the oven and lower the temperature to 375°F. Bake until puffed and the center barely moves when shaken, 25-35 minutes (don't open the oven door for the first 20 minutes) — less time for a runnier center, more for firmer. Serve immediately.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1018499-bittersweet-chocolate-souffle",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased."
+    },
+    "R0345": {
+      "ingredients": [
+        {
+          "rawText": "1/2 cup cornstarch",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "cornstarch",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Salt and pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "salt and pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 (14- to 16-ounce) blocks extra-firm tofu, drained and cut into 1/2-inch slices",
+          "quantity": "2",
+          "unit": "blocks (14-16 oz each)",
+          "item": "extra-firm tofu, drained and cut into 1/2-inch slices",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "5 tablespoons vegetable oil",
+          "quantity": "5",
+          "unit": "tablespoons",
+          "item": "vegetable oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound broccoli, cut into small 1-inch florets",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "broccoli, cut into small 1-inch florets",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons unsalted butter",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "unsalted butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons gochujang paste",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "gochujang paste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons soy sauce",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons maple syrup",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "maple syrup",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 garlic cloves, finely chopped",
+          "quantity": "2",
+          "unit": "cloves",
+          "item": "garlic, finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (1-inch) piece ginger, peeled and finely chopped",
+          "quantity": "1 (1-inch piece)",
+          "unit": "",
+          "item": "ginger, peeled and finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 scallions, thinly sliced",
+          "quantity": "2",
+          "unit": "",
+          "item": "scallions, thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Toasted white sesame seeds, for topping",
+          "quantity": "",
+          "unit": "",
+          "item": "toasted white sesame seeds, for topping",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Rice, to serve",
+          "quantity": "",
+          "unit": "",
+          "item": "rice, to serve",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Spread the cornstarch on a plate or rimmed sheet pan and toss with 1 teaspoon salt and 1/2 teaspoon black pepper. Coat both sides of the tofu slices in the mixture, shaking off the excess, and set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Heat a large (12-inch) skillet over medium-high for 2 minutes. Add 1 tablespoon oil and the broccoli, season with salt and pepper, and cook, tossing, until just tender, 3-5 minutes. Transfer to a bowl.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Keeping the heat on medium-high, add 2 tablespoons oil to the skillet. Cook half the tofu in a single layer until golden, 2-3 minutes per side, then transfer to a plate. Add the remaining 2 tablespoons oil and cook the rest of the tofu the same way.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Lower the heat to medium. Add the butter, gochujang, soy sauce, maple syrup, garlic and ginger, and cook until the butter melts. Stir in 3 tablespoons water and cook until the sauce thickens slightly, 1-2 minutes. Add the tofu and broccoli back in and gently toss to coat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Top with the scallions and sesame seeds, and serve with rice.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/766421145-buttery-gochujang-tofu-and-broccoli",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Hetty Lui McKinnon), 2026-08-30; instructions paraphrased."
+    },
+    "R0219": {
+      "ingredients": [
+        {
+          "rawText": "2 tablespoons butter",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons extra-virgin olive oil",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "extra-virgin olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 garlic cloves, minced",
+          "quantity": "4",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup dry white wine or broth",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "dry white wine or broth",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 teaspoon kosher salt, or to taste",
+          "quantity": "3/4",
+          "unit": "teaspoon",
+          "item": "kosher salt, or to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/8 teaspoon crushed red pepper flakes, or to taste",
+          "quantity": "1/8",
+          "unit": "teaspoon",
+          "item": "crushed red pepper flakes, or to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Freshly ground black pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "freshly ground black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 3/4 pounds large or extra-large shrimp, shelled",
+          "quantity": "1 3/4",
+          "unit": "pounds",
+          "item": "large or extra-large shrimp, shelled",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/3 cup chopped parsley",
+          "quantity": "1/3",
+          "unit": "cup",
+          "item": "chopped parsley",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Freshly squeezed juice of half a lemon",
+          "quantity": "juice of 1/2",
+          "unit": "",
+          "item": "lemon",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Cooked pasta or crusty bread",
+          "quantity": "",
+          "unit": "",
+          "item": "cooked pasta or crusty bread, to serve",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a large skillet, melt the butter with the olive oil. Add the garlic and sauté until fragrant, about 1 minute. Add the wine (or broth), salt, red pepper flakes and plenty of black pepper, and bring to a simmer. Let the wine reduce by half, about 2 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Add the shrimp and sauté until just pink, 2-4 minutes depending on size. Stir in the parsley and lemon juice, and serve over pasta or with crusty bread.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/9101-classic-shrimp-scampi",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased."
+    },
+    "R0066": {
+      "ingredients": [
+        {
+          "rawText": "2 tablespoons safflower or canola oil",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "safflower or canola oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium red onion, halved and sliced 1/2-inch thick (about 2 cups)",
+          "quantity": "1",
+          "unit": "medium",
+          "item": "red onion, halved and sliced 1/2-inch thick (about 2 cups)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (1-inch) piece fresh ginger, minced (about 2 tablespoons)",
+          "quantity": "1 (1-inch piece)",
+          "unit": "",
+          "item": "fresh ginger, minced (about 2 tablespoons)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 garlic cloves, thinly sliced",
+          "quantity": "3",
+          "unit": "cloves",
+          "item": "garlic, thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Kosher salt and black pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "kosher salt and black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup white miso",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "white miso",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup unsweetened, full-fat canned coconut milk",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "unsweetened, full-fat canned coconut milk",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (1 1/2-pound) salmon fillet, cut into 2-inch pieces",
+          "quantity": "1 (1 1/2 lb)",
+          "unit": "",
+          "item": "salmon fillet, cut into 2-inch pieces",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "5 ounces baby spinach (about 5 packed cups)",
+          "quantity": "5",
+          "unit": "ounces",
+          "item": "baby spinach (about 5 packed cups)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon fresh lime juice, plus lime wedges for serving",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "fresh lime juice, plus lime wedges for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Steamed rice, such as jasmine or basmati, for serving",
+          "quantity": "",
+          "unit": "",
+          "item": "steamed rice, such as jasmine or basmati, for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chopped fresh basil",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chopped fresh basil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chopped fresh cilantro",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chopped fresh cilantro",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oil in a large pot over medium heat. Add the onion, ginger and garlic, season with salt and pepper, and cook, stirring occasionally, until softened, about 3 minutes. Stir in the miso and cook, stirring frequently, until lightly caramelized, about 2 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Add the coconut milk and 3 cups water, and bring to a boil over high heat. Cook until the liquid reduces slightly, about 5 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Stir in the salmon, lower the heat to medium-low, and simmer gently until just cooked through, about 5 minutes. Turn off the heat and stir in the spinach and lime juice.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Divide the rice among bowls, top with the salmon curry, basil and cilantro, and serve with lime wedges.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1020045-coconut-miso-salmon-curry",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Kay Chun), 2026-08-30; instructions paraphrased."
+    },
+    "R0451": {
+      "ingredients": [
+        {
+          "rawText": "1 (12-ounce/340-gram) bag fresh or frozen cranberries",
+          "quantity": "1 (12 oz / 340 g)",
+          "unit": "bag",
+          "item": "fresh or frozen cranberries",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup/150 grams granulated sugar (for cranberry layer)",
+          "quantity": "3/4 cup / 150",
+          "unit": "grams",
+          "item": "granulated sugar (for cranberry layer)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 3 large lemons",
+          "quantity": "2 to 3",
+          "unit": "large",
+          "item": "lemons",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Nonstick cooking spray",
+          "quantity": "",
+          "unit": "",
+          "item": "nonstick cooking spray",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 cups/190 grams all-purpose flour (for crust)",
+          "quantity": "1 1/2 cups / 190",
+          "unit": "grams",
+          "item": "all-purpose flour (for crust)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/3 cup/65 grams granulated sugar (for crust)",
+          "quantity": "1/3 cup / 65",
+          "unit": "grams",
+          "item": "granulated sugar (for crust)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon fine sea salt (for crust)",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "fine sea salt (for crust)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon vanilla extract",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup/170 grams unsalted butter (1 1/2 sticks), melted and cooled",
+          "quantity": "3/4 cup / 170",
+          "unit": "grams",
+          "item": "unsalted butter (1 1/2 sticks), melted and cooled",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/200 grams granulated sugar (for lemon layer)",
+          "quantity": "1 cup / 200",
+          "unit": "grams",
+          "item": "granulated sugar (for lemon layer)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup/30 grams all-purpose flour (for lemon layer)",
+          "quantity": "1/4 cup / 30",
+          "unit": "grams",
+          "item": "all-purpose flour (for lemon layer)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/8 teaspoon fine sea salt (for lemon layer)",
+          "quantity": "1/8",
+          "unit": "teaspoon",
+          "item": "fine sea salt (for lemon layer)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 large eggs, at room temperature",
+          "quantity": "3",
+          "unit": "large",
+          "item": "eggs, at room temperature",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Powdered sugar (optional)",
+          "quantity": "",
+          "unit": "",
+          "item": "powdered sugar (optional, for dusting)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine the cranberries, sugar and 3 tablespoons water in a medium saucepan. Zest 2 of the lemons directly into the pan and set the zested lemons aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Bring to a boil over medium-high heat, stirring occasionally, and continue boiling until the berries burst and the mixture turns jammy, 7-9 minutes. Remove from the heat and set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Heat oven to 350°F. Line a 9-by-13-inch baking pan with a single large sheet of heavy foil with no gaps, then coat generously with cooking spray.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Whisk the flour, sugar and salt for the crust in a bowl. Whisk the vanilla into the melted butter, then pour over the flour mixture and stir until it comes together. Press into an even layer in the pan and bake until golden around the edges and dry on top, 17-20 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "While the crust bakes, squeeze the juice from the 2 zested lemons (about 1/2 cup); squeeze another lemon if needed to reach that amount.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Whisk the sugar, flour and salt for the lemon layer in a bowl. Add the eggs and whisk gently just until incorporated, then stir in the lemon juice just until smooth.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Let the baked crust cool 5 minutes, then spread the cranberry mixture evenly over it. Slowly and carefully pour the lemon mixture on top to form two distinct layers.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Bake until the filling is set, 18-22 minutes. Cool completely in the pan on a rack, then refrigerate until cold and firm, at least 2 hours. Lift out using the foil, cut into 24 squares (wiping the knife between cuts), and dust with powdered sugar if desired just before serving.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1021641-cranberry-lemon-bars",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased."
+    },
+    "R0034": {
+      "ingredients": [
+        {
+          "rawText": "1 (12- to 18-ounce) package shelf-stable potato gnocchi",
+          "quantity": "1 (12-18 oz)",
+          "unit": "package",
+          "item": "shelf-stable potato gnocchi",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large head broccoli (about 1 pound), florets cut into 1 1/2- to 2-inch pieces, stems thinly sliced",
+          "quantity": "1",
+          "unit": "large head (about 1 lb)",
+          "item": "broccoli, florets cut into 1 1/2- to 2-inch pieces, stems thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup extra-virgin olive oil",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "extra-virgin olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 garlic cloves, finely grated",
+          "quantity": "2",
+          "unit": "cloves",
+          "item": "garlic, finely grated",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Salt",
+          "quantity": "",
+          "unit": "",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Crushed red pepper (optional)",
+          "quantity": "",
+          "unit": "",
+          "item": "crushed red pepper (optional)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound hot or sweet Italian sausage, casings removed",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "hot or sweet Italian sausage, casings removed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup grated Parmesan, plus more for serving",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "grated Parmesan, plus more for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 lemon",
+          "quantity": "1/2",
+          "unit": "",
+          "item": "lemon",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 425°F. On a sheet pan, toss the gnocchi, broccoli, olive oil and garlic until well coated. Season with salt and crushed red pepper if using, and spread into an even layer. Pinch off pieces of the sausage roughly the size of the gnocchi and scatter over the top. Roast until the sausage and broccoli are golden and crisp, 20-25 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Squeeze the lemon half over the top (about 1 1/2 tablespoons juice) and sprinkle with the Parmesan. Stir until the cheese melts, and serve with more Parmesan and crushed red pepper as you like.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1025733-crispy-gnocchi-with-sausage-and-broccoli",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Ali Slagle), 2026-08-30; instructions paraphrased."
+    },
+    "R0381": {
+      "ingredients": [
+        {
+          "rawText": "2 tablespoons olive or vegetable oil",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "olive or vegetable oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound ground beef (preferably 10 percent fat)",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "ground beef (preferably 10 percent fat)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 small onion, diced (about 1 cup)",
+          "quantity": "1",
+          "unit": "small",
+          "item": "onion, diced (about 1 cup)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 large celery stalks, diced",
+          "quantity": "2",
+          "unit": "large",
+          "item": "celery stalks, diced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 large garlic cloves, finely chopped",
+          "quantity": "3",
+          "unit": "large cloves",
+          "item": "garlic, finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons tomato paste",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "tomato paste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (14-ounce) can diced tomatoes",
+          "quantity": "1 (14 oz)",
+          "unit": "can",
+          "item": "diced tomatoes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups low-sodium beef stock or broth",
+          "quantity": "3",
+          "unit": "cups",
+          "item": "low-sodium beef stock or broth",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 teaspoons Italian seasoning",
+          "quantity": "1 1/2",
+          "unit": "teaspoons",
+          "item": "Italian seasoning",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Salt and black pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "salt and black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "12 ounces russet or Yukon gold potatoes (about 2 medium russet or 3 to 4 medium Yukon gold), peeled and cut into 1/2-inch cubes",
+          "quantity": "12",
+          "unit": "ounces",
+          "item": "russet or Yukon gold potatoes (about 2 medium russet or 3-4 medium Yukon gold), peeled and cut into 1/2-inch cubes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups chopped mixed vegetables, such as green beans, corn, peas and carrots, frozen (unthawed) or fresh (see Tip)",
+          "quantity": "3",
+          "unit": "cups",
+          "item": "chopped mixed vegetables, such as green beans, corn, peas and carrots, frozen (unthawed) or fresh",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons Worcestershire sauce (optional)",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "Worcestershire sauce (optional)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Chopped parsley, for serving (optional)",
+          "quantity": "",
+          "unit": "",
+          "item": "chopped parsley, for serving (optional)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oil in a large Dutch oven or heavy pot over medium-high. Add the ground beef, onion and celery, and cook, breaking up the meat, until it's no longer pink and the vegetables start to soften, 5-7 minutes. Stir in the garlic and cook 2 minutes more.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Add the tomato paste and stir until it coats everything; cook 1 minute. Stir in the diced tomatoes with their juice, the stock, Italian seasoning, 1 1/2 teaspoons salt and 1/4 teaspoon pepper, scraping up any browned bits from the bottom of the pot.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Stir in the potatoes, bring to a boil, then reduce heat and simmer uncovered for 10 minutes. Add the mixed vegetables, make sure everything is submerged, partially cover, and simmer until the potatoes and vegetables are tender, 7-10 minutes more.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Taste and season with the Worcestershire sauce if using, plus more salt and pepper as needed. Ladle into bowls and top with chopped parsley if desired.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1025427-hamburger-soup",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Knific), 2026-08-30; instructions paraphrased. NYT tip: frozen mixed vegetables can go in unthawed to save time; fresh vegetables need about 10-15 extra minutes of prep and simmering."
+    },
+    "R0405": {
+      "ingredients": [
+        {
+          "rawText": "1/2 cup softened butter",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "softened butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/4 cups sugar",
+          "quantity": "1 1/4",
+          "unit": "cups",
+          "item": "sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 eggs",
+          "quantity": "2",
+          "unit": "",
+          "item": "eggs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon vanilla extract",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cups flour",
+          "quantity": "2",
+          "unit": "cups",
+          "item": "flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons baking powder",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "baking powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup milk",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "milk",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cups blueberries, washed, drained and picked over",
+          "quantity": "2",
+          "unit": "cups",
+          "item": "blueberries, washed, drained and picked over",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 teaspoons sugar, for topping",
+          "quantity": "3",
+          "unit": "teaspoons",
+          "item": "sugar, for topping",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Preheat the oven to 375°F.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Cream the butter and sugar until light.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Add the eggs one at a time, beating well after each addition, then add the vanilla.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Sift together the flour, salt and baking powder, and add to the creamed mixture alternately with the milk.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Crush 1/2 cup of the blueberries with a fork and mix into the batter, then fold in the remaining whole berries.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Line a 12-cup standard muffin tin with cupcake liners and fill with batter. Sprinkle the 3 teaspoons of sugar over the tops and bake at 375°F for about 30-35 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Remove the muffins from the tin and cool at least 30 minutes. Store uncovered, or the muffins will turn too moist by the second day (if they last that long).",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/2868-jordan-marshs-blueberry-muffins",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Marian Burros), 2026-08-30; instructions paraphrased."
+    },
+    "R0072": {
+      "ingredients": [
+        {
+          "rawText": "1 pound ground beef (round or chuck)",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "ground beef (round or chuck)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup finely crushed Ritz crackers (12 crackers)",
+          "quantity": "1/2 cup (12 crackers)",
+          "unit": "",
+          "item": "finely crushed Ritz crackers",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup chopped scallions",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "chopped scallions",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons low-sodium soy sauce",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "low-sodium soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons minced garlic",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "minced garlic",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon kosher salt (such as Diamond Crystal)",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "kosher salt (such as Diamond Crystal)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon freshly ground black pepper",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "freshly ground black pepper",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 425°F. In a large bowl, combine all the ingredients and gently mix with your hands.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Shape the meat into 12 golf-ball-size rounds (about 2 inches across) and arrange on a greased rimmed baking sheet.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Bake until golden and cooked through, about 15 minutes. Serve warm.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1019763-korean-bbq-style-meatballs",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Kay Chun), 2026-08-30; instructions paraphrased. NYT tips: leftover meatballs freeze well and reheat in a 375°F oven for about 20 minutes; make Ritz crumbs by crushing crackers in a resealable bag with a wooden spoon or measuring cup."
+    },
+    "R0102": {
+      "ingredients": [
+        {
+          "rawText": "3 cups/385 grams all-purpose flour, plus more for dusting",
+          "quantity": "3 cups / 385",
+          "unit": "grams",
+          "item": "all-purpose flour, plus more for dusting",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 teaspoons kosher salt",
+          "quantity": "1 1/2",
+          "unit": "teaspoons",
+          "item": "kosher salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon baking powder",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "baking powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Cooking spray",
+          "quantity": "",
+          "unit": "",
+          "item": "cooking spray",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/225 grams unsalted butter (2 sticks), softened",
+          "quantity": "1 cup / 225",
+          "unit": "grams",
+          "item": "unsalted butter (2 sticks), softened",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/125 grams unsifted confectioners' sugar",
+          "quantity": "1 cup / 125",
+          "unit": "grams",
+          "item": "unsifted confectioners' sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large egg, at room temperature, plus 1 egg white",
+          "quantity": "1 large + 1 white",
+          "unit": "",
+          "item": "egg, at room temperature, plus 1 egg white",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon vanilla extract",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup plain tahini",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "plain tahini",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons black tahini",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "black tahini",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup/50 grams coarse black sanding sugar (optional)",
+          "quantity": "1/4 cup / 50",
+          "unit": "grams",
+          "item": "coarse black sanding sugar (optional)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Whisk the flour, salt and baking powder together in a bowl and set aside. Coat a small loaf pan with cooking spray, then line it with plastic wrap, tucking it into the corners with plenty of overhang.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "In a stand mixer with the paddle attachment, cream the butter and confectioners' sugar on medium-high until fluffy, 2-3 minutes. Add the egg and vanilla and beat on medium-high until combined, about 2 minutes, scraping the bowl as needed.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Add the flour mixture and beat on low until combined, then increase to medium and beat until the dough starts to clump together.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Turn the dough out, knead lightly, and form into a log. Cut into two pieces, one about 1/3 and the other about 2/3 of the dough. Beat the plain tahini into the larger piece until fully combined and set aside. Beat the black tahini into the smaller piece until fully combined.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "On a well-floured surface, cut the white dough in half and pat half into a 5-inch square. Cut the black dough in half and pat half on top to match. Repeat with the remaining dough so you have four alternating layers. Cut in half crosswise, gently knead and roll each half to marble the colors together, then stack and briefly knead the two pieces into one soft dough.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Press the dough into the prepared loaf pan and fold the plastic wrap over the top to seal, pressing to even out the surface. Chill until firm — preferably overnight, or at least a few hours (up to 3 days ahead, or freeze up to 3 months).",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Heat the oven to 325°F. Beat the egg white with 1 teaspoon water. Spread the sanding sugar on a small baking sheet. Unmold the dough, trim the sides square if desired, lightly brush the outside with the egg white mixture, then roll and press it in the sugar to coat all sides except the ends.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Cut the block into barely 1/4-inch-thick slices and lay them 1 inch apart on parchment- or silicone-mat-lined baking sheets. Freeze until firm, about 10 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 9,
+          "text": "Bake until golden underneath, 14-16 minutes. Cool a few minutes on the sheets, then transfer to wire racks to cool completely. Keeps in an airtight container at room temperature up to 1 week.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1020650-marbled-tahini-cookies",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Susan Spungen), 2026-08-30; instructions paraphrased."
+    },
+    "R0121": {
+      "ingredients": [
+        {
+          "rawText": "1/4 cup mirin",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "mirin",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup sake",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "sake",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons white or yellow miso paste",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "white or yellow miso paste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon sugar",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons dark sesame oil",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "dark sesame oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 salmon, trout, Arctic char, mahi mahi or black cod fillets, about 6 ounces each",
+          "quantity": "4",
+          "unit": "fillets (about 6 oz each)",
+          "item": "salmon, trout, Arctic char, mahi mahi or black cod",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine the mirin and sake in a small saucepan and bring to a boil over high heat. Boil 20 seconds without boiling off too much liquid, then lower the heat and whisk in the miso and sugar, stirring over medium heat until the sugar dissolves (don't let it boil). Remove from heat and whisk in the sesame oil, then let cool and transfer to a wide glass, stainless steel bowl, or baking dish.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Pat the fish fillets dry, brush or rub with the marinade on both sides, and place in the dish, turning a few times to coat. Cover and marinate 2-3 hours, or up to a day.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Light the broiler or prepare a grill. Line a sheet pan with oiled foil. Tap each fillet against the dish to let excess marinade drip off; place skin side up on the sheet pan if broiling.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Grill skin side down, or broil skin side up, about 6 inches from the heat, 2-3 minutes per side until browned and blackened in spots. If needed, finish in a 400°F oven about 5 minutes more, until the fish is opaque and flakes easily.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1015115-miso-glazed-fish",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Martha Rose Shulman), 2026-08-30; instructions paraphrased. NYT tips: for a vegetarian version, substitute tofu sliced about 2/3 inch thick; the fish can be prepped up to 12 hours ahead of cooking."
+    },
+    "R0455": {
+      "ingredients": [
+        {
+          "rawText": "2 cups/400 grams granulated sugar (for syrup)",
+          "quantity": "2 cups / 400",
+          "unit": "grams",
+          "item": "granulated sugar (for syrup)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon freshly squeezed lemon juice",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "freshly squeezed lemon juice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/4 teaspoons lavender extract, vanilla extract or rose water",
+          "quantity": "1 1/4",
+          "unit": "teaspoons",
+          "item": "lavender extract, vanilla extract or rose water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup/170 grams unsalted butter (1 1/2 sticks), melted, plus more for coating the pan",
+          "quantity": "3/4 cup / 170",
+          "unit": "grams",
+          "item": "unsalted butter (1 1/2 sticks), melted, plus more for coating the pan",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups/490 grams semolina flour",
+          "quantity": "3 cups / 490",
+          "unit": "grams",
+          "item": "semolina flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup/150 grams granulated sugar (for cake)",
+          "quantity": "3/4 cup / 150",
+          "unit": "grams",
+          "item": "granulated sugar (for cake)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/227 grams plain whole-milk yogurt",
+          "quantity": "1 cup / 227",
+          "unit": "grams",
+          "item": "plain whole-milk yogurt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 1/2 teaspoons baking soda",
+          "quantity": "2 1/2",
+          "unit": "teaspoons",
+          "item": "baking soda",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup/29 grams slivered almonds",
+          "quantity": "1/4 cup / 29",
+          "unit": "grams",
+          "item": "slivered almonds",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a small saucepan over high heat, boil the sugar with 1 cup (240 ml) water, stirring until the sugar dissolves. Reduce to a simmer, add the lemon juice and extract, and simmer until thickened into a syrup, about 2 minutes. Remove from heat and let cool.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Heat the oven to 400°F. Butter a 9-by-13-inch baking dish. In a large bowl, stir together the semolina, melted butter and sugar until well combined; set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Stir the yogurt and baking soda together in a bowl and let sit until it nearly doubles in size, about 10 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Pour the yogurt mixture over the semolina mixture and mix well. Transfer to the buttered dish and press into an even layer. Score the surface on the diagonal into 2-inch diamonds and top each diamond with an almond. Bake until golden brown, 25-30 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Set the dish on a wire rack and drizzle the cooled syrup over the hot cake. Let cool to room temperature before recutting along the scored lines and serving.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1018776-namoura-syrup-soaked-semolina-cake",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Tejal Rao, Amanda Saab), 2026-08-30; instructions paraphrased."
+    },
+    "R0104": {
+      "ingredients": [
+        {
+          "rawText": "1 1/4 cups all-purpose flour (150 grams)",
+          "quantity": "1 1/4 cups / 150",
+          "unit": "grams",
+          "item": "all-purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon fine sea salt",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "fine sea salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "10 tablespoons unsalted butter, cold and cut into cubes",
+          "quantity": "10",
+          "unit": "tablespoons",
+          "item": "unsalted butter, cold and cut into cubes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 4 tablespoons ice water, as needed",
+          "quantity": "2 to 4",
+          "unit": "tablespoons",
+          "item": "ice water, as needed",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a food processor, pulse the flour and salt together. Add the butter and pulse until the mixture forms lima-bean-size pieces. Slowly add the ice water, 1 tablespoon at a time, pulsing until the dough just comes together — it should be moist but not wet.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Turn the dough out onto a lightly floured surface, gather into a ball, and flatten into a disk with the heel of your hand. Wrap tightly in plastic and refrigerate at least 1 hour and up to 2 days.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/448-pie-crust",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased. NYT tips: use a high-fat European-style butter for best results; the dough freezes up to 3 months (thaw overnight in the fridge); for a cheddar variant, swap in 3/4 cup grated sharp cheddar with the flour and use 8 tablespoons butter instead of 10."
+    },
+    "R0333": {
+      "ingredients": [
+        {
+          "rawText": "1 pound cauliflower, about 1 medium-large head, trimmed and cut into 1/4-inch-thick slices or 2-inch florets",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "cauliflower, about 1 medium-large head, trimmed and cut into 1/4-inch-thick slices or 2-inch florets",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Extra virgin olive oil",
+          "quantity": "",
+          "unit": "",
+          "item": "extra virgin olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Salt",
+          "quantity": "",
+          "unit": "",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Black pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "black pepper",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 375°F. Put the cauliflower in a large bowl, pour on enough olive oil to coat (a few tablespoons), season generously with salt and pepper, and toss gently until evenly coated.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Spread the cauliflower on a baking sheet and drizzle any remaining oil from the bowl on top. Bake, turning once, until caramelized at the edges and tender, 25-30 minutes. Serve warm or at room temperature as a side dish; a splash of good aged vinegar is nice on top.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/7588-roasted-cauliflower",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Amanda Hesser), 2026-08-30; instructions paraphrased."
+    },
+    "R0227": {
+      "ingredients": [
+        {
+          "rawText": "3 tablespoons unsalted butter",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "unsalted butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound sea scallops, patted dry",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "sea scallops, patted dry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Kosher salt, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "kosher salt, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon dry white vermouth or white wine",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "dry white vermouth or white wine",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon finely chopped parsley, for garnish",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "finely chopped parsley, for garnish",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Set a large sauté pan or skillet over medium-high heat and add the butter. Once melted and foaming, place the scallops in the pan in a single layer and season with a pinch or two of salt.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Cook the scallops without moving them until golden brown on the bottom, about 2-3 minutes, then flip, add the vermouth or wine, and cook 1-2 minutes more.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Garnish with parsley before serving.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1019116-sauteed-scallops",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Sam Sifton), 2026-08-30; instructions paraphrased. Top reader tip: after patting scallops dry, refrigerate them uncovered for up to 30 minutes to dry them further for a better sear and crust. This recipe is saved in your NYT Cooking Recipe Box, but has no private note attached."
+    },
+    "R0218": {
+      "ingredients": [
+        {
+          "rawText": "1 1/2 pounds boneless, skinless chicken thighs",
+          "quantity": "1 1/2",
+          "unit": "pounds",
+          "item": "boneless, skinless chicken thighs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 cups jarred salsa verde",
+          "quantity": "1 1/2",
+          "unit": "cups",
+          "item": "jarred salsa verde",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (4-ounce) can chopped mild green chiles",
+          "quantity": "1 (4 oz)",
+          "unit": "can",
+          "item": "chopped mild green chiles",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 garlic cloves, finely chopped",
+          "quantity": "8",
+          "unit": "cloves",
+          "item": "garlic, finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 jalapeño, stemmed, seeded and diced",
+          "quantity": "1",
+          "unit": "",
+          "item": "jalapeño, stemmed, seeded and diced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon garlic powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "garlic powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon onion powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "onion powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon ground cumin",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "ground cumin",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 scallions (green and white parts), thinly sliced",
+          "quantity": "3",
+          "unit": "",
+          "item": "scallions (green and white parts), thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 small bunch cilantro, leaves and tender stems finely chopped (about 1 heaping cup)",
+          "quantity": "1",
+          "unit": "small bunch (about 1 heaping cup)",
+          "item": "cilantro, leaves and tender stems finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Kosher salt, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "kosher salt, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Fresh lime juice, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "fresh lime juice, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Any combination of rice, tortillas, pepitas, queso fresco, diced avocado and crushed tortilla chips, for serving",
+          "quantity": "",
+          "unit": "",
+          "item": "any combination of rice, tortillas, pepitas, queso fresco, diced avocado and crushed tortilla chips, for serving",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine the chicken thighs, salsa verde, green chiles, garlic, jalapeño, garlic powder, onion powder and cumin in a 6- to 8-quart slow cooker and stir to combine evenly (don't add salt yet, since jarred salsas are often high in sodium). Cook on low until the chicken is tender and the flavors meld, 5-6 hours. (If you'll be away 8+ hours, set the cook time to 4 hours on low and let the auto-switch to warm handle the rest.)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Shred the chicken coarsely with two forks. With the heat still on low, stir in the scallions and cilantro. Season to taste with salt and lime juice, then serve with rice or in tortillas with your choice of accompaniments.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1020669-slow-cooker-salsa-verde-chicken",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Sarah DiGregorio), 2026-08-30; instructions paraphrased."
+    },
+    "R0411": {
+      "ingredients": [
+        {
+          "rawText": "2 cups full-fat or low-fat Greek yogurt (about 16 ounces)",
+          "quantity": "2",
+          "unit": "cups (about 16 oz)",
+          "item": "full-fat or low-fat Greek yogurt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 mini cucumbers (about 1/2 pound), grated on the large holes of a box grater",
+          "quantity": "2",
+          "unit": "mini (about 1/2 lb)",
+          "item": "cucumbers, grated on the large holes of a box grater",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons finely chopped mint, plus mint leaves for serving",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "finely chopped mint, plus mint leaves for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large garlic clove, finely grated",
+          "quantity": "1",
+          "unit": "large clove",
+          "item": "garlic, finely grated",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound ground beef (preferably 80 percent lean) or ground lamb",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "ground beef (preferably 80 percent lean) or ground lamb",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 small yellow onion, grated on the large holes of a box grater (see Tips)",
+          "quantity": "1",
+          "unit": "small",
+          "item": "yellow onion, grated on the large holes of a box grater",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon ground turmeric",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground turmeric",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons kosher salt (such as Diamond Crystal)",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "kosher salt (such as Diamond Crystal)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Freshly ground black pepper",
+          "quantity": "",
+          "unit": "",
+          "item": "freshly ground black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup walnut halves or pieces, or both (see Tips)",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "walnut halves or pieces, or both",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons raisins or dried cranberries",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "raisins or dried cranberries",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Pomegranate molasses, optional, for serving",
+          "quantity": "",
+          "unit": "",
+          "item": "pomegranate molasses, optional, for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Warmed pita or white rice, for serving",
+          "quantity": "",
+          "unit": "",
+          "item": "warmed pita or white rice, for serving",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine the yogurt, cucumbers, chopped mint and garlic in a medium bowl and mix well. Chill until ready to serve.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "In a second bowl, mix the beef, onion, turmeric, 1 teaspoon of the salt and plenty of black pepper until well combined.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Heat a large well-seasoned cast-iron skillet (or other heavy-bottomed pan) over medium-high. Once very hot, break the beef into large, irregular chunks with two spoons or your hands and drop into the skillet. Cook undisturbed until charred and crisp on the bottom and browned partway up the sides, 6-8 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "With a wooden spoon, toss the meat and break up any large pieces. Add the walnuts and raisins and continue cooking, stirring often, until the meat reaches your desired doneness and the walnuts are toasted, 2-3 minutes more.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Take the yogurt from the fridge and season with the remaining teaspoon of salt. Spread it on a serving platter, top with the crispy meat, drizzle with pomegranate molasses if using, and garnish with mint leaves. Serve with warmed pita or rice.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1026425-smashed-beef-kebab-with-cucumber-yogurt",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Zaynab Issa), 2026-08-30; instructions paraphrased. NYT tips: chilling the onion before grating reduces eye irritation; pistachios or pine nuts can substitute for the walnuts."
+    },
+    "R0231": {
+      "ingredients": [
+        {
+          "rawText": "1 tablespoon cumin seeds, lightly toasted and ground",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "cumin seeds, lightly toasted and ground",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon chipotle or ancho chile powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "chipotle or ancho chile powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon salt, more to taste",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "salt, more to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/4 pounds flank or skirt steak",
+          "quantity": "1 1/4",
+          "unit": "pounds",
+          "item": "flank or skirt steak",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Zest of 1 lime (2 teaspoons)",
+          "quantity": "2 teaspoons",
+          "unit": "",
+          "item": "lime zest (from 1 lime)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup fresh lime juice",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "fresh lime juice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup plus 2 tablespoons extra-virgin olive oil",
+          "quantity": "1/4 cup + 2",
+          "unit": "tablespoons",
+          "item": "extra-virgin olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon Worcestershire sauce",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "Worcestershire sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 large garlic cloves, minced",
+          "quantity": "4",
+          "unit": "large cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large red or yellow onion, halved and sliced",
+          "quantity": "1",
+          "unit": "large",
+          "item": "red or yellow onion, halved and sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 red bell peppers (or 1 red and 1 orange or yellow), seeded and sliced 1/4 inch thick",
+          "quantity": "2",
+          "unit": "",
+          "item": "red bell peppers (or 1 red and 1 orange or yellow), seeded and sliced 1/4 inch thick",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 green bell pepper, seeded and sliced 1/4 inch thick",
+          "quantity": "1",
+          "unit": "",
+          "item": "green bell pepper, seeded and sliced 1/4 inch thick",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 jalapeño or 2 serrano chiles, minced",
+          "quantity": "1",
+          "unit": "jalapeño (or 2 serrano)",
+          "item": "chiles, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chopped cilantro",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chopped cilantro",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 large flour or 8 corn tortillas",
+          "quantity": "4 large (or 8 corn)",
+          "unit": "",
+          "item": "tortillas",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon grapeseed or canola oil",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "grapeseed or canola oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 romaine heart, cut crosswise into 1-inch wide pieces",
+          "quantity": "1",
+          "unit": "heart",
+          "item": "romaine, cut crosswise into 1-inch wide pieces",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Salsa fresca, for serving (see recipe)",
+          "quantity": "",
+          "unit": "",
+          "item": "salsa fresca, for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Queso fresco, for sprinkling",
+          "quantity": "",
+          "unit": "",
+          "item": "queso fresco, for sprinkling",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Combine 2 teaspoons ground cumin, the chile powder and 1 teaspoon salt. Cut shallow crosshatched incisions across the top and bottom of the steak, then rub the spice mix all over it (gloves recommended, the chile powder is hot). Place the steak in a resealable freezer bag.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Whisk together the lime juice and zest, 1/4 cup olive oil, the Worcestershire sauce and half the garlic. Reserve 2 tablespoons of this marinade and pour the rest into the bag with the steak. Seal, coat thoroughly, place on a sheet pan and refrigerate at least 4 hours and up to 24, massaging the bag occasionally. Refrigerate the reserved marinade too if cooking the next day.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Heat 2 tablespoons olive oil in a large, heavy skillet over medium-high. Add the onion and cook, stirring, until softened and starting to color, 4-5 minutes. Stir in the bell peppers and chile and cook, stirring, until the peppers begin to soften, about 3 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Lower the heat to medium, add the remaining garlic and cumin, and salt to taste. Cook, stirring often, until the peppers are nicely seared, softened and starting to caramelize, 5-8 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Pour in the reserved 2 tablespoons of marinade and scrape up the bottom of the pan with a wooden spoon. Stir in half the cilantro, taste and adjust seasoning, then remove from heat but keep warm.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Wrap the tortillas in foil and warm in a low oven, or wrap in a towel and warm in a steamer or the microwave.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Heat a large cast-iron skillet over medium-high, or prepare a medium-hot grill. Remove the steak from the marinade (discard the marinade) and pat dry. If using a skillet, heat the remaining tablespoon of oil (cut the steak in half and cook in batches if it doesn't fit). Cook 3-4 minutes per side for medium-rare. Rest on a cutting board, tented with foil, for 10 minutes, then slice across the grain into 1/2- to 3/4-inch strips.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Arrange the lettuce on a platter and place the sliced steak next to it. Pour any accumulated juices from the cutting board over the meat and sprinkle with the remaining cilantro. Serve the vegetables on the same platter or separately, along with warm tortillas, salsa and crumbled queso fresco.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1018078-steak-fajitas",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Martha Rose Shulman), 2026-08-30; instructions paraphrased."
+    },
+    "R0320": {
+      "ingredients": [
+        {
+          "rawText": "2 tablespoons extra-virgin olive oil, plus more for toasts",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "extra-virgin olive oil, plus more for toasts",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 garlic cloves, minced, plus 1 or 2 whole garlic cloves for rubbing toasts",
+          "quantity": "2",
+          "unit": "cloves",
+          "item": "garlic, minced, plus 1-2 whole cloves for rubbing toasts",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Pinch of crushed red pepper",
+          "quantity": "pinch",
+          "unit": "",
+          "item": "crushed red pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 pounds mussels, cleaned",
+          "quantity": "4",
+          "unit": "pounds",
+          "item": "mussels, cleaned",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup white wine or water",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "white wine or water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 baguette, split lengthwise, then cut crosswise in half",
+          "quantity": "1",
+          "unit": "",
+          "item": "baguette, split lengthwise, then cut crosswise in half",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup roughly chopped parsley",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "roughly chopped parsley",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the broiler. Warm the olive oil in a large heavy-bottomed soup pot or Dutch oven over medium heat. Add the minced garlic and red pepper and let sizzle 30 seconds without browning. Add the mussels, stir to coat, and raise the heat to high. Add the wine or water and cover. After 2 minutes, stir the mussels, replace the lid, and continue cooking until all the mussels have opened, 6-8 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Brush the cut sides of the baguette pieces with oil and toast cut-side up under the broiler. Rub the toasts with the remaining garlic cloves.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Stir the chopped parsley into the mussels, then ladle the mussels and broth into bowls. Serve with the garlic toasts.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1017709-steamed-mussels-with-garlic-and-parsley",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (David Tanis), 2026-08-30; instructions paraphrased. Top reader tip: some cooks pull mussels out with a slotted spoon as soon as they open (rather than waiting for the batch to finish) to avoid overcooking, keeping them warm while the broth reduces. This recipe is saved in your NYT Cooking Recipe Box, but has no private note attached."
+    },
+    "R0076": {
+      "ingredients": [
+        {
+          "rawText": "2 sticks (16 tablespoons) butter, more for pan and parchment paper",
+          "quantity": "2 sticks (16 tablespoons)",
+          "unit": "",
+          "item": "butter, more for pan and parchment paper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 ounces bittersweet chocolate",
+          "quantity": "8",
+          "unit": "ounces",
+          "item": "bittersweet chocolate",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup dark brown sugar, such as muscovado",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "dark brown sugar, such as muscovado",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup granulated sugar",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "granulated sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 eggs",
+          "quantity": "4",
+          "unit": "",
+          "item": "eggs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons vanilla extract",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup flour",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup chopped walnuts or 3/4 cup whole walnuts, optional",
+          "quantity": "1/2 cup chopped or 3/4 cup whole",
+          "unit": "",
+          "item": "walnuts, optional",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Butter a 13-by-9-inch baking pan and line with buttered parchment paper. Preheat the oven to 350°F. Melt the butter, chocolate and both sugars together in a double boiler over barely simmering water, or in a microwave on low power, and let cool slightly. In a large bowl or mixer, whisk the eggs, then whisk in the salt and vanilla.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Whisk the chocolate mixture into the eggs. Fold in the flour just until combined, then stir in the chopped walnuts if using. Pour the batter into the prepared pan; if using whole walnuts, arrange them on top of the batter. Bake 35-40 minutes, until shiny and beginning to crack on top. Cool in the pan on a rack.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1017216-supernatural-brownies",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Nick Malgieri, adapted by Julia Moskin), 2026-08-30; instructions paraphrased. NYT tip: for best flavor, bake a day before serving, then cool and store tightly wrapped."
+    },
+    "R0241": {
+      "ingredients": [
+        {
+          "rawText": "Nonstick spray",
+          "quantity": "",
+          "unit": "",
+          "item": "nonstick spray",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "9 whole graham crackers (about 135 grams), or store-bought graham cracker crumbs (about 1 cup)",
+          "quantity": "9 whole (about 135 g) or 1 cup crumbs",
+          "unit": "",
+          "item": "graham crackers or store-bought graham cracker crumbs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/4 cups/160 grams all-purpose flour",
+          "quantity": "1 1/4 cups / 160",
+          "unit": "grams",
+          "item": "all-purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/4 teaspoons baking powder",
+          "quantity": "1 1/4",
+          "unit": "teaspoons",
+          "item": "baking powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon fine sea salt",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "fine sea salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup/225 grams unsalted butter (2 sticks), at room temperature",
+          "quantity": "1 cup / 225",
+          "unit": "grams",
+          "item": "unsalted butter (2 sticks), at room temperature",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 packed cup/220 grams dark brown sugar",
+          "quantity": "1 packed cup / 220",
+          "unit": "grams",
+          "item": "dark brown sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup/100 grams granulated sugar",
+          "quantity": "1/2 cup / 100",
+          "unit": "grams",
+          "item": "granulated sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 large eggs, at room temperature",
+          "quantity": "2",
+          "unit": "large",
+          "item": "eggs, at room temperature",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon vanilla extract",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 ounces/225 grams bittersweet chocolate, coarsely chopped into chunks",
+          "quantity": "8 ounces / 225",
+          "unit": "grams",
+          "item": "bittersweet chocolate, coarsely chopped into chunks",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 1/2 cups/150 grams mini marshmallows",
+          "quantity": "2 1/2 cups / 150",
+          "unit": "grams",
+          "item": "mini marshmallows",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 350°F with racks in the upper and lower thirds. Coat a 9-by-13-inch pan with nonstick spray and line with parchment, leaving 2 inches of excess on the long sides to help lift the blondies out later.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "If using whole graham crackers, pulse them in a food processor (or crush in a bag with a rolling pin) into a fine powder. Add the flour, baking powder and salt to the crumbs and pulse a few times to combine.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "In a stand mixer with the paddle attachment, cream the butter, brown sugar and granulated sugar on medium until light and fluffy, 4-5 minutes. Add the eggs one at a time, mixing well after each and scraping the bowl.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Mix in the vanilla. On low speed, add the graham crumb mixture and mix just to combine. Mix in about 3/4 of the chocolate. Transfer the dough to the prepared pan and press into an even layer with damp hands.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Bake on the lower rack until golden at the edges with a crackly surface, 30-32 minutes. Remove from the oven, sprinkle the marshmallows evenly over the top, and return to the upper rack. Bake until the marshmallows soften and turn golden brown, 6-8 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Remove the pan. If any marshmallows have puffed up, pop them with a toothpick or skewer (they deflate easily). Sprinkle the reserved chocolate over the top and return to the upper rack; bake until the chocolate is melted and the marshmallows lightly toasted, about 2 minutes. Cool on a rack for 45 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Run a thin knife between the blondies and the pan on the short sides, then lift out using the parchment sling. Cool 10 more minutes, then slice into 12 pieces and serve.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1020331-smores-blondies",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Erin Jeanne McDowell), 2026-08-30; instructions paraphrased."
+    },
+    "R0181": {
+      "ingredients": [
+        {
+          "rawText": "1 pound noodles, frozen or (preferably) fresh",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "noodles, frozen or (preferably) fresh",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons sesame oil, plus a splash",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "sesame oil, plus a splash",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 1/2 tablespoons soy sauce",
+          "quantity": "3 1/2",
+          "unit": "tablespoons",
+          "item": "soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons rice vinegar",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "rice vinegar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons sesame paste (preferably Chinese)",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "sesame paste (preferably Chinese)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon smooth peanut butter",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "smooth peanut butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon granulated sugar",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "granulated sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon finely grated ginger",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "finely grated ginger",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons minced garlic",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "minced garlic",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons chile-garlic paste, chile crisp or chile oil, or to taste",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "chile-garlic paste, chile crisp or chile oil, or to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Half a cucumber, peeled, seeded and cut into 1/8-inch by 1/8-inch by 2-inch sticks",
+          "quantity": "1/2",
+          "unit": "",
+          "item": "cucumber, peeled, seeded and cut into 1/8-inch by 1/8-inch by 2-inch sticks",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chopped roasted peanuts",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chopped roasted peanuts",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Bring a large pot of water to a boil. Add the noodles and cook until barely tender, about 5 minutes — they should retain a hint of chewiness.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Drain the noodles, rinse with cold water, drain again, and toss with a splash of sesame oil.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "In a medium bowl, whisk together the remaining 2 tablespoons sesame oil, the soy sauce, rice vinegar, sesame paste, peanut butter, sugar, ginger, garlic and chile-garlic paste.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Pour the sauce over the noodles and toss to coat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Transfer to a serving bowl and garnish with the cucumber and peanuts.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/9558-takeout-style-sesame-noodles",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Sam Sifton), 2026-08-30; instructions paraphrased. NYT tip: the Chinese sesame paste called for is made from toasted sesame seeds, not the same as tahini (untoasted); tahini can substitute in a pinch with a little extra toasted sesame oil and peanut butter to compensate."
+    },
+    "R0379": {
+      "ingredients": [
+        {
+          "rawText": "2 1/4 cups all-purpose flour",
+          "quantity": "2 1/4",
+          "unit": "cups",
+          "item": "all-purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon baking soda",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "baking soda",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon salt",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup butter (2 sticks), softened",
+          "quantity": "1 cup (2 sticks)",
+          "unit": "",
+          "item": "butter, softened",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup granulated sugar",
+          "quantity": "3/4",
+          "unit": "cup",
+          "item": "granulated sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup packed brown sugar",
+          "quantity": "3/4",
+          "unit": "cup",
+          "item": "packed brown sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon vanilla extract",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 large eggs",
+          "quantity": "2",
+          "unit": "large",
+          "item": "eggs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cups/12 ounces semisweet chocolate chips",
+          "quantity": "2 cups / 12",
+          "unit": "ounces",
+          "item": "semisweet chocolate chips",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup chopped nuts (optional)",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "chopped nuts (optional)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 375°F. Combine the flour, baking soda and salt in a small bowl. In a large bowl, beat the butter, granulated sugar, brown sugar and vanilla until creamy. Add the eggs one at a time, beating well after each addition. Gradually beat in the flour mixture, then stir in the chocolate chips and nuts if using. Drop by rounded tablespoons onto ungreased baking sheets.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Bake 9-11 minutes, until golden brown. Cool on the baking sheets 2 minutes, then move to wire racks to cool completely.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1019232-toll-house-chocolate-chip-cookies",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (The New York Times), 2026-08-30; instructions paraphrased."
     }
   }
 }
