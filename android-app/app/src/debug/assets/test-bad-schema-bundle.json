@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 99,
+  "generatedAt": "2026-01-01T00:00:00Z",
+  "source": {"database": "test", "canonicalRecipeCount": 0, "contract": "test fixture"},
+  "recipes": []
+}

@@ -107,3 +107,111 @@ For your current Brother scan workflow, keep scanning in 10-15 sheet batches to
 ```bash
 python3 recipe_preprocess.py process /media/nas/RecipeScans --latest
 ```
+
+## Android App (Phase 3)
+
+A native Android tablet app lives in [`android-app/`](android-app/). It imports the
+Phase 2 archive's `recipe-app-import.json` bundle into an offline Room database and
+provides a searchable recipe library and detail view. See
+[`android-app/ARCHITECTURE.md`](android-app/ARCHITECTURE.md) for the internal layering.
+
+### Prerequisites
+
+- JDK 17+ (built and tested against OpenJDK 21).
+- Android SDK with `platform-tools`, `platforms;android-34`, and
+  `build-tools;34.0.0` installed. Point `android-app/local.properties` at it with
+  `sdk.dir=/path/to/Android/Sdk` (this file is machine-specific and not committed).
+- No system-wide Gradle install is required — the project uses the Gradle wrapper
+  (`./gradlew`), committed under `android-app/gradle/wrapper/`.
+- To run instrumented UI tests: a connected device or emulator (AVD) with API 26+.
+  An x86_64 tablet AVD (e.g. `google_apis` system image, API 34) works well and only
+  needs `/dev/kvm` access for hardware acceleration.
+
+### Build
+
+```bash
+cd android-app
+./gradlew assembleDebug
+```
+
+The debug APK is written to `android-app/app/build/outputs/apk/debug/app-debug.apk`.
+
+### Test
+
+```bash
+cd android-app
+./gradlew testDebugUnitTest        # JUnit + Robolectric: import, DAO, search, ViewModel tests
+./gradlew lintDebug                # Android lint
+./gradlew connectedDebugAndroidTest  # Compose UI tests; requires a connected device/emulator
+```
+
+### How the import bundle is generated and packaged
+
+`recipe_export.py` (this directory) reads the archive SQLite database
+(`/media/nas/RecipeScans/.processed/archive/recipe-archive.sqlite`) and writes
+`recipe-app-import.json` next to it:
+
+```bash
+python3 recipe_export.py /media/nas/RecipeScans/.processed/archive/recipe-archive.sqlite
+```
+
+The Android app never reads that path directly and never bundles a second checked-in
+copy of the JSON. Instead, a Gradle task (`copyImportBundle`, wired into `preBuild`)
+copies the current bundle into a generated, gitignored assets directory
+(`app/build/generated/assets/importBundle/`) at build time, so `./gradlew assembleDebug`
+or `./gradlew testDebugUnitTest` always package whatever the archive last exported. To
+point at a different bundle path (e.g. a snapshot for testing), pass:
+
+```bash
+./gradlew assembleDebug -PrecipeBundleSource=/path/to/other-import.json
+```
+
+### How to force or rerun an import
+
+The app re-imports the bundled `recipe-app-import.json` automatically on every cold
+start (idempotent — see [`ImportService`](android-app/app/src/main/kotlin/com/recipearchive/app/data/import/ImportService.kt)).
+From the Library screen, an import failure shows a "Retry import" button that reruns
+the same import. There is currently no in-app "pick a different file" flow; to import
+a different bundle during development, change `-PrecipeBundleSource` (above) and
+rebuild.
+
+### Database/schema overview
+
+Room database `RecipeDatabase` (schema version 1, exported to `android-app/app/schemas/`
+for migration testing):
+
+- **Import-owned** (fully replaced per recipe on every import): `recipes`,
+  `ingredients`, `instructions`, `recipe_pages`, `handwritten_notes`,
+  `source_evidence`, `recipe_review_flags`, and the FTS4 search index
+  (`recipe_search_documents` / `recipe_search_fts`).
+- **App-owned** (never touched by import beyond creating a default row for new
+  recipes): `recipe_app_state` — favorite, personal rating, personal notes, review
+  completion.
+- **Audit**: `import_runs` — one row per import attempt with counts and status.
+
+Recipes are upserted by their stable `id` using an explicit insert-or-update (not
+`INSERT OR REPLACE`), because SQLite implements `REPLACE` as a physical
+delete-then-insert that would cascade-delete every foreign-key child row — including
+`recipe_app_state` — on every reimport.
+
+### Known Phase 3 limitations
+
+- Scan images and PDFs stay on the NAS; only their path references are stored. The
+  app does not copy or display scan imagery yet (see "Original OCR" and "Scan pages"
+  in the detail screen for the text-only provenance that is shown).
+- No cooking mode, meal planning, shopping lists, pantry, recommendations, multi-user
+  profiles, sync, auth, or nutrition calculation — intentionally out of scope for
+  this phase.
+- Two-pane (list + detail) tablet layout was not built; the detail screen is
+  full-screen even on large tablets, reached via standard back/forward navigation.
+- Compose UI tests were only run against `connectedDebugAndroidTest` on a single
+  local x86_64 AVD; no CI device matrix exists yet.
+
+### Future phases
+
+`recipe_app_state` and `import_runs` establish the pattern for further app-owned
+data: cooking mode can add a `cook_history` table keyed by `recipeId`; meal planning
+can add `meal_plans` / `meal_plan_entries` referencing `recipeId`; shopping lists can
+add `shopping_lists` / `shopping_list_items` optionally derived from a recipe's
+ingredients. None of these should ever be written to by the importer, following the
+same ownership boundary as favorites/notes today.

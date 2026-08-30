@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-01-01T00:00:00Z",
+  "source": {"database": "test", "canonicalRecipeCount": 2, "contract": "test fixture"},
+  "recipes": [
+    {
+      "id": "R0001",
+      "title": "Chicken Soup",
+      "rawText": "Ingredients:\n1 cup chicken\nInstructions:\n1. Boil water",
+      "wordCount": 10,
+      "ingredients": [
+        {"rawText": "1 cup chicken", "quantity": "1", "unit": "cup", "item": "chicken", "parseStatus": "candidate"}
+      ],
+      "instructions": [
+        {"order": 1, "text": "Boil water", "parseStatus": "candidate"}
+      ],
+      "pageRefs": ["Batch_01__scan.pdf#p001"],
+      "arrangementStatus": "single_group",
+      "duplicateStatus": "canonical",
+      "reviewFlags": ["handwriting_review"],
+      "handwritingPageRefs": [],
+      "source": {"publisher": "Grandma's Notebook", "domain": "", "url": "", "status": "confirmed", "evidence": []},
+      "handwrittenNotes": []
+    },
+    {
+      "id": "R0002",
+      "title": "Grandma's Apple Pie",
+      "rawText": "A family favorite dessert.",
+      "wordCount": 4,
+      "ingredients": [],
+      "instructions": [],
+      "pageRefs": ["Batch_02__scan.pdf#p010"],
+      "arrangementStatus": "confirmed_single",
+      "duplicateStatus": "canonical",
+      "reviewFlags": [],
+      "handwritingPageRefs": [],
+      "source": {"publisher": "Food Network", "domain": "foodnetwork.com", "url": "https://foodnetwork.com/apple-pie", "status": "printed_url", "evidence": []},
+      "handwrittenNotes": []
+    }
+  ]
+}
