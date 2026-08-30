@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
@@ -73,9 +74,9 @@ private val RecipeTypography = Typography(
 )
 
 private val RecipeShapes = Shapes(
-    small = RoundedCornerShape(10),
-    medium = RoundedCornerShape(18),
-    large = RoundedCornerShape(28),
+    small = RoundedCornerShape(10.dp),
+    medium = RoundedCornerShape(18.dp),
+    large = RoundedCornerShape(28.dp),
 )
 
 @Composable

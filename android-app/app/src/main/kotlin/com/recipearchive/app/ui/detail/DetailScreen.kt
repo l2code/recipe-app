@@ -120,12 +120,22 @@ fun DetailContent(
             if (detail.ingredients.isEmpty()) {
                 Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
             } else {
+                val reviewCount = detail.ingredients.count { it.parseStatus == "needs_review" }
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    if (reviewCount > 0) {
+                        Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.tertiaryContainer) {
+                            Text(
+                                "$reviewCount ${if (reviewCount == 1) "line may" else "lines may"} need cleanup",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            )
+                        }
+                    }
                     detail.ingredients.forEach { ingredient ->
                         IngredientRow(
                             text = listOf(ingredient.quantity, ingredient.unit, ingredient.item)
                                 .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
-                            needsReview = ingredient.parseStatus == "needs_review",
                         )
                     }
                 }
@@ -181,9 +191,14 @@ private fun SourceSection(detail: RecipeDetailUi) {
         color = MaterialTheme.colorScheme.onPrimaryContainer,
     )
     if (url.isNotBlank()) Text(url, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-    detail.sourceEvidence.take(2).forEach { evidence ->
+    detail.sourceEvidence
+        .map { it.evidenceText.trim() }
+        .filter { it.isNotBlank() && !it.equals(url, ignoreCase = true) && !it.equals(publisher, ignoreCase = true) }
+        .distinct()
+        .take(2)
+        .forEach { evidence ->
         Text(
-            evidence.evidenceText,
+            evidence,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.72f),
         )
@@ -223,15 +238,11 @@ private fun ContentCard(title: String, icon: androidx.compose.ui.graphics.vector
 }
 
 @Composable
-private fun IngredientRow(text: String, needsReview: Boolean) {
+private fun IngredientRow(text: String) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
         Box(Modifier.padding(top = 9.dp).size(7.dp).background(MaterialTheme.colorScheme.secondary, CircleShape))
         Spacer(Modifier.width(12.dp))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        if (needsReview) {
-            Spacer(Modifier.width(8.dp))
-            Icon(Icons.Filled.Warning, contentDescription = "Ingredient needs review", modifier = Modifier.size(17.dp), tint = MaterialTheme.colorScheme.tertiary)
-        }
     }
 }
 
