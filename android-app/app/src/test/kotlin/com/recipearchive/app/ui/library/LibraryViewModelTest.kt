@@ -37,7 +37,7 @@ class LibraryViewModelTest {
     @Before
     fun setUp() {
         database = TestDatabaseFactory.create()
-        repository = RecipeRepository(database, ImportService(database))
+        repository = RecipeRepository(database, ImportService(database, ioDispatcher = testDispatcher))
     }
 
     @After

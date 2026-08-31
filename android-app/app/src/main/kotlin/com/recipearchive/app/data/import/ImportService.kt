@@ -16,6 +16,7 @@ import com.recipearchive.app.data.local.entity.RecipeReviewFlagEntity
 import com.recipearchive.app.data.local.entity.RecipeSearchDocumentEntity
 import com.recipearchive.app.data.local.entity.SourceEvidenceEntity
 import com.recipearchive.app.data.organization.RecipeCategories
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -33,15 +34,16 @@ class ImportService(
     private val database: RecipeDatabase,
     private val json: Json = Json { ignoreUnknownKeys = true },
     private val clock: () -> Long = System::currentTimeMillis,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     suspend fun importFromAssets(context: Context, assetName: String = DEFAULT_ASSET_NAME): ImportOutcome {
-        val text = withContext(Dispatchers.IO) {
+        val text = withContext(ioDispatcher) {
             context.assets.open(assetName).bufferedReader().use { it.readText() }
         }
         return import(text)
     }
 
-    suspend fun import(jsonText: String): ImportOutcome = withContext(Dispatchers.IO) {
+    suspend fun import(jsonText: String): ImportOutcome = withContext(ioDispatcher) {
         val startedAt = clock()
 
         val envelope = try {
