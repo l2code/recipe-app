@@ -161,7 +161,7 @@ def export_bundle(
         exported.append(
             {
                 "id": row["recipe_id"],
-                "title": row["title"] or "Untitled recipe",
+                "title": override.get("title") or row["title"] or "Untitled recipe",
                 "rawText": row["text"] or "",
                 "ingredients": ingredients,
                 "instructions": instructions,

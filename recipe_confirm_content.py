@@ -11,6 +11,7 @@ Usage:
 
 Where the --data file looks like:
     {
+      "title": "Optional cleaned-up title, overrides the raw OCR'd title",
       "ingredients": [
         {"rawText": "...", "quantity": "153", "unit": "grams", "item": "00 flour", "parseStatus": "confirmed"}
       ],
@@ -21,6 +22,10 @@ Where the --data file looks like:
       "sourceStatus": "confirmed",
       "note": "Confirmed against NYT Cooking on 2026-08-30."
     }
+
+All fields are optional; only the ones with a real value need to be
+supplied. `title`, `sourceUrl`, `sourceStatus`, and `note` can each be set
+independently of ingredients/instructions.
 """
 
 from __future__ import annotations
