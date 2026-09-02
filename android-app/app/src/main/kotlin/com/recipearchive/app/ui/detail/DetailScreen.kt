@@ -2,6 +2,7 @@ package com.recipearchive.app.ui.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -316,7 +317,6 @@ private fun RecipeHero(
             companion = companion,
             onRatingChanged = onRatingChanged,
             onCategoryClick = { showOrganizer = true },
-            onImportedNotesClick = onShowOriginalRecipe,
         )
     }
     val actions: @Composable () -> Unit = {
@@ -333,7 +333,7 @@ private fun RecipeHero(
                 Text(if (companion.activeSession == null) "Start cooking" else "Resume")
             }
             Box {
-                IconButton(onClick = { showMoreMenu = true }) {
+                IconButton(onClick = { showMoreMenu = true }, modifier = Modifier.size(40.dp)) {
                     Icon(Icons.Filled.MoreVert, contentDescription = "More recipe actions")
                 }
                 DropdownMenu(expanded = showMoreMenu, onDismissRequest = { showMoreMenu = false }) {
@@ -342,7 +342,15 @@ private fun RecipeHero(
                         onClick = { showMoreMenu = false; showOrganizer = true },
                     )
                     DropdownMenuItem(
-                        text = { Text("Original Recipe") },
+                        text = {
+                            val pendingCount = detail.handwrittenNotes.size.takeIf {
+                                it > 0 && detail.appState?.importedNotesReviewStatus.orEmpty() == "pending"
+                            }
+                            Text(
+                                pendingCount?.let { "$it imported ${if (it == 1) "note" else "notes"} to review" }
+                                    ?: "Original Recipe",
+                            )
+                        },
                         onClick = { showMoreMenu = false; onShowOriginalRecipe() },
                     )
                     DropdownMenuItem(
@@ -396,14 +404,11 @@ private fun RecipeMetadata(
     companion: RecipeCompanionUi,
     onRatingChanged: (Int?) -> Unit,
     onCategoryClick: () -> Unit,
-    onImportedNotesClick: () -> Unit,
 ) {
     val lastMade = companion.sessions.firstOrNull()?.let { it.finishedAt ?: it.startedAt }
-    val importedPending = detail.handwrittenNotes.isNotEmpty() &&
-        detail.appState?.importedNotesReviewStatus.orEmpty() == "pending"
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(7.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
@@ -413,20 +418,19 @@ private fun RecipeMetadata(
             modifier = Modifier.align(Alignment.CenterVertically),
         )
         Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
-        TextButton(onClick = onCategoryClick, contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)) {
-            Text(detail.appState?.category ?: "Choose category")
-        }
+        Text(
+            detail.appState?.category ?: "Choose category",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.align(Alignment.CenterVertically).clickable(onClick = onCategoryClick),
+        )
         Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
         RatingRow(detail.appState?.personalRating, onRatingChanged)
         if (companion.madeCount > 0) {
             Text("· Made ${companion.madeCount}×", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(Alignment.CenterVertically))
             lastMade?.let {
                 Text("· Last ${formatSessionDateShort(it)}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(Alignment.CenterVertically))
-            }
-        }
-        if (importedPending) {
-            TextButton(onClick = onImportedNotesClick, contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)) {
-                Text("${detail.handwrittenNotes.size} imported ${if (detail.handwrittenNotes.size == 1) "note" else "notes"} to review")
             }
         }
     }
