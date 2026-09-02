@@ -74,9 +74,7 @@ fun CookingScreen(
     val companion by viewModel.companion.collectAsState()
     var showFinishDialog by remember { mutableStateOf(false) }
     var showDiscardDialog by remember { mutableStateOf(false) }
-    var showSessionNoteDialog by remember { mutableStateOf(false) }
     var completedSteps by remember(recipe?.recipe?.id) { mutableStateOf<Set<Long>>(emptySet()) }
-    var sessionNote by remember(session?.id) { mutableStateOf("") }
     var stepNotes by remember(session?.id) { mutableStateOf<Map<Long, String>>(emptyMap()) }
     var stepTimers by remember(session?.id) { mutableStateOf<Map<Long, StepTimerState>>(emptyMap()) }
     var editingStep by remember { mutableStateOf<InstructionEntity?>(null) }
@@ -109,11 +107,16 @@ fun CookingScreen(
                         Spacer(Modifier.width(8.dp))
                         Text(
                             if (isPaused) "PAUSED" else "COOKING",
-                            style = MaterialTheme.typography.labelLarge,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
                             color = if (isPaused) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
                         )
-                        Spacer(Modifier.width(12.dp))
-                        Text("· ${session?.let { formatElapsed(cookingElapsed(now, it)) } ?: "00:00"}", style = MaterialTheme.typography.titleMedium)
+                        Spacer(Modifier.width(16.dp))
+                        Text(
+                            session?.let { formatElapsed(cookingElapsed(now, it)) } ?: "00:00",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.SemiBold,
+                        )
                     }
                 },
                 navigationIcon = {
@@ -126,9 +129,7 @@ fun CookingScreen(
                         Text(if (session?.pausedAt == null) "Pause" else "Resume")
                     }
                     Spacer(Modifier.width(8.dp))
-                    TextButton(onClick = { showSessionNoteDialog = true }) { Text("Add Note") }
-                    OutlinedButton(onClick = { showFinishDialog = true }) { Text("Finish") }
-                    TextButton(onClick = { showDiscardDialog = true }) { Text("Discard") }
+                    Button(onClick = { showFinishDialog = true }) { Text("Finish") }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
@@ -188,19 +189,15 @@ fun CookingScreen(
         val stepNoteSummary = recipe?.instructions.orEmpty().mapNotNull { instruction ->
             stepNotes[instruction.id]?.takeIf(String::isNotBlank)?.let { "Step ${instruction.displayOrder}: $it" }
         }
-        val combinedNotes = (listOf(sessionNote) + stepNoteSummary).filter(String::isNotBlank).joinToString("\n")
+        val combinedNotes = stepNoteSummary.joinToString("\n")
         FinishCookingDialog(
             initialNotes = combinedNotes,
             onDismiss = { showFinishDialog = false },
+            onRequestDiscard = {
+                showFinishDialog = false
+                showDiscardDialog = true
+            },
             onConfirm = { notes, rating -> viewModel.finish(notes, rating, onSessionComplete) },
-        )
-    }
-    if (showSessionNoteDialog) {
-        SessionNoteDialog(
-            title = "Cooking session note",
-            initialNote = sessionNote,
-            onDismiss = { showSessionNoteDialog = false },
-            onSave = { sessionNote = it; showSessionNoteDialog = false },
         )
     }
     editingStep?.let { step ->
@@ -504,7 +501,12 @@ private fun SessionNoteDialog(
 }
 
 @Composable
-private fun FinishCookingDialog(initialNotes: String, onDismiss: () -> Unit, onConfirm: (String, Int?) -> Unit) {
+private fun FinishCookingDialog(
+    initialNotes: String,
+    onDismiss: () -> Unit,
+    onRequestDiscard: () -> Unit,
+    onConfirm: (String, Int?) -> Unit,
+) {
     var notes by remember(initialNotes) { mutableStateOf(initialNotes) }
     var rating by remember { mutableIntStateOf(0) }
     AlertDialog(
@@ -538,7 +540,14 @@ private fun FinishCookingDialog(initialNotes: String, onDismiss: () -> Unit, onC
         confirmButton = {
             Button(onClick = { onConfirm(notes, rating.takeIf { it > 0 }) }) { Text("Save session") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Keep cooking") } },
+        dismissButton = {
+            Row {
+                TextButton(onClick = onRequestDiscard) {
+                    Text("Discard session", color = MaterialTheme.colorScheme.error)
+                }
+                TextButton(onClick = onDismiss) { Text("Keep cooking") }
+            }
+        },
     )
 }
 
