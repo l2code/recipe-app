@@ -13,6 +13,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 
 class CookingCompanionRepository(private val database: RecipeDatabase) {
+
+    fun observeCookingHistory(): Flow<List<CookingHistoryItemUi>> = combine(
+        database.cookingSessionDao().observeAllConfirmed(),
+        database.recipeDao().observeAll(),
+    ) { sessions, recipes ->
+        val titlesById = recipes.associate { it.id to it.title }
+        sessions.map { session ->
+            CookingHistoryItemUi(session, titlesById[session.recipeId] ?: "Recipe")
+        }
+    }
     fun observeRecipe(recipeId: String): Flow<RecipeCompanionUi> = combine(
         database.cookingSessionDao().observeConfirmedForRecipe(recipeId),
         database.cookingSessionDao().observeActiveForRecipe(recipeId),
@@ -107,13 +117,22 @@ class CookingCompanionRepository(private val database: RecipeDatabase) {
     suspend fun confirmSession(sessionId: String, notes: String, rating: Int?) {
         val session = database.cookingSessionDao().getById(sessionId) ?: return
         val finishedAt = System.currentTimeMillis()
+        val timerStoppedAt = session.pausedAt ?: finishedAt
         database.cookingSessionDao().confirm(
             sessionId = sessionId,
             finishedAt = finishedAt,
-            durationMillis = (finishedAt - session.startedAt).coerceAtLeast(0),
+            durationMillis = (timerStoppedAt - session.startedAt - session.totalPausedMillis).coerceAtLeast(0),
             notes = notes.trim(),
             rating = rating,
         )
+    }
+
+    suspend fun pauseSession(sessionId: String) {
+        database.cookingSessionDao().pause(sessionId, System.currentTimeMillis())
+    }
+
+    suspend fun resumeSession(sessionId: String) {
+        database.cookingSessionDao().resume(sessionId, System.currentTimeMillis())
     }
 
     suspend fun discardSession(sessionId: String) {

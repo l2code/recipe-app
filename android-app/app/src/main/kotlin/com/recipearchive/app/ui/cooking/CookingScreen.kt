@@ -57,6 +57,7 @@ import com.recipearchive.app.data.companion.PantryStatus
 import com.recipearchive.app.data.companion.RecipeCompanionUi
 import com.recipearchive.app.data.local.entity.IngredientEntity
 import com.recipearchive.app.data.local.entity.InstructionEntity
+import com.recipearchive.app.data.local.entity.CookingSessionEntity
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import kotlinx.coroutines.delay
 
@@ -92,12 +93,22 @@ fun CookingScreen(
         topBar = {
             TopAppBar(
                 title = {
+                    val isPaused = session?.pausedAt != null
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(Modifier.size(9.dp).background(MaterialTheme.colorScheme.primary, CircleShape))
+                        Box(
+                            Modifier.size(9.dp).background(
+                                if (isPaused) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
+                                CircleShape,
+                            ),
+                        )
                         Spacer(Modifier.width(8.dp))
-                        Text("COOKING", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text(
+                            if (isPaused) "PAUSED" else "COOKING",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (isPaused) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
+                        )
                         Spacer(Modifier.width(12.dp))
-                        Text("· ${formatElapsed(now - (session?.startedAt ?: now))}", style = MaterialTheme.typography.titleMedium)
+                        Text("· ${session?.let { formatElapsed(cookingElapsed(now, it)) } ?: "00:00"}", style = MaterialTheme.typography.titleMedium)
                     }
                 },
                 navigationIcon = {
@@ -106,6 +117,10 @@ fun CookingScreen(
                     }
                 },
                 actions = {
+                    OutlinedButton(onClick = viewModel::toggleTimer) {
+                        Text(if (session?.pausedAt == null) "Pause" else "Resume")
+                    }
+                    Spacer(Modifier.width(8.dp))
                     OutlinedButton(onClick = { showFinishDialog = true }) { Text("Finish") }
                     TextButton(onClick = { showDiscardDialog = true }) { Text("Discard") }
                 },
@@ -387,4 +402,9 @@ private fun formatElapsed(milliseconds: Long): String {
     val seconds = totalSeconds % 60
     return if (hours > 0) "%d:%02d:%02d".format(hours, minutes, seconds)
     else "%02d:%02d".format(minutes, seconds)
+}
+
+private fun cookingElapsed(now: Long, session: CookingSessionEntity): Long {
+    val timerEnd = session.pausedAt ?: now
+    return (timerEnd - session.startedAt - session.totalPausedMillis).coerceAtLeast(0)
 }

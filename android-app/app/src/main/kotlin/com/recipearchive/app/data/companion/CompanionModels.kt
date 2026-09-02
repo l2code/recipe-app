@@ -57,3 +57,8 @@ data class MealPlanItemUi(
 ) {
     val missingCount: Int get() = totalCount - availableCount
 }
+
+data class CookingHistoryItemUi(
+    val session: CookingSessionEntity,
+    val recipeTitle: String,
+)

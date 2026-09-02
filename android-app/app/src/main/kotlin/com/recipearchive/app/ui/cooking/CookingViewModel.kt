@@ -28,6 +28,13 @@ class CookingViewModel(
     val companion: StateFlow<RecipeCompanionUi> = companionRepository.observeRecipe(recipeId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), RecipeCompanionUi())
 
+    fun toggleTimer() {
+        viewModelScope.launch {
+            if (session.value?.pausedAt == null) companionRepository.pauseSession(sessionId)
+            else companionRepository.resumeSession(sessionId)
+        }
+    }
+
     fun finish(notes: String, rating: Int?, onFinished: () -> Unit) {
         viewModelScope.launch {
             companionRepository.confirmSession(sessionId, notes, rating)

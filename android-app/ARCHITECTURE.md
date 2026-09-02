@@ -77,7 +77,7 @@ list and the import-owned vs. app-owned split. Notable implementation details:
   `RecipeSearchDocumentEntity` (one row per recipe, concatenating title/raw
   OCR/ingredients/instructions/handwriting/source text). Room's own triggers keep
   the FTS shadow table in sync whenever the importer writes to the content table.
-- Schema is exported (`room.schemaLocation`) to `app/schemas/` and the v1→v2→v3→v4
+- Schema is exported (`room.schemaLocation`) to `app/schemas/` and the v1→v2→v3→v4→v5
   path is covered with `MigrationTestHelper` (see `RecipeDatabaseMigrationTest`).
 
 ## Import service

@@ -27,6 +27,8 @@ data class CookingSessionEntity(
     val origin: String = "manual",
     val status: String = "active",
     val rating: Int? = null,
+    val pausedAt: Long? = null,
+    val totalPausedMillis: Long = 0,
     val createdAt: Long,
     val updatedAt: Long,
 )

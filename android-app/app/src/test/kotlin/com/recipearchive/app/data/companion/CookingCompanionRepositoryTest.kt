@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -52,6 +53,30 @@ class CookingCompanionRepositoryTest {
         val sessionId = repository.startCooking("R0001")
         repository.discardSession(sessionId)
         assertEquals(0, repository.observeRecipe("R0001").first().madeCount)
+    }
+
+    @Test
+    fun `cooking timer pause state persists and resumes`() = runTest {
+        val sessionId = repository.startCooking("R0001")
+
+        repository.pauseSession(sessionId)
+        assertNotNull(database.cookingSessionDao().getById(sessionId)?.pausedAt)
+
+        repository.resumeSession(sessionId)
+        val resumed = database.cookingSessionDao().getById(sessionId)
+        assertNull(resumed?.pausedAt)
+        assertTrue((resumed?.totalPausedMillis ?: -1) >= 0)
+    }
+
+    @Test
+    fun `global cooking history includes confirmed sessions only`() = runTest {
+        val confirmed = repository.startCooking("R0001")
+        repository.confirmSession(confirmed, "Good soup", 5)
+        repository.startCooking("R0001")
+
+        val history = repository.observeCookingHistory().first()
+        assertEquals(1, history.size)
+        assertEquals("Chicken Soup", history.single().recipeTitle)
     }
 
     @Test

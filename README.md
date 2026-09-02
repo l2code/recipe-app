@@ -177,7 +177,7 @@ rebuild.
 
 ### Database/schema overview
 
-Room database `RecipeDatabase` (schema version 4, exported to `android-app/app/schemas/`
+Room database `RecipeDatabase` (schema version 5, exported to `android-app/app/schemas/`
 for migration testing):
 
 - **Import-owned** (fully replaced per recipe on every import): `recipes`,
@@ -190,6 +190,10 @@ for migration testing):
   `cooking_sessions`, `pantry_items`, `shopping_items` /
   `shopping_item_sources`, and `meal_plan_entries` — the persistent cooking workflow.
 - **Audit**: `import_runs` — one row per import attempt with counts and status.
+
+Cooking timers can be paused and resumed across navigation or app restarts. The
+History destination shows confirmed sessions from the current calendar week or the
+complete cooking history; active and discarded sessions are excluded.
 
 Recipes are upserted by their stable `id` using an explicit insert-or-update (not
 `INSERT OR REPLACE`), because SQLite implements `REPLACE` as a physical

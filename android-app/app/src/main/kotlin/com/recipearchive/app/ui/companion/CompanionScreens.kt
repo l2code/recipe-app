@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,8 +18,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -45,11 +48,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.companion.MealPlanItemUi
+import com.recipearchive.app.data.companion.CookingHistoryItemUi
 import com.recipearchive.app.data.companion.PantryCatalogItemUi
 import com.recipearchive.app.data.companion.PantryStatus
 import com.recipearchive.app.data.companion.ShoppingListItemUi
 import java.time.LocalDate
+import java.time.DayOfWeek
+import java.time.Instant
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAdjusters
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -229,6 +237,123 @@ private fun MealPlanRow(item: MealPlanItemUi, viewModel: CompanionViewModel, onR
             }
         }
     }
+}
+
+private enum class HistoryRange { THIS_WEEK, ALL }
+
+@Composable
+fun HistoryScreen(viewModel: CompanionViewModel, onRecipeClick: (String) -> Unit, modifier: Modifier = Modifier) {
+    val history by viewModel.cookingHistory.collectAsState()
+    var range by remember { mutableStateOf(HistoryRange.THIS_WEEK) }
+    val weekStart = remember { LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)) }
+    val visibleItems = history.filter { item ->
+        range == HistoryRange.ALL || historyDate(item) >= weekStart
+    }
+
+    CompanionScaffold(title = "Cooking History", modifier = modifier) { padding ->
+        Column(modifier = Modifier.fillMaxSize().padding(padding).padding(horizontal = 20.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(
+                    selected = range == HistoryRange.THIS_WEEK,
+                    onClick = { range = HistoryRange.THIS_WEEK },
+                    label = { Text("This week") },
+                )
+                FilterChip(
+                    selected = range == HistoryRange.ALL,
+                    onClick = { range = HistoryRange.ALL },
+                    label = { Text("All history") },
+                )
+            }
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colorScheme.secondaryContainer,
+            ) {
+                Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.History, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Spacer(Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            if (range == HistoryRange.THIS_WEEK) "${visibleItems.size} ${if (visibleItems.size == 1) "meal" else "meals"} cooked this week"
+                            else "${visibleItems.size} confirmed cooking ${if (visibleItems.size == 1) "session" else "sessions"}",
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        if (range == HistoryRange.THIS_WEEK) {
+                            Text(
+                                "Since ${weekStart.format(DateTimeFormatter.ofPattern("MMM d"))}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
+            if (visibleItems.isEmpty()) {
+                EmptyCompanionState(
+                    Icons.Filled.History,
+                    if (range == HistoryRange.THIS_WEEK) "No meals cooked this week" else "No cooking history yet",
+                    "Confirmed cooking sessions will appear here.",
+                    PaddingValues(),
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(top = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(9.dp),
+                    contentPadding = PaddingValues(bottom = 20.dp),
+                ) {
+                    items(visibleItems, key = { it.session.id }) { item ->
+                        CookingHistoryRow(item, onRecipeClick)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CookingHistoryRow(item: CookingHistoryItemUi, onRecipeClick: (String) -> Unit) {
+    Surface(
+        onClick = { onRecipeClick(item.session.recipeId) },
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(item.recipeTitle, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    formatHistoryTimestamp(item.session.finishedAt ?: item.session.startedAt),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (item.session.notes.isNotBlank()) {
+                    Text(item.session.notes, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 5.dp))
+                }
+            }
+            item.session.durationMillis?.let { duration ->
+                Text(formatHistoryDuration(duration), style = MaterialTheme.typography.labelLarge)
+            }
+            item.session.rating?.let { rating ->
+                Spacer(Modifier.width(12.dp))
+                Icon(Icons.Filled.Star, contentDescription = null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
+            }
+        }
+    }
+}
+
+private fun historyDate(item: CookingHistoryItemUi): LocalDate = Instant.ofEpochMilli(
+    item.session.finishedAt ?: item.session.startedAt,
+).atZone(ZoneId.systemDefault()).toLocalDate()
+
+private fun formatHistoryTimestamp(timestamp: Long): String = Instant.ofEpochMilli(timestamp)
+    .atZone(ZoneId.systemDefault())
+    .format(DateTimeFormatter.ofPattern("EEE, MMM d, yyyy · h:mm a"))
+
+private fun formatHistoryDuration(milliseconds: Long): String {
+    val minutes = (milliseconds / 60_000).coerceAtLeast(0)
+    return if (minutes >= 60) "${minutes / 60} hr ${minutes % 60} min" else "$minutes min"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.companion.CookingCompanionRepository
+import com.recipearchive.app.data.companion.CookingHistoryItemUi
 import com.recipearchive.app.data.companion.MealPlanItemUi
 import com.recipearchive.app.data.companion.PantryCatalogItemUi
 import com.recipearchive.app.data.companion.PantryStatus
@@ -19,6 +20,8 @@ class CompanionViewModel(private val repository: CookingCompanionRepository) : V
     val pantry: StateFlow<List<PantryCatalogItemUi>> = repository.observePantry()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val mealPlan: StateFlow<List<MealPlanItemUi>> = repository.observeMealPlan()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val cookingHistory: StateFlow<List<CookingHistoryItemUi>> = repository.observeCookingHistory()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun addPantryItem(name: String) = viewModelScope.launch { repository.addPantryItem(name) }

@@ -62,7 +62,7 @@ import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
         ShoppingItemSourceEntity::class,
         MealPlanEntryEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -216,6 +216,13 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE cooking_sessions ADD COLUMN pausedAt INTEGER")
+                db.execSQL("ALTER TABLE cooking_sessions ADD COLUMN totalPausedMillis INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         @Volatile private var instance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase =
@@ -225,7 +232,7 @@ abstract class RecipeDatabase : RoomDatabase() {
 
         private fun build(context: Context): RecipeDatabase =
             Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .build()
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Kitchen
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import androidx.navigation.navArgument
 import com.recipearchive.app.AppContainer
 import com.recipearchive.app.ui.companion.CompanionViewModel
 import com.recipearchive.app.ui.companion.MealPlanScreen
+import com.recipearchive.app.ui.companion.HistoryScreen
 import com.recipearchive.app.ui.companion.PantryScreen
 import com.recipearchive.app.ui.companion.ShoppingScreen
 import com.recipearchive.app.ui.cooking.CookingScreen
@@ -46,6 +48,7 @@ private const val ROUTE_LIBRARY = "library"
 private const val ROUTE_PLAN = "plan"
 private const val ROUTE_SHOPPING = "shopping"
 private const val ROUTE_PANTRY = "pantry"
+private const val ROUTE_HISTORY = "history"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
 private const val ARG_RECIPE_ID = "recipeId"
@@ -58,6 +61,7 @@ private val mainDestinations = listOf(
     MainDestination(ROUTE_PLAN, "Plan", Icons.Filled.CalendarMonth),
     MainDestination(ROUTE_SHOPPING, "Shopping", Icons.Filled.ShoppingCart),
     MainDestination(ROUTE_PANTRY, "Pantry", Icons.Filled.Kitchen),
+    MainDestination(ROUTE_HISTORY, "History", Icons.Filled.History),
 )
 
 @Composable
@@ -130,6 +134,12 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                     }
                     composable(ROUTE_SHOPPING) { ShoppingScreen(companionViewModel) }
                     composable(ROUTE_PANTRY) { PantryScreen(companionViewModel) }
+                    composable(ROUTE_HISTORY) {
+                        HistoryScreen(
+                            viewModel = companionViewModel,
+                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+                        )
+                    }
                     composable(
                         route = ROUTE_DETAIL,
                         arguments = listOf(navArgument(ARG_RECIPE_ID) { type = NavType.StringType }),
