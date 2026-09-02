@@ -169,7 +169,7 @@ def export_bundle(
                 "pageRefs": page_refs,
                 "arrangementStatus": row["arrangement_status"],
                 "duplicateStatus": row["duplicate_status"],
-                "reviewFlags": split_csv(row["review_flags"]),
+                "reviewFlags": override.get("reviewFlags") if override.get("reviewFlags") is not None else split_csv(row["review_flags"]),
                 "handwritingPageRefs": split_csv(row["handwriting_pages"]),
                 "source": {
                     "publisher": row["publisher"] or "",
