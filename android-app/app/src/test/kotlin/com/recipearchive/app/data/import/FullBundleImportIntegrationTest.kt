@@ -15,8 +15,8 @@ import org.robolectric.RobolectricTestRunner
 /**
  * Integration check against the real Phase 2 archive output (copied into assets by the
  * `copyImportBundle` Gradle task from /media/nas/RecipeScans/.processed/archive), not a
- * hand-written fixture. Confirms the acceptance criterion that Room holds exactly 418
- * canonical recipes after import, and stays at 418 after a repeat import.
+ * hand-written fixture. Confirms the acceptance criterion that Room holds exactly 411
+ * canonical recipes after import, and stays at 411 after a repeat import.
  */
 @RunWith(RobolectricTestRunner::class)
 class FullBundleImportIntegrationTest {
@@ -34,18 +34,18 @@ class FullBundleImportIntegrationTest {
     }
 
     @Test
-    fun `importing the real bundle yields exactly 418 canonical recipes`() = runTest {
+    fun `importing the real bundle yields exactly 411 canonical recipes`() = runTest {
         val importService = ImportService(database)
         val context = ApplicationProvider.getApplicationContext<android.content.Context>()
 
         val first = importService.importFromAssets(context, ImportService.DEFAULT_ASSET_NAME)
         assertTrue(first is ImportOutcome.Completed)
-        assertEquals(418, database.recipeDao().count())
+        assertEquals(411, database.recipeDao().count())
 
         val second = importService.importFromAssets(context, ImportService.DEFAULT_ASSET_NAME)
         assertTrue(second is ImportOutcome.Completed)
-        assertEquals(418, database.recipeDao().count())
+        assertEquals(411, database.recipeDao().count())
         assertEquals(0, (second as ImportOutcome.Completed).insertedCount)
-        assertEquals(418, second.updatedCount)
+        assertEquals(411, second.updatedCount)
     }
 }

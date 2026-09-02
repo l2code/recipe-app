@@ -11,6 +11,7 @@ sealed interface ImportOutcome {
         val importedRecipeCount: Int,
         val insertedCount: Int,
         val updatedCount: Int,
+        val deletedCount: Int,
         val skipped: List<SkippedRecipe>,
     ) : ImportOutcome
 

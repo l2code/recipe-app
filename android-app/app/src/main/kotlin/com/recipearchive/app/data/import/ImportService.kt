@@ -79,6 +79,7 @@ class ImportService(
 
         var insertedCount = 0
         var updatedCount = 0
+        var deletedCount = 0
         val now = clock()
 
         try {
@@ -87,6 +88,14 @@ class ImportService(
                 for (dto in validRecipes) {
                     val isNew = writeRecipe(dto, envelope, now)
                     if (isNew) insertedCount++ else updatedCount++
+                }
+                val bundleIds = validRecipes.mapTo(mutableSetOf()) { it.id }
+                val recipeDao = database.recipeDao()
+                for (existingId in recipeDao.getAllIds()) {
+                    if (existingId !in bundleIds) {
+                        recipeDao.deleteById(existingId)
+                        deletedCount++
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -104,13 +113,13 @@ class ImportService(
             importedRecipeCount = validRecipes.size,
             insertedCount = insertedCount,
             updatedCount = updatedCount,
-            deletedCount = 0,
+            deletedCount = deletedCount,
             errorCount = skipped.size,
             status = status,
             errorSummary = skipped.takeIf { it.isNotEmpty() }?.let(::summarize),
         )
         val runId = database.importRunDao().insert(run)
-        ImportOutcome.Completed(runId, status, validRecipes.size, insertedCount, updatedCount, skipped)
+        ImportOutcome.Completed(runId, status, validRecipes.size, insertedCount, updatedCount, deletedCount, skipped)
     }
 
     /** Returns true if this recipe was newly inserted, false if it already existed. */

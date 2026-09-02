@@ -140,6 +140,25 @@ class ImportServiceTest {
     }
 
     @Test
+    fun `recipe absent from a later bundle is deleted along with its child rows`() = runTest {
+        val firstBundle = TestBundleFixtures.envelope(
+            recipesJson = "${TestBundleFixtures.chickenSoup},${TestBundleFixtures.applePie}",
+        )
+        importService.import(firstBundle)
+        database.recipeAppStateDao().setFavorite("R0001", true, 123L)
+
+        val secondBundle = TestBundleFixtures.envelope(recipesJson = TestBundleFixtures.applePie)
+        val outcome = importService.import(secondBundle) as ImportOutcome.Completed
+
+        assertEquals(1, outcome.deletedCount)
+        assertEquals(1, database.recipeDao().count())
+        assertNull(database.recipeDao().getById("R0001"))
+        assertNotNull(database.recipeDao().getById("R0002"))
+        assertTrue(database.ingredientDao().observeForRecipe("R0001").first().isEmpty())
+        assertNull(database.recipeAppStateDao().getForRecipe("R0001"))
+    }
+
+    @Test
     fun `malformed bundle JSON leaves previous data intact`() = runTest {
         val goodBundle = TestBundleFixtures.envelope(recipesJson = TestBundleFixtures.chickenSoup)
         importService.import(goodBundle)

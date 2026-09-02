@@ -23,6 +23,12 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE id = :id")
     suspend fun getById(id: String): RecipeEntity?
 
+    @Query("SELECT id FROM recipes")
+    suspend fun getAllIds(): List<String>
+
+    @Query("DELETE FROM recipes WHERE id = :id")
+    suspend fun deleteById(id: String)
+
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun observeById(id: String): Flow<RecipeEntity?>
 
