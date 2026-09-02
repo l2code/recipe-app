@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +35,8 @@ import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Schedule
@@ -66,12 +70,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.organization.RecipeCategories
 import com.recipearchive.app.data.companion.IngredientAvailabilityUi
@@ -94,6 +101,7 @@ fun DetailScreen(
 ) {
     val detail by viewModel.uiState.collectAsState()
     val companion by viewModel.companionState.collectAsState()
+    var showOriginalRecipe by remember { mutableStateOf(false) }
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
@@ -122,6 +130,9 @@ fun DetailScreen(
                                 tint = if (favorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
+                        IconButton(onClick = { showOriginalRecipe = true }) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = "Original recipe and source")
+                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -141,11 +152,27 @@ fun DetailScreen(
                 onPantryStatusChanged = viewModel::setPantryStatus,
                 onAddUnavailableToShopping = viewModel::addUnavailableToShopping,
                 onAddToMealPlan = viewModel::addToMealPlan,
+                onShowOriginalRecipe = { showOriginalRecipe = true },
                 useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
         } ?: Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
+        }
+    }
+    if (showOriginalRecipe) {
+        detail?.let { current ->
+            OriginalRecipeSideSheet(
+                detail = current,
+                onDismiss = { showOriginalRecipe = false },
+                onPromoteNote = { importedNote ->
+                    val existing = current.appState?.personalNotes.orEmpty().trim()
+                    val promoted = importedNote.trim()
+                    if (promoted.isNotBlank() && !existing.contains(promoted)) {
+                        viewModel.updateNotes(listOf(existing, promoted).filter(String::isNotBlank).joinToString("\n\n"))
+                    }
+                },
+            )
         }
     }
 }
@@ -164,6 +191,7 @@ fun DetailContent(
     onPantryStatusChanged: (String, String, PantryStatus, Boolean) -> Unit = { _, _, _, _ -> },
     onAddUnavailableToShopping: () -> Unit = {},
     onAddToMealPlan: (LocalDate) -> Unit = {},
+    onShowOriginalRecipe: () -> Unit = {},
     useTwoColumns: Boolean = false,
 ) {
     LazyColumn(
@@ -182,6 +210,7 @@ fun DetailContent(
                 onStartCooking = onStartCooking,
                 onAddToMealPlan = onAddToMealPlan,
                 onAddUnavailableToShopping = onAddUnavailableToShopping,
+                onShowOriginalRecipe = onShowOriginalRecipe,
             )
         }
         if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
@@ -192,22 +221,19 @@ fun DetailContent(
                     Box(modifier = Modifier.weight(0.42f)) {
                         IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping)
                     }
-                    Box(modifier = Modifier.weight(0.58f)) { InstructionsCard(detail) }
+                    Column(modifier = Modifier.weight(0.58f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged)
+                        InstructionsCard(detail)
+                    }
                 }
             }
         } else {
+            item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
             item { IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping) }
             item { InstructionsCard(detail) }
         }
 
-        if (detail.handwrittenNotes.isNotEmpty()) {
-            item { HandwrittenNotesCard(detail) }
-        }
-        if (detail.pages.isNotEmpty()) item { ScanPagesCard(detail) }
         if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
-        item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
-        item { SourceDetailsSection(detail) }
-        item { RawOcrSection(detail.recipe.rawText) }
     }
 }
 
@@ -222,6 +248,7 @@ private fun RecipeHero(
     onStartCooking: () -> Unit,
     onAddToMealPlan: (LocalDate) -> Unit,
     onAddUnavailableToShopping: () -> Unit,
+    onShowOriginalRecipe: () -> Unit,
 ) {
     var showOrganizer by remember { mutableStateOf(false) }
     var showPlanDialog by remember { mutableStateOf(false) }
@@ -238,6 +265,9 @@ private fun RecipeHero(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
                 )
+                if (detail.handwrittenNotes.isNotEmpty()) {
+                    TextButton(onClick = onShowOriginalRecipe) { Text("Imported notes") }
+                }
                 RatingRow(detail.appState?.personalRating, onRatingChanged)
             }
             if (companion.sessions.isNotEmpty()) {
@@ -418,6 +448,136 @@ private fun MealPlanDateDialog(
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
+}
+
+@Composable
+private fun OriginalRecipeSideSheet(
+    detail: RecipeDetailUi,
+    onDismiss: () -> Unit,
+    onPromoteNote: (String) -> Unit,
+) {
+    val uriHandler = LocalUriHandler.current
+    RightSideSheet(title = "Original Recipe", onDismiss = onDismiss) {
+        item {
+            Text("Source", style = MaterialTheme.typography.titleMedium)
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(top = 7.dp),
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+            ) {
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Text(
+                        detail.recipe.sourcePublisher.ifBlank { "Source not identified" },
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    if (detail.recipe.sourceUrl.isNotBlank()) {
+                        TextButton(onClick = { runCatching { uriHandler.openUri(detail.recipe.sourceUrl) } }) {
+                            Text("View original source")
+                        }
+                    }
+                    detail.sourceEvidence.map { it.evidenceText.trim() }
+                        .filter(String::isNotBlank)
+                        .distinct()
+                        .take(4)
+                        .forEach { evidence ->
+                            Text(evidence, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                }
+            }
+        }
+        if (detail.handwrittenNotes.isNotEmpty()) {
+            item { Text("Imported notes", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 18.dp)) }
+            items(detail.handwrittenNotes, key = { "note:${it.pageId}" }) { note ->
+                val importedText = note.transcription.ifBlank { note.ocrDraft }.trim()
+                val isPromoted = importedText.isNotBlank() && detail.appState?.personalNotes.orEmpty().contains(importedText)
+                Surface(
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.45f),
+                ) {
+                    Column(modifier = Modifier.padding(14.dp)) {
+                        Text(
+                            importedText.ifBlank { "No readable note text" },
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontStyle = if (importedText.isBlank()) FontStyle.Italic else FontStyle.Normal,
+                        )
+                        if (importedText.isNotBlank()) {
+                            TextButton(onClick = { onPromoteNote(importedText) }, enabled = !isPromoted) {
+                                Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(5.dp))
+                                Text(if (isPromoted) "Added to My Notes" else "Add to My Notes")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (detail.pages.isNotEmpty()) {
+            item { Text("Original pages", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 18.dp)) }
+            items(detail.pages, key = { "page:${it.pageRef}:${it.pageNumber}" }) { page ->
+                val scan = page.scanFilename ?: page.pageRef
+                val pageNumber = page.pageNumber?.let { "Page $it · " }.orEmpty()
+                Text(
+                    "$pageNumber$scan",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 7.dp),
+                )
+            }
+        }
+        item {
+            Text("OCR text", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 18.dp))
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(top = 7.dp),
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+            ) {
+                Text(
+                    detail.recipe.rawText.ifBlank { "No OCR text available." },
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(14.dp),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RightSideSheet(
+    title: String,
+    onDismiss: () -> Unit,
+    content: LazyListScope.() -> Unit,
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterEnd) {
+            Surface(
+                modifier = Modifier.fillMaxHeight().fillMaxWidth(0.46f).widthIn(min = 380.dp, max = 600.dp),
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 4.dp,
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                        IconButton(onClick = onDismiss) {
+                            Icon(Icons.Filled.Close, contentDescription = "Close $title")
+                        }
+                    }
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                        content = content,
+                    )
+                }
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -838,6 +998,7 @@ private fun ScanPagesCard(detail: RecipeDetailUi) {
 
 @Composable
 private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
+    var showAllHistory by remember { mutableStateOf(false) }
     ContentCard(title = "Cooking history", icon = Icons.Filled.History) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             val durations = sessions.mapNotNull { it.durationMillis }.sorted()
@@ -857,26 +1018,52 @@ private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
                     Modifier.weight(1f),
                 )
             }
-            sessions.take(8).forEach { session ->
-                Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
-                    Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(formatSessionDate(session.finishedAt ?: session.startedAt), style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                formatDuration(session.durationMillis ?: 0),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            if (session.notes.isNotBlank()) Text(session.notes, style = MaterialTheme.typography.bodyMedium)
-                        }
-                        session.rating?.let { rating ->
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
-                                Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
-                            }
-                        }
-                    }
+            sessions.take(3).forEach { session ->
+                CookingSessionRow(session)
+            }
+            if (sessions.size > 3) {
+                TextButton(onClick = { showAllHistory = true }) {
+                    Text("View all ${sessions.size} cooking sessions")
                 }
+            }
+        }
+    }
+    if (showAllHistory) {
+        AllCookingHistorySideSheet(sessions = sessions, onDismiss = { showAllHistory = false })
+    }
+}
+
+@Composable
+private fun CookingSessionRow(session: CookingSessionEntity, modifier: Modifier = Modifier) {
+    Surface(modifier = modifier, shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(formatSessionDate(session.finishedAt ?: session.startedAt), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    formatDuration(session.durationMillis ?: 0),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (session.notes.isNotBlank()) Text(session.notes, style = MaterialTheme.typography.bodyMedium)
+            }
+            session.rating?.let { rating ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
+                    Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AllCookingHistorySideSheet(sessions: List<CookingSessionEntity>, onDismiss: () -> Unit) {
+    val sessionsByYear = sessions.groupBy { sessionYear(it.finishedAt ?: it.startedAt) }.toSortedMap(reverseOrder())
+    RightSideSheet(title = "Cooking History", onDismiss = onDismiss) {
+        sessionsByYear.forEach { (year, yearSessions) ->
+            item { Text(year.toString(), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 10.dp, bottom = 2.dp)) }
+            items(yearSessions, key = { it.id }) { session ->
+                CookingSessionRow(session, Modifier.fillMaxWidth().padding(top = 8.dp))
             }
         }
     }
@@ -897,6 +1084,10 @@ private fun formatSessionDate(timestamp: Long): String = Instant.ofEpochMilli(ti
     .toLocalDate()
     .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
 
+private fun sessionYear(timestamp: Long): Int = Instant.ofEpochMilli(timestamp)
+    .atZone(ZoneId.systemDefault())
+    .year
+
 private fun formatDuration(milliseconds: Long): String {
     val minutes = (milliseconds / 60_000).coerceAtLeast(0)
     val hours = minutes / 60
@@ -907,13 +1098,13 @@ private fun formatDuration(milliseconds: Long): String {
 @Composable
 private fun NotesSection(initialNotes: String, onNotesChanged: (String) -> Unit) {
     var text by remember(initialNotes) { mutableStateOf(initialNotes) }
-    ContentCard(title = "Your notes", icon = Icons.Filled.EditNote) {
+    ContentCard(title = "My Notes", icon = Icons.Filled.EditNote) {
         OutlinedTextField(
             value = text,
             onValueChange = { text = it; onNotesChanged(it) },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("What would you change next time?") },
-            minLines = 3,
+            minLines = 2,
             shape = MaterialTheme.shapes.medium,
         )
     }
