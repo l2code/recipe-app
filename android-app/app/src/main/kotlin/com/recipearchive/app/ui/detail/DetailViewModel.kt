@@ -38,6 +38,10 @@ class DetailViewModel(
         viewModelScope.launch { repository.setPersonalRating(recipeId, rating) }
     }
 
+    fun reviewImportedNotes(status: String) {
+        viewModelScope.launch { repository.setImportedNotesReviewStatus(recipeId, status) }
+    }
+
     fun updateCategory(category: String?) {
         viewModelScope.launch { repository.setCategory(recipeId, category) }
     }
@@ -56,6 +60,18 @@ class DetailViewModel(
 
     fun startCooking(onStarted: (String) -> Unit) {
         viewModelScope.launch { onStarted(companionRepository.startCooking(recipeId)) }
+    }
+
+    fun recordPossibleSession(startedAt: Long, finishedAt: Long) {
+        viewModelScope.launch { companionRepository.recordPossibleSession(recipeId, startedAt, finishedAt) }
+    }
+
+    fun confirmPossibleSession(sessionId: String, notes: String, rating: Int?) {
+        viewModelScope.launch { companionRepository.confirmPossibleSession(sessionId, notes, rating) }
+    }
+
+    fun dismissPossibleSession(sessionId: String) {
+        viewModelScope.launch { companionRepository.discardSession(sessionId) }
     }
 
     fun setPantryStatus(key: String, displayName: String, status: PantryStatus, isStaple: Boolean = false) {

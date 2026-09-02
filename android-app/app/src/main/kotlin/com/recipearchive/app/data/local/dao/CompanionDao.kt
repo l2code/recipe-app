@@ -34,8 +34,17 @@ interface CookingSessionDao {
     @Query("SELECT * FROM cooking_sessions WHERE recipeId = :recipeId AND status = 'active' ORDER BY startedAt DESC LIMIT 1")
     suspend fun getActiveForRecipe(recipeId: String): CookingSessionEntity?
 
+    @Query("SELECT * FROM cooking_sessions WHERE recipeId = :recipeId AND status = 'possible' ORDER BY startedAt DESC LIMIT 1")
+    fun observePossibleForRecipe(recipeId: String): Flow<CookingSessionEntity?>
+
+    @Query("SELECT * FROM cooking_sessions WHERE recipeId = :recipeId AND status = 'possible' ORDER BY startedAt DESC LIMIT 1")
+    suspend fun getPossibleForRecipe(recipeId: String): CookingSessionEntity?
+
     @Query("UPDATE cooking_sessions SET finishedAt = :finishedAt, durationMillis = :durationMillis, notes = :notes, rating = :rating, status = 'confirmed', pausedAt = NULL, updatedAt = :finishedAt WHERE id = :sessionId")
     suspend fun confirm(sessionId: String, finishedAt: Long, durationMillis: Long, notes: String, rating: Int?)
+
+    @Query("UPDATE cooking_sessions SET notes = :notes, rating = :rating, status = 'confirmed', updatedAt = :updatedAt WHERE id = :sessionId AND status = 'possible'")
+    suspend fun confirmPossible(sessionId: String, notes: String, rating: Int?, updatedAt: Long)
 
     @Query("UPDATE cooking_sessions SET pausedAt = :pausedAt, updatedAt = :pausedAt WHERE id = :sessionId AND status = 'active' AND pausedAt IS NULL")
     suspend fun pause(sessionId: String, pausedAt: Long)
@@ -45,6 +54,9 @@ interface CookingSessionDao {
 
     @Query("UPDATE cooking_sessions SET status = 'discarded', finishedAt = :finishedAt, updatedAt = :finishedAt WHERE id = :sessionId")
     suspend fun discard(sessionId: String, finishedAt: Long)
+
+    @Query("UPDATE cooking_sessions SET status = 'discarded', updatedAt = :updatedAt WHERE recipeId = :recipeId AND status = 'possible'")
+    suspend fun discardPossibleForRecipe(recipeId: String, updatedAt: Long)
 }
 
 @Dao

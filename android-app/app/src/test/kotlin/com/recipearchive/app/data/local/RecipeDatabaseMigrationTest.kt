@@ -43,12 +43,13 @@ class RecipeDatabaseMigrationTest {
 
         val migrated = helper.runMigrationsAndValidate(
             TEST_DB_NAME,
-            5,
+            6,
             true,
             RecipeDatabase.MIGRATION_1_2,
             RecipeDatabase.MIGRATION_2_3,
             RecipeDatabase.MIGRATION_3_4,
             RecipeDatabase.MIGRATION_4_5,
+            RecipeDatabase.MIGRATION_5_6,
         )
 
         migrated.query(
@@ -82,6 +83,10 @@ class RecipeDatabaseMigrationTest {
         migrated.query("SELECT COUNT(*) FROM pantry_items").use { cursor ->
             assertTrue(cursor.moveToFirst())
             assertEquals(0, cursor.getInt(0))
+        }
+        migrated.query("SELECT importedNotesReviewStatus FROM recipe_app_state WHERE recipeId = 'R1'").use { cursor ->
+            assertTrue(cursor.moveToFirst())
+            assertEquals("pending", cursor.getString(0))
         }
         migrated.close()
     }

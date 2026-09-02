@@ -154,6 +154,10 @@ class RecipeRepository(
         database.recipeAppStateDao().setRating(recipeId, rating, System.currentTimeMillis())
     }
 
+    suspend fun setImportedNotesReviewStatus(recipeId: String, status: String) {
+        database.recipeAppStateDao().setImportedNotesReviewStatus(recipeId, status, System.currentTimeMillis())
+    }
+
     suspend fun setCategory(recipeId: String, category: String?) {
         database.recipeAppStateDao().setCategory(recipeId, category, System.currentTimeMillis())
     }

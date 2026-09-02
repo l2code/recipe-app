@@ -56,6 +56,32 @@ class CookingCompanionRepositoryTest {
     }
 
     @Test
+    fun `possible session counts only after confirmation`() = runTest {
+        val finishedAt = System.currentTimeMillis()
+        repository.recordPossibleSession("R0001", finishedAt - 10 * 60_000L, finishedAt)
+
+        val possible = repository.observeRecipe("R0001").first().possibleSession
+        assertNotNull(possible)
+        assertEquals(0, repository.observeRecipe("R0001").first().madeCount)
+
+        repository.confirmPossibleSession(possible!!.id, "Made without pressing Start", 5)
+
+        val confirmed = repository.observeRecipe("R0001").first()
+        assertEquals(1, confirmed.madeCount)
+        assertNull(confirmed.possibleSession)
+        assertEquals("inferred", confirmed.sessions.single().origin)
+    }
+
+    @Test
+    fun `short recipe view does not create possible session`() = runTest {
+        val finishedAt = System.currentTimeMillis()
+        repository.recordPossibleSession("R0001", finishedAt - 2 * 60_000L, finishedAt)
+
+        assertNull(repository.observeRecipe("R0001").first().possibleSession)
+        assertEquals(0, repository.observeRecipe("R0001").first().madeCount)
+    }
+
+    @Test
     fun `cooking timer pause state persists and resumes`() = runTest {
         val sessionId = repository.startCooking("R0001")
 

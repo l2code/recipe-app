@@ -331,7 +331,7 @@ private fun CookingHistoryRow(item: CookingHistoryItemUi, onRecipeClick: (String
                     Text(item.session.notes, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 5.dp))
                 }
             }
-            item.session.durationMillis?.let { duration ->
+            item.session.durationMillis?.takeIf { it >= 60_000L }?.let { duration ->
                 Text(formatHistoryDuration(duration), style = MaterialTheme.typography.labelLarge)
             }
             item.session.rating?.let { rating ->

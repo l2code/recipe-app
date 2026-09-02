@@ -74,7 +74,12 @@ fun CookingScreen(
     val companion by viewModel.companion.collectAsState()
     var showFinishDialog by remember { mutableStateOf(false) }
     var showDiscardDialog by remember { mutableStateOf(false) }
+    var showSessionNoteDialog by remember { mutableStateOf(false) }
     var completedSteps by remember(recipe?.recipe?.id) { mutableStateOf<Set<Long>>(emptySet()) }
+    var sessionNote by remember(session?.id) { mutableStateOf("") }
+    var stepNotes by remember(session?.id) { mutableStateOf<Map<Long, String>>(emptyMap()) }
+    var stepTimers by remember(session?.id) { mutableStateOf<Map<Long, StepTimerState>>(emptyMap()) }
+    var editingStep by remember { mutableStateOf<InstructionEntity?>(null) }
     val now by produceState(System.currentTimeMillis(), session?.id) {
         while (true) {
             value = System.currentTimeMillis()
@@ -121,6 +126,7 @@ fun CookingScreen(
                         Text(if (session?.pausedAt == null) "Pause" else "Resume")
                     }
                     Spacer(Modifier.width(8.dp))
+                    TextButton(onClick = { showSessionNoteDialog = true }) { Text("Add Note") }
                     OutlinedButton(onClick = { showFinishDialog = true }) { Text("Finish") }
                     TextButton(onClick = { showDiscardDialog = true }) { Text("Discard") }
                 },
@@ -137,18 +143,75 @@ fun CookingScreen(
             val toggleStep: (Long) -> Unit = { id ->
                 completedSteps = if (id in completedSteps) completedSteps - id else completedSteps + id
             }
+            val toggleStepTimer: (Long) -> Unit = { id ->
+                val timer = stepTimers[id] ?: StepTimerState()
+                stepTimers = stepTimers + (id to if (timer.startedAt == null) {
+                    timer.copy(startedAt = now)
+                } else {
+                    timer.copy(
+                        startedAt = null,
+                        accumulatedMillis = timer.accumulatedMillis + (now - timer.startedAt).coerceAtLeast(0),
+                    )
+                })
+            }
             if (widthSizeClass == WindowWidthSizeClass.Expanded) {
-                CookingTabletContent(currentRecipe, companion, completedSteps, toggleStep, padding)
+                CookingTabletContent(
+                    currentRecipe,
+                    companion,
+                    completedSteps,
+                    toggleStep,
+                    now,
+                    stepTimers,
+                    toggleStepTimer,
+                    stepNotes,
+                    { editingStep = it },
+                    padding,
+                )
             } else {
-                CookingCompactContent(currentRecipe, completedSteps, toggleStep, padding)
+                CookingCompactContent(
+                    currentRecipe,
+                    companion,
+                    completedSteps,
+                    toggleStep,
+                    now,
+                    stepTimers,
+                    toggleStepTimer,
+                    stepNotes,
+                    { editingStep = it },
+                    padding,
+                )
             }
         }
     }
 
     if (showFinishDialog) {
+        val stepNoteSummary = recipe?.instructions.orEmpty().mapNotNull { instruction ->
+            stepNotes[instruction.id]?.takeIf(String::isNotBlank)?.let { "Step ${instruction.displayOrder}: $it" }
+        }
+        val combinedNotes = (listOf(sessionNote) + stepNoteSummary).filter(String::isNotBlank).joinToString("\n")
         FinishCookingDialog(
+            initialNotes = combinedNotes,
             onDismiss = { showFinishDialog = false },
             onConfirm = { notes, rating -> viewModel.finish(notes, rating, onSessionComplete) },
+        )
+    }
+    if (showSessionNoteDialog) {
+        SessionNoteDialog(
+            title = "Cooking session note",
+            initialNote = sessionNote,
+            onDismiss = { showSessionNoteDialog = false },
+            onSave = { sessionNote = it; showSessionNoteDialog = false },
+        )
+    }
+    editingStep?.let { step ->
+        SessionNoteDialog(
+            title = "Note for step ${step.displayOrder}",
+            initialNote = stepNotes[step.id].orEmpty(),
+            onDismiss = { editingStep = null },
+            onSave = { note ->
+                stepNotes = if (note.isBlank()) stepNotes - step.id else stepNotes + (step.id to note.trim())
+                editingStep = null
+            },
         )
     }
     if (showDiscardDialog) {
@@ -171,6 +234,11 @@ private fun CookingTabletContent(
     companion: RecipeCompanionUi,
     completedSteps: Set<Long>,
     onToggleStep: (Long) -> Unit,
+    now: Long,
+    stepTimers: Map<Long, StepTimerState>,
+    onToggleStepTimer: (Long) -> Unit,
+    stepNotes: Map<Long, String>,
+    onEditStepNote: (InstructionEntity) -> Unit,
     padding: PaddingValues,
 ) {
     Row(
@@ -179,7 +247,17 @@ private fun CookingTabletContent(
     ) {
         CookingIngredientsPane(recipe, companion, Modifier.weight(0.35f).fillMaxHeight())
         VerticalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        CookingStepsPane(recipe.instructions, completedSteps, onToggleStep, Modifier.weight(0.65f).fillMaxHeight())
+        CookingStepsPane(
+            recipe.instructions,
+            completedSteps,
+            onToggleStep,
+            now,
+            stepTimers,
+            onToggleStepTimer,
+            stepNotes,
+            onEditStepNote,
+            Modifier.weight(0.65f).fillMaxHeight(),
+        )
     }
 }
 
@@ -218,35 +296,20 @@ private fun CookingIngredientsPane(recipe: RecipeDetailUi, companion: RecipeComp
 @Composable
 private fun CookingIngredientRow(ingredient: IngredientEntity, availability: IngredientAvailabilityUi?) {
     Row(verticalAlignment = Alignment.Top) {
-        CookingStatusMark(availability)
-        Spacer(Modifier.width(10.dp))
         Text(
             listOf(ingredient.quantity, ingredient.unit, ingredient.item)
                 .filter(String::isNotBlank).joinToString(" ").ifBlank { ingredient.rawText },
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f),
         )
-    }
-}
-
-@Composable
-private fun CookingStatusMark(availability: IngredientAvailabilityUi?) {
-    val isAvailable = availability?.status == PantryStatus.HAVE ||
-        (availability?.isStaple == true && availability.status == PantryStatus.UNKNOWN)
-    val color = when {
-        isAvailable -> MaterialTheme.colorScheme.primary
-        availability?.status == PantryStatus.DONT_HAVE -> MaterialTheme.colorScheme.error
-        availability?.status == PantryStatus.LOW -> MaterialTheme.colorScheme.tertiary
-        else -> MaterialTheme.colorScheme.outline
-    }
-    Surface(
-        modifier = Modifier.padding(top = 2.dp).size(19.dp),
-        shape = CircleShape,
-        color = if (isAvailable) color else MaterialTheme.colorScheme.surface,
-        border = BorderStroke(1.5.dp, color),
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            if (isAvailable) Text("✓", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onPrimary)
+        when {
+            availability?.status == PantryStatus.HAVE ||
+                (availability?.isStaple == true && availability.status == PantryStatus.UNKNOWN) -> {
+                Text("Have", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            availability?.status == PantryStatus.LOW || availability?.status == PantryStatus.DONT_HAVE -> {
+                Text("Need", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+            }
         }
     }
 }
@@ -256,6 +319,11 @@ private fun CookingStepsPane(
     instructions: List<InstructionEntity>,
     completedSteps: Set<Long>,
     onToggleStep: (Long) -> Unit,
+    now: Long,
+    stepTimers: Map<Long, StepTimerState>,
+    onToggleStepTimer: (Long) -> Unit,
+    stepNotes: Map<Long, String>,
+    onEditStepNote: (InstructionEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val activeStepId = instructions.firstOrNull { it.id !in completedSteps }?.id
@@ -275,6 +343,11 @@ private fun CookingStepsPane(
                         isActive = instruction.id == activeStepId,
                         isComplete = instruction.id in completedSteps,
                         onToggle = { onToggleStep(instruction.id) },
+                        timer = stepTimers[instruction.id],
+                        now = now,
+                        onToggleTimer = { onToggleStepTimer(instruction.id) },
+                        note = stepNotes[instruction.id].orEmpty(),
+                        onEditNote = { onEditStepNote(instruction) },
                     )
                 }
             }
@@ -288,6 +361,11 @@ private fun CookingStepCard(
     isActive: Boolean,
     isComplete: Boolean,
     onToggle: () -> Unit,
+    timer: StepTimerState? = null,
+    now: Long = 0,
+    onToggleTimer: () -> Unit = {},
+    note: String = "",
+    onEditNote: () -> Unit = {},
 ) {
     Surface(
         onClick = onToggle,
@@ -325,6 +403,24 @@ private fun CookingStepCard(
                         modifier = Modifier.padding(top = 8.dp),
                     )
                 }
+                Row(modifier = Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(onClick = onToggleTimer) {
+                        Text(
+                            if (timer?.startedAt != null) "Pause timer ${formatElapsed(stepTimerElapsed(now, timer))}"
+                            else if ((timer?.accumulatedMillis ?: 0) > 0) "Resume timer ${formatElapsed(timer?.accumulatedMillis ?: 0)}"
+                            else "Start timer",
+                        )
+                    }
+                    TextButton(onClick = onEditNote) { Text(if (note.isBlank()) "Add note" else "Edit note") }
+                }
+                if (note.isNotBlank()) {
+                    Text(
+                        note,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 4.dp),
+                    )
+                }
             }
         }
     }
@@ -333,32 +429,83 @@ private fun CookingStepCard(
 @Composable
 private fun CookingCompactContent(
     recipe: RecipeDetailUi,
+    companion: RecipeCompanionUi,
     completedSteps: Set<Long>,
     onToggleStep: (Long) -> Unit,
+    now: Long,
+    stepTimers: Map<Long, StepTimerState>,
+    onToggleStepTimer: (Long) -> Unit,
+    stepNotes: Map<Long, String>,
+    onEditStepNote: (InstructionEntity) -> Unit,
     padding: PaddingValues,
 ) {
     val activeStepId = recipe.instructions.firstOrNull { it.id !in completedSteps }?.id
+    val availabilityByIngredient = companion.ingredients.associateBy { it.ingredient.id }
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(padding).widthIn(max = 900.dp),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         item { Text(recipe.recipe.title, style = MaterialTheme.typography.headlineMedium) }
+        item { Text("Ingredients", style = MaterialTheme.typography.titleLarge) }
+        recipe.ingredients.forEach { ingredient ->
+            item(key = "ingredient:${ingredient.id}") {
+                CookingIngredientRow(ingredient, availabilityByIngredient[ingredient.id])
+            }
+        }
+        item { Text("Instructions", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 8.dp)) }
         recipe.instructions.forEach { instruction ->
             item(key = instruction.id) {
                 CookingStepCard(
                     instruction,
                     instruction.id == activeStepId,
                     instruction.id in completedSteps,
-                ) { onToggleStep(instruction.id) }
+                    onToggle = { onToggleStep(instruction.id) },
+                    timer = stepTimers[instruction.id],
+                    now = now,
+                    onToggleTimer = { onToggleStepTimer(instruction.id) },
+                    note = stepNotes[instruction.id].orEmpty(),
+                    onEditNote = { onEditStepNote(instruction) },
+                )
             }
         }
     }
 }
 
+private data class StepTimerState(
+    val startedAt: Long? = null,
+    val accumulatedMillis: Long = 0,
+)
+
 @Composable
-private fun FinishCookingDialog(onDismiss: () -> Unit, onConfirm: (String, Int?) -> Unit) {
-    var notes by remember { mutableStateOf("") }
+private fun SessionNoteDialog(
+    title: String,
+    initialNote: String,
+    onDismiss: () -> Unit,
+    onSave: (String) -> Unit,
+) {
+    var note by remember(initialNote) { mutableStateOf(initialNote) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        title = { Text(title) },
+        text = {
+            OutlinedTextField(
+                value = note,
+                onValueChange = { note = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("What happened while cooking?") },
+                minLines = 3,
+            )
+        },
+        confirmButton = { Button(onClick = { onSave(note) }) { Text("Save note") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
+}
+
+@Composable
+private fun FinishCookingDialog(initialNotes: String, onDismiss: () -> Unit, onConfirm: (String, Int?) -> Unit) {
+    var notes by remember(initialNotes) { mutableStateOf(initialNotes) }
     var rating by remember { mutableIntStateOf(0) }
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -408,3 +555,6 @@ private fun cookingElapsed(now: Long, session: CookingSessionEntity): Long {
     val timerEnd = session.pausedAt ?: now
     return (timerEnd - session.startedAt - session.totalPausedMillis).coerceAtLeast(0)
 }
+
+private fun stepTimerElapsed(now: Long, timer: StepTimerState): Long =
+    timer.accumulatedMillis + (timer.startedAt?.let { (now - it).coerceAtLeast(0) } ?: 0)

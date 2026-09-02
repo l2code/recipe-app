@@ -26,13 +26,15 @@ class CookingCompanionRepository(private val database: RecipeDatabase) {
     fun observeRecipe(recipeId: String): Flow<RecipeCompanionUi> = combine(
         database.cookingSessionDao().observeConfirmedForRecipe(recipeId),
         database.cookingSessionDao().observeActiveForRecipe(recipeId),
+        database.cookingSessionDao().observePossibleForRecipe(recipeId),
         database.ingredientDao().observeForRecipe(recipeId),
         database.pantryDao().observeAll(),
-    ) { sessions, active, ingredients, pantry ->
+    ) { sessions, active, possible, ingredients, pantry ->
         val pantryByKey = pantry.associateBy { it.ingredientKey }
         RecipeCompanionUi(
             sessions = sessions,
             activeSession = active,
+            possibleSession = possible,
             ingredients = ingredients.map { ingredient ->
                 val displayName = ingredient.item.ifBlank { ingredient.rawText }
                 val key = IngredientNormalizer.key(displayName)
@@ -101,6 +103,7 @@ class CookingCompanionRepository(private val database: RecipeDatabase) {
     suspend fun startCooking(recipeId: String): String {
         database.cookingSessionDao().getActiveForRecipe(recipeId)?.let { return it.id }
         val now = System.currentTimeMillis()
+        database.cookingSessionDao().discardPossibleForRecipe(recipeId, now)
         val id = UUID.randomUUID().toString()
         database.cookingSessionDao().insert(
             CookingSessionEntity(
@@ -125,6 +128,30 @@ class CookingCompanionRepository(private val database: RecipeDatabase) {
             notes = notes.trim(),
             rating = rating,
         )
+    }
+
+    suspend fun recordPossibleSession(recipeId: String, startedAt: Long, finishedAt: Long) {
+        val duration = (finishedAt - startedAt).coerceAtLeast(0)
+        if (duration < 8 * 60_000L) return
+        if (database.cookingSessionDao().getActiveForRecipe(recipeId) != null) return
+        if (database.cookingSessionDao().getPossibleForRecipe(recipeId) != null) return
+        database.cookingSessionDao().insert(
+            CookingSessionEntity(
+                id = UUID.randomUUID().toString(),
+                recipeId = recipeId,
+                startedAt = startedAt,
+                finishedAt = finishedAt,
+                durationMillis = duration,
+                origin = "inferred",
+                status = "possible",
+                createdAt = finishedAt,
+                updatedAt = finishedAt,
+            ),
+        )
+    }
+
+    suspend fun confirmPossibleSession(sessionId: String, notes: String, rating: Int?) {
+        database.cookingSessionDao().confirmPossible(sessionId, notes.trim(), rating, System.currentTimeMillis())
     }
 
     suspend fun pauseSession(sessionId: String) {

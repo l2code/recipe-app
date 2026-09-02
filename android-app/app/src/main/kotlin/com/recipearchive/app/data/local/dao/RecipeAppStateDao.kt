@@ -46,4 +46,7 @@ interface RecipeAppStateDao {
 
     @Query("UPDATE recipe_app_state SET reviewCompleted = :completed, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setReviewCompleted(recipeId: String, completed: Boolean, updatedAt: Long)
+
+    @Query("UPDATE recipe_app_state SET importedNotesReviewStatus = :status, updatedAt = :updatedAt WHERE recipeId = :recipeId")
+    suspend fun setImportedNotesReviewStatus(recipeId: String, status: String, updatedAt: Long)
 }

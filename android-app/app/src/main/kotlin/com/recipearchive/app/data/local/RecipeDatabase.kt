@@ -62,7 +62,7 @@ import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
         ShoppingItemSourceEntity::class,
         MealPlanEntryEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -223,6 +223,14 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE recipe_app_state ADD COLUMN importedNotesReviewStatus TEXT NOT NULL DEFAULT 'pending'",
+                )
+            }
+        }
+
         @Volatile private var instance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase =
@@ -232,7 +240,7 @@ abstract class RecipeDatabase : RoomDatabase() {
 
         private fun build(context: Context): RecipeDatabase =
             Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                 .build()
     }
 }

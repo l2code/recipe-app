@@ -47,7 +47,10 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -62,10 +65,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,6 +84,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.organization.RecipeCategories
 import com.recipearchive.app.data.companion.IngredientAvailabilityUi
@@ -101,7 +109,41 @@ fun DetailScreen(
 ) {
     val detail by viewModel.uiState.collectAsState()
     val companion by viewModel.companionState.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val latestCompanion by rememberUpdatedState(companion)
     var showOriginalRecipe by remember { mutableStateOf(false) }
+    DisposableEffect(lifecycleOwner, detail?.recipe?.id) {
+        if (detail == null) return@DisposableEffect onDispose {}
+        var activeSince = if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            System.currentTimeMillis()
+        } else {
+            null
+        }
+        var activeDuration = 0L
+        var candidateRecorded = false
+        fun stopTracking(now: Long) {
+            activeSince?.let { activeDuration += (now - it).coerceAtLeast(0) }
+            activeSince = null
+            if (!candidateRecorded && activeDuration >= 8 * 60_000L &&
+                latestCompanion.activeSession == null && latestCompanion.possibleSession == null
+            ) {
+                candidateRecorded = true
+                viewModel.recordPossibleSession(now - activeDuration, now)
+            }
+        }
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_START -> activeSince = System.currentTimeMillis()
+                Lifecycle.Event.ON_STOP -> stopTracking(System.currentTimeMillis())
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            stopTracking(System.currentTimeMillis())
+        }
+    }
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
@@ -118,21 +160,6 @@ fun DetailScreen(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to library")
-                    }
-                },
-                actions = {
-                    detail?.let { current ->
-                        val favorite = current.appState?.isFavorite ?: false
-                        IconButton(onClick = { viewModel.toggleFavorite(favorite) }) {
-                            Icon(
-                                if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                                contentDescription = if (favorite) "Remove from favorites" else "Add to favorites",
-                                tint = if (favorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        IconButton(onClick = { showOriginalRecipe = true }) {
-                            Icon(Icons.Filled.MoreVert, contentDescription = "Original recipe and source")
-                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -153,6 +180,7 @@ fun DetailScreen(
                 onAddUnavailableToShopping = viewModel::addUnavailableToShopping,
                 onAddToMealPlan = viewModel::addToMealPlan,
                 onShowOriginalRecipe = { showOriginalRecipe = true },
+                onFavoriteChanged = viewModel::toggleFavorite,
                 useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
@@ -170,10 +198,20 @@ fun DetailScreen(
                     val promoted = importedNote.trim()
                     if (promoted.isNotBlank() && !existing.contains(promoted)) {
                         viewModel.updateNotes(listOf(existing, promoted).filter(String::isNotBlank).joinToString("\n\n"))
+                        viewModel.reviewImportedNotes("promoted")
                     }
                 },
+                onReviewStatusChanged = viewModel::reviewImportedNotes,
             )
         }
+    }
+    companion.possibleSession?.let { possible ->
+        PossibleCookingSessionDialog(
+            recipeTitle = detail?.recipe?.title ?: "this recipe",
+            session = possible,
+            onConfirm = { notes, rating -> viewModel.confirmPossibleSession(possible.id, notes, rating) },
+            onDismiss = { viewModel.dismissPossibleSession(possible.id) },
+        )
     }
 }
 
@@ -192,48 +230,64 @@ fun DetailContent(
     onAddUnavailableToShopping: () -> Unit = {},
     onAddToMealPlan: (LocalDate) -> Unit = {},
     onShowOriginalRecipe: () -> Unit = {},
+    onFavoriteChanged: (Boolean) -> Unit = {},
     useTwoColumns: Boolean = false,
 ) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize().wrapContentWidth(Alignment.CenterHorizontally).widthIn(max = 940.dp),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        item {
-            RecipeHero(
-                detail = detail,
-                onRatingChanged = onRatingChanged,
-                onCategoryChanged = onCategoryChanged,
-                onCollectionChanged = onCollectionChanged,
-                onCollectionCreated = onCollectionCreated,
-                companion = companion,
-                onStartCooking = onStartCooking,
-                onAddToMealPlan = onAddToMealPlan,
-                onAddUnavailableToShopping = onAddUnavailableToShopping,
-                onShowOriginalRecipe = onShowOriginalRecipe,
-            )
-        }
-        if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
-
-        if (useTwoColumns) {
-            item {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
-                    Box(modifier = Modifier.weight(0.42f)) {
-                        IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping)
-                    }
-                    Column(modifier = Modifier.weight(0.58f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged)
-                        InstructionsCard(detail)
-                    }
+    val header: @Composable () -> Unit = {
+        RecipeHero(
+            detail = detail,
+            onRatingChanged = onRatingChanged,
+            onCategoryChanged = onCategoryChanged,
+            onCollectionChanged = onCollectionChanged,
+            onCollectionCreated = onCollectionCreated,
+            companion = companion,
+            onStartCooking = onStartCooking,
+            onAddToMealPlan = onAddToMealPlan,
+            onAddUnavailableToShopping = onAddUnavailableToShopping,
+            onShowOriginalRecipe = onShowOriginalRecipe,
+            onFavoriteChanged = onFavoriteChanged,
+            expanded = useTwoColumns,
+        )
+    }
+    if (useTwoColumns) {
+        Column(
+            modifier = modifier.fillMaxSize().wrapContentWidth(Alignment.CenterHorizontally).widthIn(max = 1160.dp)
+                .padding(horizontal = 20.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            header()
+            if (detail.reviewFlags.isNotEmpty()) ReviewFlagsSection(detail.reviewFlags.map { it.flagValue })
+            Row(modifier = Modifier.fillMaxWidth().weight(1f), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                LazyColumn(
+                    modifier = Modifier.weight(0.35f).fillMaxHeight(),
+                    contentPadding = PaddingValues(bottom = 20.dp),
+                ) {
+                    item { IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping) }
+                }
+                LazyColumn(
+                    modifier = Modifier.weight(0.65f).fillMaxHeight(),
+                    contentPadding = PaddingValues(bottom = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp),
+                ) {
+                    item { InstructionsCard(detail) }
+                    item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
+                    if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
                 }
             }
-        } else {
-            item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
+        }
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxSize().wrapContentWidth(Alignment.CenterHorizontally).widthIn(max = 940.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(18.dp),
+        ) {
+            item { header() }
+            if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
             item { IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping) }
             item { InstructionsCard(detail) }
+            item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
+            if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
         }
-
-        if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
     }
 }
 
@@ -249,58 +303,67 @@ private fun RecipeHero(
     onAddToMealPlan: (LocalDate) -> Unit,
     onAddUnavailableToShopping: () -> Unit,
     onShowOriginalRecipe: () -> Unit,
+    onFavoriteChanged: (Boolean) -> Unit,
+    expanded: Boolean,
 ) {
     var showOrganizer by remember { mutableStateOf(false) }
     var showPlanDialog by remember { mutableStateOf(false) }
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.background,
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    detail.recipe.sourcePublisher.ifBlank { "Source unknown" },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1f),
-                )
-                if (detail.handwrittenNotes.isNotEmpty()) {
-                    TextButton(onClick = onShowOriginalRecipe) { Text("Imported notes") }
-                }
-                RatingRow(detail.appState?.personalRating, onRatingChanged)
+    var showMoreMenu by remember { mutableStateOf(false) }
+    val favorite = detail.appState?.isFavorite ?: false
+    val metadata: @Composable () -> Unit = {
+        RecipeMetadata(
+            detail = detail,
+            companion = companion,
+            onRatingChanged = onRatingChanged,
+            onCategoryClick = { showOrganizer = true },
+            onImportedNotesClick = onShowOriginalRecipe,
+        )
+    }
+    val actions: @Composable () -> Unit = {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            OutlinedButton(onClick = { showPlanDialog = true }) {
+                Icon(Icons.Filled.CalendarMonth, contentDescription = "Add to meal plan", modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(5.dp))
+                Text("Plan")
             }
-            if (companion.sessions.isNotEmpty()) {
-                val lastMade = companion.sessions.first().finishedAt?.let(::formatSessionDate).orEmpty()
-                Text(
-                    "Made ${companion.madeCount} ${if (companion.madeCount == 1) "time" else "times"}${if (lastMade.isBlank()) "" else " · Last made $lastMade"}",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 7.dp),
-                )
+            Spacer(Modifier.width(8.dp))
+            Button(onClick = onStartCooking) {
+                Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(4.dp))
+                Text(if (companion.activeSession == null) "Start cooking" else "Resume")
             }
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                TextButton(onClick = { showOrganizer = true }) {
-                    val category = detail.appState?.category ?: "Choose category"
-                    val collectionCount = detail.collectionIds.size
-                    Text("$category · $collectionCount ${if (collectionCount == 1) "collection" else "collections"} · Organize")
+            Box {
+                IconButton(onClick = { showMoreMenu = true }) {
+                    Icon(Icons.Filled.MoreVert, contentDescription = "More recipe actions")
                 }
-                Spacer(Modifier.weight(1f))
-                OutlinedButton(onClick = { showPlanDialog = true }) {
-                    Icon(Icons.Filled.CalendarMonth, contentDescription = "Add to meal plan")
-                    Spacer(Modifier.width(5.dp))
-                    Text("Plan")
-                }
-                Spacer(Modifier.width(8.dp))
-                Button(onClick = onStartCooking) {
-                    Icon(Icons.Filled.PlayArrow, contentDescription = null)
-                    Spacer(Modifier.width(4.dp))
-                    Text(if (companion.activeSession == null) "Start cooking" else "Resume cooking")
+                DropdownMenu(expanded = showMoreMenu, onDismissRequest = { showMoreMenu = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Organize recipe") },
+                        onClick = { showMoreMenu = false; showOrganizer = true },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Original Recipe") },
+                        onClick = { showMoreMenu = false; onShowOriginalRecipe() },
+                    )
+                    DropdownMenuItem(
+                        text = { Text(if (favorite) "Remove from favorites" else "Add to favorites") },
+                        leadingIcon = { Icon(if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, contentDescription = null) },
+                        onClick = { showMoreMenu = false; onFavoriteChanged(favorite) },
+                    )
                 }
             }
+        }
+    }
+    if (expanded) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Box(modifier = Modifier.weight(1f)) { metadata() }
+            Spacer(Modifier.width(12.dp))
+            actions()
+        }
+    } else {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            metadata()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) { actions() }
         }
     }
     if (showOrganizer) {
@@ -323,6 +386,49 @@ private fun RecipeHero(
                 showPlanDialog = false
             },
         )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun RecipeMetadata(
+    detail: RecipeDetailUi,
+    companion: RecipeCompanionUi,
+    onRatingChanged: (Int?) -> Unit,
+    onCategoryClick: () -> Unit,
+    onImportedNotesClick: () -> Unit,
+) {
+    val lastMade = companion.sessions.firstOrNull()?.let { it.finishedAt ?: it.startedAt }
+    val importedPending = detail.handwrittenNotes.isNotEmpty() &&
+        detail.appState?.importedNotesReviewStatus.orEmpty() == "pending"
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(7.dp),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            detail.recipe.sourcePublisher.ifBlank { "Source unknown" },
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.align(Alignment.CenterVertically),
+        )
+        Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
+        TextButton(onClick = onCategoryClick, contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)) {
+            Text(detail.appState?.category ?: "Choose category")
+        }
+        Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
+        RatingRow(detail.appState?.personalRating, onRatingChanged)
+        if (companion.madeCount > 0) {
+            Text("· Made ${companion.madeCount}×", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(Alignment.CenterVertically))
+            lastMade?.let {
+                Text("· Last ${formatSessionDateShort(it)}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(Alignment.CenterVertically))
+            }
+        }
+        if (importedPending) {
+            TextButton(onClick = onImportedNotesClick, contentPadding = PaddingValues(horizontal = 2.dp, vertical = 0.dp)) {
+                Text("${detail.handwrittenNotes.size} imported ${if (detail.handwrittenNotes.size == 1) "note" else "notes"} to review")
+            }
+        }
     }
 }
 
@@ -423,8 +529,7 @@ private fun MealPlanDateDialog(
                         Text(
                             buildList {
                                 add("${companion.availableCount} have")
-                                if (companion.lowCount > 0) add("${companion.lowCount} low")
-                                if (companion.neededCount > 0) add("${companion.neededCount} need")
+                                if (companion.needCount > 0) add("${companion.needCount} need")
                                 if (companion.unknownCount > 0) add("${companion.unknownCount} unsure")
                             }.joinToString(" · "),
                             style = MaterialTheme.typography.bodyMedium,
@@ -451,10 +556,47 @@ private fun MealPlanDateDialog(
 }
 
 @Composable
+private fun PossibleCookingSessionDialog(
+    recipeTitle: String,
+    session: CookingSessionEntity,
+    onConfirm: (String, Int?) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var notes by remember { mutableStateOf("") }
+    var rating by remember { mutableStateOf<Int?>(null) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        title = { Text("Did you make $recipeTitle?") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    "You actively used this recipe for ${formatRecordedDuration(session.durationMillis) ?: "a while"}. " +
+                        "It will count as made only if you confirm it.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                RatingRow(rating) { rating = it }
+                OutlinedTextField(
+                    value = notes,
+                    onValueChange = { notes = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Session note (optional)") },
+                    minLines = 2,
+                )
+            }
+        },
+        confirmButton = { Button(onClick = { onConfirm(notes, rating) }) { Text("Save as made") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Not this time") } },
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
 private fun OriginalRecipeSideSheet(
     detail: RecipeDetailUi,
     onDismiss: () -> Unit,
     onPromoteNote: (String) -> Unit,
+    onReviewStatusChanged: (String) -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     RightSideSheet(title = "Original Recipe", onDismiss = onDismiss) {
@@ -489,7 +631,7 @@ private fun OriginalRecipeSideSheet(
             item { Text("Imported notes", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 18.dp)) }
             items(detail.handwrittenNotes, key = { "note:${it.pageId}" }) { note ->
                 val importedText = note.transcription.ifBlank { note.ocrDraft }.trim()
-                val isPromoted = importedText.isNotBlank() && detail.appState?.personalNotes.orEmpty().contains(importedText)
+                val reviewStatus = detail.appState?.importedNotesReviewStatus ?: "pending"
                 Surface(
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     shape = MaterialTheme.shapes.medium,
@@ -501,12 +643,27 @@ private fun OriginalRecipeSideSheet(
                             style = MaterialTheme.typography.bodyMedium,
                             fontStyle = if (importedText.isBlank()) FontStyle.Italic else FontStyle.Normal,
                         )
-                        if (importedText.isNotBlank()) {
-                            TextButton(onClick = { onPromoteNote(importedText) }, enabled = !isPromoted) {
-                                Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-                                Spacer(Modifier.width(5.dp))
-                                Text(if (isPromoted) "Added to My Notes" else "Add to My Notes")
+                        if (importedText.isNotBlank() && reviewStatus == "pending") {
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                TextButton(onClick = { onPromoteNote(importedText) }) {
+                                    Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(5.dp))
+                                    Text("Add to My Notes")
+                                }
+                                TextButton(onClick = { onReviewStatusChanged("kept") }) { Text("Keep as reference") }
+                                TextButton(onClick = { onReviewStatusChanged("dismissed") }) { Text("Dismiss") }
                             }
+                        } else if (reviewStatus != "pending") {
+                            Text(
+                                when (reviewStatus) {
+                                    "promoted" -> "Added to My Notes"
+                                    "kept" -> "Kept as reference"
+                                    else -> "Reviewed"
+                                },
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(top = 8.dp),
+                            )
                         }
                     }
                 }
@@ -538,6 +695,15 @@ private fun OriginalRecipeSideSheet(
                     modifier = Modifier.padding(14.dp),
                 )
             }
+        }
+        item {
+            Text("Import metadata", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 18.dp))
+            Text(
+                "Imported ${formatSessionDate(detail.recipe.lastImportedAt)} · Schema ${detail.recipe.importSchemaVersion}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 7.dp, bottom = 20.dp),
+            )
         }
     }
 }
@@ -665,13 +831,13 @@ private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
         (1..5).forEach { value ->
             IconButton(
                 onClick = { onRatingChanged(if (rating == value) null else value) },
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(24.dp),
             ) {
                 Icon(
                     if ((rating ?: 0) >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
                     contentDescription = "$value stars",
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(19.dp),
+                    modifier = Modifier.size(17.dp),
                 )
             }
         }
@@ -722,8 +888,7 @@ private fun IngredientsCard(
                             Text(
                                 buildList {
                                     add("${companion.availableCount} have")
-                                    if (companion.lowCount > 0) add("${companion.lowCount} low")
-                                    if (companion.neededCount > 0) add("${companion.neededCount} need")
+                                    if (companion.needCount > 0) add("${companion.needCount} need")
                                     if (companion.unknownCount > 0) add("${companion.unknownCount} unsure")
                                 }.joinToString(" · "),
                                 style = MaterialTheme.typography.titleMedium,
@@ -776,9 +941,10 @@ private fun AvailabilityDialog(
                         Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
                             Text(ingredient.displayName, style = MaterialTheme.typography.titleSmall)
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                PantryStatus.entries.forEach { status ->
+                                listOf(PantryStatus.HAVE, PantryStatus.DONT_HAVE, PantryStatus.UNKNOWN).forEach { status ->
                                     FilterChip(
-                                        selected = ingredient.status == status,
+                                        selected = ingredient.status == status ||
+                                            (status == PantryStatus.DONT_HAVE && ingredient.status == PantryStatus.LOW),
                                         onClick = {
                                             onStatusChanged(
                                                 ingredient.ingredientKey,
@@ -842,13 +1008,10 @@ private fun ContentCard(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surface,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(modifier = Modifier.padding(18.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Surface(shape = CircleShape, color = MaterialTheme.colorScheme.secondaryContainer) {
-                    Icon(icon, contentDescription = null, modifier = Modifier.padding(7.dp).size(18.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
-                }
+                Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(10.dp))
                 Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 headerMeta?.let { meta ->
@@ -890,11 +1053,18 @@ private fun IngredientRow(text: String, availability: IngredientAvailabilityUi?)
                 MaterialTheme.shapes.small,
             )
             .padding(horizontal = 6.dp, vertical = 3.dp),
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        IngredientStatusMark(availability)
-        Spacer(Modifier.width(10.dp))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+        when {
+            availability?.status == PantryStatus.HAVE ||
+                (availability?.isStaple == true && availability.status == PantryStatus.UNKNOWN) -> {
+                Text("Have", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            needsAttention -> {
+                Text("Need", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+            }
+        }
     }
 }
 
@@ -1001,29 +1171,17 @@ private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
     var showAllHistory by remember { mutableStateOf(false) }
     ContentCard(title = "Cooking history", icon = Icons.Filled.History) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            val durations = sessions.mapNotNull { it.durationMillis }.sorted()
-            val ratings = sessions.mapNotNull { it.rating }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                HistoryStat(sessions.size.toString(), "Times made", Modifier.weight(1f))
-                HistoryStat(
-                    durations.takeIf { it.isNotEmpty() }?.average()?.toLong()?.let(::formatDuration) ?: "—",
-                    "Average",
-                    Modifier.weight(1f),
-                )
-                HistoryStat(durations.firstOrNull()?.let(::formatDuration) ?: "—", "Shortest", Modifier.weight(1f))
-                HistoryStat(durations.lastOrNull()?.let(::formatDuration) ?: "—", "Longest", Modifier.weight(1f))
-                HistoryStat(
-                    ratings.takeIf { it.isNotEmpty() }?.average()?.let { "%.1f".format(it) } ?: "—",
-                    "Avg rating",
-                    Modifier.weight(1f),
-                )
-            }
-            sessions.take(3).forEach { session ->
+            val lastMade = sessions.first().finishedAt ?: sessions.first().startedAt
+            Text(
+                "Made ${sessions.size} ${if (sessions.size == 1) "time" else "times"} · Last made ${formatSessionDate(lastMade)}",
+                style = MaterialTheme.typography.titleMedium,
+            )
+            sessions.take(2).forEach { session ->
                 CookingSessionRow(session)
             }
-            if (sessions.size > 3) {
+            if (sessions.size > 2) {
                 TextButton(onClick = { showAllHistory = true }) {
-                    Text("View all ${sessions.size} cooking sessions")
+                    Text("View all ${sessions.size} →")
                 }
             }
         }
@@ -1035,24 +1193,21 @@ private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
 
 @Composable
 private fun CookingSessionRow(session: CookingSessionEntity, modifier: Modifier = Modifier) {
-    Surface(modifier = modifier, shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
-        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(formatSessionDate(session.finishedAt ?: session.startedAt), style = MaterialTheme.typography.titleMedium)
-                Text(
-                    formatDuration(session.durationMillis ?: 0),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                if (session.notes.isNotBlank()) Text(session.notes, style = MaterialTheme.typography.bodyMedium)
-            }
+    Column(modifier = modifier.fillMaxWidth().padding(vertical = 5.dp)) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            val summary = buildList {
+                add(formatSessionDate(session.finishedAt ?: session.startedAt))
+                formatRecordedDuration(session.durationMillis)?.let(::add)
+            }.joinToString(" · ")
+            Text(summary, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             session.rating?.let { rating ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
-                    Text(rating.toString(), style = MaterialTheme.typography.labelLarge)
-                }
+                Text(ratingStars(rating), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
             }
         }
+        if (session.notes.isNotBlank()) {
+            Text("“${session.notes}”", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 3.dp))
+        }
+        HorizontalDivider(modifier = Modifier.padding(top = 10.dp), color = MaterialTheme.colorScheme.outlineVariant)
     }
 }
 
@@ -1069,44 +1224,64 @@ private fun AllCookingHistorySideSheet(sessions: List<CookingSessionEntity>, onD
     }
 }
 
-@Composable
-private fun HistoryStat(value: String, label: String, modifier: Modifier = Modifier) {
-    Surface(modifier = modifier, shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
-        Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(value, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
-            Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-    }
-}
-
 private fun formatSessionDate(timestamp: Long): String = Instant.ofEpochMilli(timestamp)
     .atZone(ZoneId.systemDefault())
     .toLocalDate()
     .format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
 
+private fun formatSessionDateShort(timestamp: Long): String = Instant.ofEpochMilli(timestamp)
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate()
+    .format(DateTimeFormatter.ofPattern("MMM d"))
+
 private fun sessionYear(timestamp: Long): Int = Instant.ofEpochMilli(timestamp)
     .atZone(ZoneId.systemDefault())
     .year
 
-private fun formatDuration(milliseconds: Long): String {
-    val minutes = (milliseconds / 60_000).coerceAtLeast(0)
+private fun formatRecordedDuration(milliseconds: Long?): String? {
+    val minutes = (milliseconds ?: return null) / 60_000
+    if (minutes <= 0) return null
     val hours = minutes / 60
     val remaining = minutes % 60
     return if (hours > 0) "${hours} hr ${remaining} min" else "$minutes min"
 }
 
+private fun ratingStars(rating: Int): String = buildString {
+    repeat(5) { index -> append(if (index < rating.coerceIn(0, 5)) '★' else '☆') }
+}
+
 @Composable
 private fun NotesSection(initialNotes: String, onNotesChanged: (String) -> Unit) {
-    var text by remember(initialNotes) { mutableStateOf(initialNotes) }
+    var draft by remember(initialNotes) { mutableStateOf(initialNotes) }
+    var editing by remember { mutableStateOf(false) }
     ContentCard(title = "My Notes", icon = Icons.Filled.EditNote) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = { text = it; onNotesChanged(it) },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("What would you change next time?") },
-            minLines = 2,
-            shape = MaterialTheme.shapes.medium,
-        )
+        when {
+            editing -> {
+                OutlinedTextField(
+                    value = draft,
+                    onValueChange = { draft = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("What would you change next time?") },
+                    minLines = 2,
+                    shape = MaterialTheme.shapes.medium,
+                )
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = { draft = initialNotes; editing = false }) { Text("Cancel") }
+                    Button(onClick = { onNotesChanged(draft.trim()); editing = false }) { Text("Save") }
+                }
+            }
+            initialNotes.isBlank() -> {
+                TextButton(onClick = { draft = ""; editing = true }) {
+                    Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(5.dp))
+                    Text("Add note")
+                }
+            }
+            else -> {
+                Text(initialNotes, style = MaterialTheme.typography.bodyLarge)
+                TextButton(onClick = { draft = initialNotes; editing = true }) { Text("Edit") }
+            }
+        }
     }
 }
 

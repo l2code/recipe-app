@@ -27,5 +27,6 @@ data class RecipeAppStateEntity(
     val reviewCompleted: Boolean = false,
     val category: String? = null,
     val categoryIsUserSet: Boolean = false,
+    val importedNotesReviewStatus: String = "pending",
     val updatedAt: Long = 0,
 )

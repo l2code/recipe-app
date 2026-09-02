@@ -8,10 +8,10 @@ import com.recipearchive.app.data.local.entity.ShoppingItemEntity
 import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
 
 enum class PantryStatus(val storedValue: String, val label: String) {
-    UNKNOWN("unknown", "Unknown"),
+    UNKNOWN("unknown", "Unsure"),
     HAVE("have", "Have"),
-    LOW("low", "Low"),
-    DONT_HAVE("dont_have", "Don't have");
+    LOW("low", "Need"),
+    DONT_HAVE("dont_have", "Need");
 
     companion object {
         fun from(value: String?): PantryStatus = entries.firstOrNull { it.storedValue == value } ?: UNKNOWN
@@ -29,12 +29,14 @@ data class IngredientAvailabilityUi(
 data class RecipeCompanionUi(
     val sessions: List<CookingSessionEntity> = emptyList(),
     val activeSession: CookingSessionEntity? = null,
+    val possibleSession: CookingSessionEntity? = null,
     val ingredients: List<IngredientAvailabilityUi> = emptyList(),
 ) {
     val madeCount: Int get() = sessions.size
     val availableCount: Int get() = ingredients.count { it.status == PantryStatus.HAVE || (it.isStaple && it.status == PantryStatus.UNKNOWN) }
     val lowCount: Int get() = ingredients.count { it.status == PantryStatus.LOW }
     val neededCount: Int get() = ingredients.count { it.status == PantryStatus.DONT_HAVE }
+    val needCount: Int get() = lowCount + neededCount
     val unknownCount: Int get() = ingredients.count { it.status == PantryStatus.UNKNOWN && !it.isStaple }
 }
 
