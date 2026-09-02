@@ -1198,7 +1198,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1016230-robertas-pizza-dough",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed directly against the recipe's NYT Cooking page (2026-08-30); instructions paraphrased, not copied verbatim."
+      "note": "Ingredients and steps confirmed directly against the recipe's NYT Cooking page (2026-08-30); instructions paraphrased, not copied verbatim.",
+      "reviewFlags": []
     },
     "R0082": {
       "ingredients": [
@@ -1791,7 +1792,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/9101-classic-shrimp-scampi",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0066": {
       "ingredients": [
@@ -2269,7 +2271,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1025427-hamburger-soup",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Knific), 2026-08-30; instructions paraphrased. NYT tip: frozen mixed vegetables can go in unthawed to save time; fresh vegetables need about 10-15 extra minutes of prep and simmering."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Knific), 2026-08-30; instructions paraphrased. NYT tip: frozen mixed vegetables can go in unthawed to save time; fresh vegetables need about 10-15 extra minutes of prep and simmering.",
+      "reviewFlags": []
     },
     "R0405": {
       "ingredients": [
@@ -2383,7 +2386,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/2868-jordan-marshs-blueberry-muffins",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Marian Burros), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Marian Burros), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0072": {
       "ingredients": [
@@ -3146,7 +3150,8 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1026425-smashed-beef-kebab-with-cucumber-yogurt",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Zaynab Issa), 2026-08-30; instructions paraphrased. NYT tips: chilling the onion before grating reduces eye irritation; pistachios or pine nuts can substitute for the walnuts.",
-      "title": "Smashed Beef Kebab with Cucumber Yogurt"
+      "title": "Smashed Beef Kebab with Cucumber Yogurt",
+      "reviewFlags": []
     },
     "R0231": {
       "ingredients": [
@@ -4447,7 +4452,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1024108-brown-butter-chocolate-chip-cookies",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Millie Peartree), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Millie Peartree), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0106": {
       "ingredients": [
@@ -4868,7 +4874,10 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1019957-chocolate-lava-cake-for-two",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Yossy Arefi), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Yossy Arefi), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0108": {
       "ingredients": [
@@ -6384,7 +6393,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1018963-lemon-spice-visiting-cake",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Dorie Greenspan), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Dorie Greenspan), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0368": {
       "ingredients": [
@@ -6790,7 +6800,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1021459-mapo-tofu",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Andrea Nguyen), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Andrea Nguyen), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0062": {
       "ingredients": [
@@ -7087,7 +7098,10 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1024777-matcha-latte-cookies",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0261": {
       "ingredients": [
@@ -7649,9 +7663,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1014884-porchetta-pork-chops",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased.",
-      "reviewFlags": [
-        "duplicate_review"
-      ]
+      "reviewFlags": []
     },
     "R0243": {
       "ingredients": [
@@ -8371,7 +8383,10 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1018354-pumpkin-maple-muffins",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Alison Roman), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Alison Roman), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0409": {
       "ingredients": [
@@ -9237,7 +9252,10 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1019903-slow-cooker-chili",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Sarah DiGregorio), 2026-08-30; instructions paraphrased. Tip: you can also cook the chili in a Dutch oven on the stovetop in about 1 hour — in step 2, use 1 cup water instead of 1/2 cup, simmer over medium-high, then reduce heat to low, cover, and cook until the meat is tender, stirring occasionally, about 35 minutes."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Sarah DiGregorio), 2026-08-30; instructions paraphrased. Tip: you can also cook the chili in a Dutch oven on the stovetop in about 1 hour — in step 2, use 1 cup water instead of 1/2 cup, simmer over medium-high, then reduce heat to low, cover, and cook until the meat is tender, stirring occasionally, about 35 minutes.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0366": {
       "ingredients": [
@@ -9838,7 +9856,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1017758-sticky-cranberry-gingerbread",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0025": {
       "ingredients": [
@@ -10617,7 +10636,6 @@
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased.",
       "reviewFlags": [
-        "duplicate_review",
         "handwriting_review"
       ]
     },
@@ -11192,7 +11210,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1017734-zahavs-hummus-tehina",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark, adapted from Michael Solomonov and Steven Cook), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark, adapted from Michael Solomonov and Steven Cook), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0352": {
       "ingredients": [
@@ -11311,7 +11330,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1027547-szarlotka-jewish-apple-cake",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Laurel Kratochvila), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Laurel Kratochvila), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0452": {
       "ingredients": [
@@ -12349,9 +12369,7 @@
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against mariasmenu.com (Maria Jose Martin), 2026-08-30; instructions paraphrased.",
       "title": "Kerala Fish Curry with Coconut Milk",
-      "reviewFlags": [
-        "duplicate_review"
-      ]
+      "reviewFlags": []
     },
     "R0362": {
       "ingredients": [
@@ -12927,7 +12945,8 @@
       ],
       "sourceUrl": "https://www.allrecipes.com/recipe/232906/simple-broiled-haddock/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Allrecipes (submitted by Nicole Burdett), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against Allrecipes (submitted by Nicole Burdett), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0283": {
       "ingredients": [
@@ -16397,7 +16416,8 @@
       ],
       "sourceUrl": "https://mariasmenu.com/desserts/christmas-xmas-fruit-cake",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against mariasmenu.com (Maria Jose), 2026-08-30; instructions paraphrased. Alcohol-free version: soak the 3 cups of fruit in 1.5 cups fresh orange juice overnight at room temperature instead of rum. Notes: light brown sugar can substitute for more color; store at room temp in an airtight container up to 2 weeks, or refrigerate up to a month."
+      "note": "Ingredients and steps confirmed against mariasmenu.com (Maria Jose), 2026-08-30; instructions paraphrased. Alcohol-free version: soak the 3 cups of fruit in 1.5 cups fresh orange juice overnight at room temperature instead of rum. Notes: light brown sugar can substitute for more color; store at room temp in an airtight container up to 2 weeks, or refrigerate up to a month.",
+      "reviewFlags": []
     },
     "R0293": {
       "ingredients": [
@@ -16663,9 +16683,7 @@
       "sourceUrl": "https://www.kothiyavunu.com/2012/09/kerala-pepper-chicken-fry-nadan/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against kothiyavunu.com (Sangeetha), 2026-08-30; instructions paraphrased. This is a spicy dish — adjust black pepper to taste; fresh ground pepper and coconut oil are recommended for authentic flavor.",
-      "reviewFlags": [
-        "duplicate_review"
-      ]
+      "reviewFlags": []
     },
     "R0337": {
       "ingredients": [
@@ -18027,7 +18045,8 @@
       "sourceUrl": "https://www.epicurious.com/recipes/food/views/chicken-salad-with-grapes-and-walnuts-108165",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Epicurious/Gourmet (Lillian Chou), June 2003, 2026-08-30. Makes 4-6 servings.",
-      "title": "Chicken Salad with Grapes and Walnuts"
+      "title": "Chicken Salad with Grapes and Walnuts",
+      "reviewFlags": []
     },
     "R0194": {
       "ingredients": [
@@ -18687,7 +18706,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1026693-chile-crisp-and-honey-roasted-salmon",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Naz Deravian), 2026-08-30; instructions paraphrased. Roasting one large fillet rather than several small ones makes the topping easier to spread and bakes more evenly."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Naz Deravian), 2026-08-30; instructions paraphrased. Roasting one large fillet rather than several small ones makes the topping easier to spread and bakes more evenly.",
+      "reviewFlags": []
     },
     "R0351": {
       "ingredients": [
@@ -18862,7 +18882,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1020478-greek-lemon-potatoes",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Ali Slagle), 2026-08-30; instructions paraphrased. The potatoes soak up the oil-lemon-broth mixture as they roast, giving creamy interiors with very crisp, browned edges."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Ali Slagle), 2026-08-30; instructions paraphrased. The potatoes soak up the oil-lemon-broth mixture as they roast, giving creamy interiors with very crisp, browned edges.",
+      "reviewFlags": []
     },
     "R0419": {
       "ingredients": [
@@ -19465,7 +19486,10 @@
       "sourceUrl": "https://www.maangchi.com/recipe/easy-dakgangjeong",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Maangchi's dakgangjeong (crispy Korean fried chicken) recipe, 2026-08-30; instructions paraphrased. This card is the first half of a two-part scan; see the continuation card for coating the fried chicken in the sauce.",
-      "title": "Crispy and Crunchy Fried Chicken"
+      "title": "Crispy and Crunchy Fried Chicken",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0323": {
       "ingredients": [
@@ -20647,7 +20671,8 @@
       "sourceUrl": "https://www.foodandwine.com/baltimore-style-crab-cakes-6419082",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Food & Wine's 'Baltimore-Style Crab Cakes' by Andrew Zimmern (originally from 'Andrew Zimmern's Kitchen Adventures'), 2026-08-30; instructions paraphrased. The archived OCR's garbled masthead/byline text matches this column.",
-      "title": "Baltimore-Style Crab Cakes"
+      "title": "Baltimore-Style Crab Cakes",
+      "reviewFlags": []
     },
     "R0078": {
       "ingredients": [
@@ -24407,7 +24432,8 @@
       ],
       "sourceUrl": "https://mariasmenu.com/spicy/pepper-chicken-kurumulaku-chicken",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against MariasMenu (author Maria Jose), 2026-08-30; instructions paraphrased. OCR text explicitly credits 'mariasmenu.com' and 'Maria Jose' and matches the ingredient list and notes word for word."
+      "note": "Ingredients and steps confirmed against MariasMenu (author Maria Jose), 2026-08-30; instructions paraphrased. OCR text explicitly credits 'mariasmenu.com' and 'Maria Jose' and matches the ingredient list and notes word for word.",
+      "reviewFlags": []
     },
     "R0202": {
       "ingredients": [
@@ -25030,7 +25056,10 @@
       ],
       "sourceUrl": "https://www.seriouseats.com/the-best-roast-potatoes-ever-recipe",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Serious Eats, 'The Best Crispy Roast Potatoes Ever' by J. Kenji Lopez-Alt, 2026-08-30; instructions paraphrased. The archived scan's intro paragraph matches this recipe's headnote almost verbatim, confirming the source."
+      "note": "Ingredients and steps confirmed against Serious Eats, 'The Best Crispy Roast Potatoes Ever' by J. Kenji Lopez-Alt, 2026-08-30; instructions paraphrased. The archived scan's intro paragraph matches this recipe's headnote almost verbatim, confirming the source.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0009": {
       "ingredients": [
@@ -25146,7 +25175,8 @@
       ],
       "sourceUrl": "https://www.themediterraneandish.com/sun-dried-tomato-pasta/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against The Mediterranean Dish's Sun-Dried Tomato Pasta, 2026-08-30; instructions paraphrased. Archived scan's phrase 'our all-natural sun-dried tomatoes' matches the site's own sun-dried tomato product; a web-story version of the same recipe is titled '10-Minute Sun-Dried Tomato Pasta', matching the archive title, though the current full recipe page lists slightly different quantities/timing from a later recipe update."
+      "note": "Ingredients and steps confirmed against The Mediterranean Dish's Sun-Dried Tomato Pasta, 2026-08-30; instructions paraphrased. Archived scan's phrase 'our all-natural sun-dried tomatoes' matches the site's own sun-dried tomato product; a web-story version of the same recipe is titled '10-Minute Sun-Dried Tomato Pasta', matching the archive title, though the current full recipe page lists slightly different quantities/timing from a later recipe update.",
+      "reviewFlags": []
     },
     "R0149": {
       "ingredients": [
@@ -31544,7 +31574,8 @@
       "sourceUrl": "https://www.sadafsculinaryadventures.com/2014/03/quick-sardine-curry-with-canned-sardines.html",
       "sourceStatus": "confirmed",
       "note": "Instructions paraphrased from the archived scan, which already contained the complete recipe with its source domain visible (garbled as 'sadafscutinaryadventures.com', corrected to sadafsculinaryadventures.com); the parser had simply left the instructions unclassified. Same source URL as the already-fixed R0398 'Sardine Curry'. This is the verified original, 2026-09-01.",
-      "title": "Quick Sardine Curry with Canned Sardines"
+      "title": "Quick Sardine Curry with Canned Sardines",
+      "reviewFlags": []
     },
     "R0140": {
       "ingredients": [
@@ -34612,7 +34643,8 @@
       "title": "Garlic Butter Salmon Recipe"
     },
     "R0019": {
-      "title": "Garlic Herb Crusted Roast Rack of Lamb"
+      "title": "Garlic Herb Crusted Roast Rack of Lamb",
+      "reviewFlags": []
     },
     "R0353": {
       "ingredients": [
@@ -35892,7 +35924,8 @@
       ],
       "sourceUrl": "https://alittlebitofspice.com/kerala-style-chicken-curry-without-coconut-nadan-kozhi-curry-recipe",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against alittlebitofspice.com (Jane Jojo), 2026-09-02 - this is the same underlying recipe as archive card R0263 ('Kerala Style Chicken Curry -- Without'), which was already confirmed against this same source URL with an identical ingredient list and near-identical intro text. The archived title here was cut off mid-word by a page break; restored to the full title from the source page. Original scan had a trailing 'Recipe Notes' section with an unrelated fragment about Kashmiri chilli color, which is removed as junk. Instructions paraphrased."
+      "note": "Ingredients and steps confirmed against alittlebitofspice.com (Jane Jojo), 2026-09-02 - this is the same underlying recipe as archive card R0263 ('Kerala Style Chicken Curry -- Without'), which was already confirmed against this same source URL with an identical ingredient list and near-identical intro text. The archived title here was cut off mid-word by a page break; restored to the full title from the source page. Original scan had a trailing 'Recipe Notes' section with an unrelated fragment about Kashmiri chilli color, which is removed as junk. Instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0263": {
       "ingredients": [
@@ -40168,7 +40201,8 @@
       "sourceUrl": "https://www.feastingathome.com/black-pepper-tofu-with-bok-choy/",
       "sourceStatus": "confirmed",
       "note": "Ingredients were present in the archived OCR text but mis-bucketed into instructions; instructions were consolidated and paraphrased from the same OCR text. Matched against Sylvia Fountaine's Feasting at Home recipe by title/author byline in the scan. Verified original, 2026-09-01.",
-      "title": "Black Pepper Tofu with Bok Choy"
+      "title": "Black Pepper Tofu with Bok Choy",
+      "reviewFlags": []
     },
     "R0427": {
       "ingredients": [
@@ -41336,7 +41370,8 @@
       "sourceUrl": "https://cookieandkate.com/cranberry-muffins-recipe/",
       "sourceStatus": "confirmed",
       "note": "Ingredients were present in the archived OCR text but mis-bucketed into instructions; paraphrased in place. Confirmed against Cookie and Kate's published Fresh Cranberry Orange Muffins recipe (author byline in the scan reads 'Cookie and Kate'). Verified original, 2026-09-01.",
-      "title": "Fluffy Cranberry Orange Muffins"
+      "title": "Fluffy Cranberry Orange Muffins",
+      "reviewFlags": []
     },
     "R0183": {
       "ingredients": [
@@ -41516,7 +41551,8 @@
       "sourceUrl": "https://www.recipetineats.com/greek-lemon-potatoes/",
       "sourceStatus": "confirmed",
       "note": "Ingredients were present in the archived OCR text but mis-bucketed into instructions; paraphrased in place. The scan itself credits its source ('Another great recipe by recipetineats.com'), matching the RecipeTin Eats/Nagi publisher already on file. Verified original, 2026-09-01.",
-      "title": "Greek Lemon Potatoes"
+      "title": "Greek Lemon Potatoes",
+      "reviewFlags": []
     },
     "R0360": {
       "ingredients": [
@@ -41713,7 +41749,10 @@
       "sourceUrl": "https://www.recipetineats.com/crispy-smashed-potatoes/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against RecipeTin Eats' Ultra Crispy Smashed Potatoes by Nagi Maehashi, recipetineats.com, 2026-09-01; instructions paraphrased. Verified original source matching the recipetineats.com domain hint -- note the scanned card reflects an earlier version of the published recipe (e.g. 40-minute bake time vs. the site's current 45-55 minutes), so timings follow the card rather than the latest site revision.",
-      "title": "Ultra Crispy Smashed Potatoes"
+      "title": "Ultra Crispy Smashed Potatoes",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0046": {
       "ingredients": [
@@ -47923,7 +47962,10 @@
       ],
       "sourceUrl": "https://omnivorescookbook.com/cumin-lamb/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Omnivore's Cookbook (Maggie Zhu), 2026-09-02; instructions paraphrased. Original scan's ingredient/instruction lines were severely OCR-garbled and interspersed with unrelated handwritten notes; rebuilt from the published recipe."
+      "note": "Ingredients and steps confirmed against Omnivore's Cookbook (Maggie Zhu), 2026-09-02; instructions paraphrased. Original scan's ingredient/instruction lines were severely OCR-garbled and interspersed with unrelated handwritten notes; rebuilt from the published recipe.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0115": {
       "instructions": [
@@ -48485,7 +48527,8 @@
           "text": "ae",
           "parseStatus": "candidate"
         }
-      ]
+      ],
+      "reviewFlags": []
     },
     "R0163": {
       "instructions": [
@@ -48797,7 +48840,8 @@
           "text": "has the desired consistency. Turn off the heat.Let it rest and serve.",
           "parseStatus": "candidate"
         }
-      ]
+      ],
+      "reviewFlags": []
     },
     "R0245": {
       "instructions": [
@@ -50519,7 +50563,10 @@
       ],
       "sourceUrl": "https://www.seriouseats.com/black-pepper-tofu-recipe",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Serious Eats (Blake Royer, adapted from Yotam Ottolenghi's Plenty), 2026-09-02; instructions paraphrased. Original scan had ingredients split across multiple line-wrapped entries that didn't get rejoined properly, which is fixed here."
+      "note": "Ingredients and steps confirmed against Serious Eats (Blake Royer, adapted from Yotam Ottolenghi's Plenty), 2026-09-02; instructions paraphrased. Original scan had ingredients split across multiple line-wrapped entries that didn't get rejoined properly, which is fixed here.",
+      "reviewFlags": [
+        "handwriting_review"
+      ]
     },
     "R0071": {
       "title": "Sheet-Pan Chicken With Potatoes, Arugula and Garlic Yogurt",
@@ -51327,6 +51374,20 @@
       "reviewFlags": []
     },
     "R0059": {
+      "reviewFlags": []
+    },
+    "R0015": {
+      "reviewFlags": [
+        "handwriting_review"
+      ]
+    },
+    "R0402": {
+      "reviewFlags": []
+    },
+    "R0425": {
+      "reviewFlags": []
+    },
+    "R0014": {
       "reviewFlags": []
     }
   }
