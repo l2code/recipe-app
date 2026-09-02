@@ -48,6 +48,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -64,10 +65,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.organization.RecipeCategories
@@ -96,7 +99,14 @@ fun DetailScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text("Recipe", style = MaterialTheme.typography.titleMedium) },
+                title = {
+                    Text(
+                        detail?.recipe?.title ?: "Recipe",
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to library")
@@ -171,6 +181,7 @@ fun DetailContent(
                 companion = companion,
                 onStartCooking = onStartCooking,
                 onAddToMealPlan = onAddToMealPlan,
+                onAddUnavailableToShopping = onAddUnavailableToShopping,
             )
         }
         if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
@@ -210,18 +221,16 @@ private fun RecipeHero(
     companion: RecipeCompanionUi,
     onStartCooking: () -> Unit,
     onAddToMealPlan: (LocalDate) -> Unit,
+    onAddUnavailableToShopping: () -> Unit,
 ) {
     var showOrganizer by remember { mutableStateOf(false) }
     var showPlanDialog by remember { mutableStateOf(false) }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surface,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        color = MaterialTheme.colorScheme.background,
     ) {
-        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)) {
-            Text(detail.recipe.title, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
-            Spacer(Modifier.height(6.dp))
+        Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     detail.recipe.sourcePublisher.ifBlank { "Source unknown" },
@@ -236,7 +245,7 @@ private fun RecipeHero(
                 Text(
                     "Made ${companion.madeCount} ${if (companion.madeCount == 1) "time" else "times"}${if (lastMade.isBlank()) "" else " · Last made $lastMade"}",
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 7.dp),
                 )
             }
@@ -250,9 +259,12 @@ private fun RecipeHero(
                     Text("$category · $collectionCount ${if (collectionCount == 1) "collection" else "collections"} · Organize")
                 }
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = { showPlanDialog = true }) {
+                OutlinedButton(onClick = { showPlanDialog = true }) {
                     Icon(Icons.Filled.CalendarMonth, contentDescription = "Add to meal plan")
+                    Spacer(Modifier.width(5.dp))
+                    Text("Plan")
                 }
+                Spacer(Modifier.width(8.dp))
                 Button(onClick = onStartCooking) {
                     Icon(Icons.Filled.PlayArrow, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
@@ -272,6 +284,9 @@ private fun RecipeHero(
     }
     if (showPlanDialog) {
         MealPlanDateDialog(
+            recipeTitle = detail.recipe.title,
+            companion = companion,
+            onAddUnavailableToShopping = onAddUnavailableToShopping,
             onDismiss = { showPlanDialog = false },
             onDateSelected = { date ->
                 onAddToMealPlan(date)
@@ -283,19 +298,26 @@ private fun RecipeHero(
 
 @Composable
 private fun MealPlanDateDialog(
+    recipeTitle: String,
+    companion: RecipeCompanionUi,
+    onAddUnavailableToShopping: () -> Unit,
     onDismiss: () -> Unit,
     onDateSelected: (LocalDate) -> Unit,
 ) {
     val today = remember { LocalDate.now() }
     var dayCount by remember { mutableStateOf(14) }
+    var selectedDate by remember { mutableStateOf(today) }
     val dates = remember(today, dayCount) { (0 until dayCount).map { today.plusDays(it.toLong()) } }
     val rangeLabel = "${today.format(DateTimeFormatter.ofPattern("MMM d"))} – ${dates.last().format(DateTimeFormatter.ofPattern("MMM d"))}"
+    val unavailableCount = companion.lowCount + companion.neededCount + companion.unknownCount
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = { Text("Add to meal plan") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Text(recipeTitle, style = MaterialTheme.typography.titleMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -321,11 +343,17 @@ private fun MealPlanDateDialog(
                         ) {
                             week.forEach { date ->
                                 val isToday = date == today
+                                val isSelected = date == selectedDate
                                 Surface(
-                                    onClick = { onDateSelected(date) },
+                                    onClick = { selectedDate = date },
                                     modifier = Modifier.weight(1f).height(76.dp),
                                     shape = MaterialTheme.shapes.medium,
-                                    color = if (isToday) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                                    color = when {
+                                        isSelected -> MaterialTheme.colorScheme.primaryContainer
+                                        isToday -> MaterialTheme.colorScheme.secondaryContainer
+                                        else -> MaterialTheme.colorScheme.surfaceVariant
+                                    },
+                                    border = if (isSelected) BorderStroke(1.dp, MaterialTheme.colorScheme.primary) else null,
                                 ) {
                                     Column(
                                         modifier = Modifier.padding(vertical = 8.dp),
@@ -335,18 +363,18 @@ private fun MealPlanDateDialog(
                                         Text(
                                             if (isToday) "Today" else date.format(DateTimeFormatter.ofPattern("EEE")),
                                             style = MaterialTheme.typography.labelSmall,
-                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                         Text(
                                             date.dayOfMonth.toString(),
                                             style = MaterialTheme.typography.titleMedium,
                                             fontWeight = FontWeight.Bold,
-                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                         Text(
                                             date.format(DateTimeFormatter.ofPattern("MMM")),
                                             style = MaterialTheme.typography.labelSmall,
-                                            color = if (isToday) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                            color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                     }
                                 }
@@ -354,9 +382,41 @@ private fun MealPlanDateDialog(
                         }
                     }
                 }
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.surface,
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                ) {
+                    Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+                        Text("Ingredient check", style = MaterialTheme.typography.titleSmall)
+                        Text(
+                            buildList {
+                                add("${companion.availableCount} have")
+                                if (companion.lowCount > 0) add("${companion.lowCount} low")
+                                if (companion.neededCount > 0) add("${companion.neededCount} need")
+                                if (companion.unknownCount > 0) add("${companion.unknownCount} unsure")
+                            }.joinToString(" · "),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        if (unavailableCount > 0) {
+                            TextButton(onClick = onAddUnavailableToShopping) {
+                                Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(5.dp))
+                                Text("Add $unavailableCount to Shopping")
+                            }
+                        }
+                    }
+                }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        confirmButton = {
+            Button(onClick = { onDateSelected(selectedDate) }) {
+                Text("Add to ${selectedDate.format(DateTimeFormatter.ofPattern("EEE, MMM d"))}")
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 
@@ -372,6 +432,7 @@ private fun OrganizerDialog(
     var newCollectionName by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = { Text("Organize recipe") },
         text = {
             LazyColumn(
@@ -444,13 +505,13 @@ private fun RatingRow(rating: Int?, onRatingChanged: (Int?) -> Unit) {
         (1..5).forEach { value ->
             IconButton(
                 onClick = { onRatingChanged(if (rating == value) null else value) },
-                modifier = Modifier.size(36.dp),
+                modifier = Modifier.size(30.dp),
             ) {
                 Icon(
                     if ((rating ?: 0) >= value) Icons.Filled.Star else Icons.Filled.StarBorder,
                     contentDescription = "$value stars",
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(22.dp),
+                    modifier = Modifier.size(19.dp),
                 )
             }
         }
@@ -470,6 +531,7 @@ private fun IngredientsCard(
             Text("No ingredients were extracted for this recipe.", style = MaterialTheme.typography.bodyMedium)
         } else {
             val reviewCount = detail.ingredients.count { it.parseStatus == "needs_review" }
+            val availabilityByIngredient = companion.ingredients.associateBy { it.ingredient.id }
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (reviewCount > 0) {
                     Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.tertiaryContainer) {
@@ -483,36 +545,38 @@ private fun IngredientsCard(
                 }
                 detail.ingredients.forEach { ingredient ->
                     IngredientRow(
-                        listOf(ingredient.quantity, ingredient.unit, ingredient.item)
+                        text = listOf(ingredient.quantity, ingredient.unit, ingredient.item)
                             .filter { it.isNotBlank() }.joinToString(" ").ifBlank { ingredient.rawText },
+                        availability = availabilityByIngredient[ingredient.id],
                     )
                 }
                 if (companion.ingredients.isNotEmpty()) {
-                    Spacer(Modifier.height(6.dp))
-                    Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.secondaryContainer) {
+                    val unavailableCount = companion.lowCount + companion.neededCount + companion.unknownCount
+                    Spacer(Modifier.height(4.dp))
+                    Surface(
+                        shape = MaterialTheme.shapes.medium,
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                    ) {
                         Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
                             Text(
-                                "${companion.availableCount} of ${companion.ingredients.size} available",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            )
-                            Text(
                                 buildList {
+                                    add("${companion.availableCount} have")
                                     if (companion.lowCount > 0) add("${companion.lowCount} low")
-                                    if (companion.neededCount > 0) add("${companion.neededCount} needed")
-                                    if (companion.unknownCount > 0) add("${companion.unknownCount} unchecked")
-                                }.joinToString(" · ").ifBlank { "Everything is ready" },
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    if (companion.neededCount > 0) add("${companion.neededCount} need")
+                                    if (companion.unknownCount > 0) add("${companion.unknownCount} unsure")
+                                }.joinToString(" · "),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
                             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                                 TextButton(onClick = { showAvailability = true }) { Text("Check ingredients") }
                                 Spacer(Modifier.weight(1f))
-                                if (companion.availableCount < companion.ingredients.size) {
+                                if (unavailableCount > 0) {
                                     TextButton(onClick = onAddUnavailableToShopping) {
                                         Icon(Icons.Filled.ShoppingCart, contentDescription = null, modifier = Modifier.size(18.dp))
                                         Spacer(Modifier.width(4.dp))
-                                        Text("Add unavailable")
+                                        Text("Add $unavailableCount to Shopping")
                                     }
                                 }
                             }
@@ -540,6 +604,7 @@ private fun AvailabilityDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = { Text("Ingredient availability") },
         text = {
             LazyColumn(
@@ -655,11 +720,52 @@ private fun ContentCard(
 }
 
 @Composable
-private fun IngredientRow(text: String) {
-    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-        Box(Modifier.padding(top = 9.dp).size(7.dp).background(MaterialTheme.colorScheme.secondary, CircleShape))
-        Spacer(Modifier.width(12.dp))
+private fun IngredientRow(text: String, availability: IngredientAvailabilityUi?) {
+    val needsAttention = availability?.status == PantryStatus.LOW || availability?.status == PantryStatus.DONT_HAVE
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                if (needsAttention) MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.38f) else Color.Transparent,
+                MaterialTheme.shapes.small,
+            )
+            .padding(horizontal = 6.dp, vertical = 3.dp),
+        verticalAlignment = Alignment.Top,
+    ) {
+        IngredientStatusMark(availability)
+        Spacer(Modifier.width(10.dp))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+private fun IngredientStatusMark(availability: IngredientAvailabilityUi?) {
+    val isAvailable = availability?.status == PantryStatus.HAVE ||
+        (availability?.isStaple == true && availability.status == PantryStatus.UNKNOWN)
+    val color = when {
+        isAvailable -> MaterialTheme.colorScheme.primary
+        availability?.status == PantryStatus.DONT_HAVE -> MaterialTheme.colorScheme.error
+        availability?.status == PantryStatus.LOW -> MaterialTheme.colorScheme.tertiary
+        else -> MaterialTheme.colorScheme.outline
+    }
+    Surface(
+        modifier = Modifier.padding(top = 2.dp).size(21.dp),
+        shape = CircleShape,
+        color = if (isAvailable) color else Color.Transparent,
+        border = BorderStroke(1.5.dp, color),
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                when {
+                    isAvailable -> "✓"
+                    availability?.status == PantryStatus.LOW -> "!"
+                    else -> ""
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = if (isAvailable) MaterialTheme.colorScheme.onPrimary else color,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }
 
@@ -734,6 +840,23 @@ private fun ScanPagesCard(detail: RecipeDetailUi) {
 private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
     ContentCard(title = "Cooking history", icon = Icons.Filled.History) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            val durations = sessions.mapNotNull { it.durationMillis }.sorted()
+            val ratings = sessions.mapNotNull { it.rating }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                HistoryStat(sessions.size.toString(), "Times made", Modifier.weight(1f))
+                HistoryStat(
+                    durations.takeIf { it.isNotEmpty() }?.average()?.toLong()?.let(::formatDuration) ?: "—",
+                    "Average",
+                    Modifier.weight(1f),
+                )
+                HistoryStat(durations.firstOrNull()?.let(::formatDuration) ?: "—", "Shortest", Modifier.weight(1f))
+                HistoryStat(durations.lastOrNull()?.let(::formatDuration) ?: "—", "Longest", Modifier.weight(1f))
+                HistoryStat(
+                    ratings.takeIf { it.isNotEmpty() }?.average()?.let { "%.1f".format(it) } ?: "—",
+                    "Avg rating",
+                    Modifier.weight(1f),
+                )
+            }
             sessions.take(8).forEach { session ->
                 Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surfaceVariant) {
                     Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -755,6 +878,16 @@ private fun CookingHistoryCard(sessions: List<CookingSessionEntity>) {
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun HistoryStat(value: String, label: String, modifier: Modifier = Modifier) {
+    Surface(modifier = modifier, shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.secondaryContainer) {
+        Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(value, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
+            Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

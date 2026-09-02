@@ -45,10 +45,12 @@ class RecipeRepository(
             database.recipeReviewFlagDao().observeRecipeIdsWithFlags(),
             organizationFlow,
             matchIdsFlow,
-        ) { recipes, flaggedIds, organization, matchIds ->
+            database.cookingSessionDao().observeAllConfirmed(),
+        ) { recipes, flaggedIds, organization, matchIds, sessions ->
             val (states, assignments) = organization
             val flaggedSet = flaggedIds.toSet()
             val stateByRecipe = states.associateBy { it.recipeId }
+            val sessionsByRecipe = sessions.groupBy { it.recipeId }
             val collectionsByRecipe = assignments.groupBy { it.recipeId }
                 .mapValues { (_, refs) -> refs.map { it.collectionId }.toSet() }
             val byId = recipes.associateBy { it.id }
@@ -58,6 +60,8 @@ class RecipeRepository(
                 val collectionIds = collectionsByRecipe[recipe.id].orEmpty()
                 if (category != null && appState?.category != category) return@mapNotNull null
                 if (collectionId != null && collectionId !in collectionIds) return@mapNotNull null
+                val recipeSessions = sessionsByRecipe[recipe.id].orEmpty()
+                val durations = recipeSessions.mapNotNull { it.durationMillis }
                 RecipeSummary(
                     id = recipe.id,
                     title = recipe.title,
@@ -67,6 +71,9 @@ class RecipeRepository(
                     personalRating = appState?.personalRating,
                     category = appState?.category,
                     collectionIds = collectionIds,
+                    madeCount = recipeSessions.size,
+                    lastMadeAt = recipeSessions.firstOrNull()?.finishedAt,
+                    averageDurationMillis = durations.takeIf { it.isNotEmpty() }?.average()?.toLong(),
                 )
             }
         }

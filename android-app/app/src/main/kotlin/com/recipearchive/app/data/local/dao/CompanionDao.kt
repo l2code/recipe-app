@@ -25,6 +25,9 @@ interface CookingSessionDao {
     @Query("SELECT * FROM cooking_sessions WHERE recipeId = :recipeId AND status = 'confirmed' ORDER BY finishedAt DESC")
     fun observeConfirmedForRecipe(recipeId: String): Flow<List<CookingSessionEntity>>
 
+    @Query("SELECT * FROM cooking_sessions WHERE status = 'confirmed' ORDER BY finishedAt DESC")
+    fun observeAllConfirmed(): Flow<List<CookingSessionEntity>>
+
     @Query("SELECT * FROM cooking_sessions WHERE recipeId = :recipeId AND status = 'active' ORDER BY startedAt DESC LIMIT 1")
     fun observeActiveForRecipe(recipeId: String): Flow<CookingSessionEntity?>
 

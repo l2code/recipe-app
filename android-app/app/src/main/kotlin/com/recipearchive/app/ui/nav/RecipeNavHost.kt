@@ -175,6 +175,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                             )
                             CookingScreen(
                                 viewModel = cookingViewModel,
+                                widthSizeClass = widthSizeClass,
                                 onBack = { navController.popBackStack() },
                                 onSessionComplete = { navController.popBackStack() },
                             )

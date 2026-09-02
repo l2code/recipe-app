@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.companion.CookingCompanionRepository
+import com.recipearchive.app.data.companion.RecipeCompanionUi
 import com.recipearchive.app.data.local.entity.CookingSessionEntity
 import com.recipearchive.app.data.repository.RecipeDetailUi
 import com.recipearchive.app.data.repository.RecipeRepository
@@ -23,6 +24,9 @@ class CookingViewModel(
 
     val session: StateFlow<CookingSessionEntity?> = companionRepository.observeSession(sessionId)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    val companion: StateFlow<RecipeCompanionUi> = companionRepository.observeRecipe(recipeId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), RecipeCompanionUi())
 
     fun finish(notes: String, rating: Int?, onFinished: () -> Unit) {
         viewModelScope.launch {

@@ -65,6 +65,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.repository.RecipeSummary
 import com.recipearchive.app.data.local.entity.CollectionEntity
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -388,7 +391,7 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
         shape = MaterialTheme.shapes.medium,
         onClick = { onRecipeClick(recipe.id) },
     ) {
-        Row(modifier = Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.padding(15.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier.size(46.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 contentAlignment = Alignment.Center,
@@ -425,7 +428,7 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                             Icon(
                                 if (recipe.personalRating == null) Icons.Filled.StarBorder else Icons.Filled.Star,
                                 contentDescription = if (recipe.personalRating == null) "Not rated" else "Rated ${recipe.personalRating} out of 5",
-                                tint = if (recipe.personalRating == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.tertiary,
+                                tint = if (recipe.personalRating == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(16.dp),
                             )
                             Spacer(Modifier.width(3.dp))
@@ -436,6 +439,18 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                             )
                         }
                     }
+                }
+                if (recipe.madeCount > 0) {
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        buildList {
+                            add("Made ${recipe.madeCount}×")
+                            recipe.averageDurationMillis?.let { add(formatCompactDuration(it)) }
+                            recipe.lastMadeAt?.let { add(formatLastMade(it)) }
+                        }.joinToString(" · "),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
                 if (recipe.hasReviewFlags) {
                     Spacer(Modifier.height(8.dp))
@@ -458,6 +473,16 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
         }
     }
 }
+
+private fun formatCompactDuration(milliseconds: Long): String {
+    val minutes = (milliseconds / 60_000).coerceAtLeast(1)
+    return if (minutes >= 60) "${minutes / 60} hr ${minutes % 60} min" else "$minutes min"
+}
+
+private fun formatLastMade(timestamp: Long): String = Instant.ofEpochMilli(timestamp)
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate()
+    .format(DateTimeFormatter.ofPattern("MMM d"))
 
 @Composable
 private fun LoadingState(modifier: Modifier = Modifier) {
