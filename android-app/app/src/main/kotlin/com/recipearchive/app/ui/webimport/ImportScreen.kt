@@ -18,8 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.RateReview
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.RestaurantMenu
@@ -29,6 +31,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -56,11 +59,13 @@ import com.recipearchive.app.data.webimport.SavedLinkUi
 fun ImportScreen(
     viewModel: ImportViewModel,
     onImported: (String) -> Unit,
+    onOpenHistory: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val savedLinks by viewModel.savedLinks.collectAsState()
     val nytAccountState by viewModel.nytAccountState.collectAsState()
+    val previewState by viewModel.previewState.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
@@ -93,6 +98,11 @@ fun ImportScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Import Recipes", style = MaterialTheme.typography.titleLarge) },
+                actions = {
+                    IconButton(onClick = onOpenHistory) {
+                        Icon(Icons.Filled.History, contentDescription = "Import History")
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )
         },
@@ -105,7 +115,7 @@ fun ImportScreen(
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            ImportFromUrlCard(uiState, viewModel::onUrlChanged, viewModel::importRecipe)
+            ImportFromUrlCard(uiState, viewModel::onUrlChanged, viewModel::importRecipe, viewModel::reviewBeforeImport)
             QuickSourcesCard(
                 infoMessage = uiState.infoMessage,
                 savedLinksExpanded = uiState.savedLinksExpanded,
@@ -122,6 +132,16 @@ fun ImportScreen(
                 onTestLogin = viewModel::testNytLogin,
                 onManageAccounts = viewModel::openManageAccounts,
             )
+            if (previewState != null) {
+                ImportPreviewCard(
+                    preview = previewState!!,
+                    onTitleChanged = viewModel::onPreviewTitleChanged,
+                    onIngredientsChanged = viewModel::onPreviewIngredientsChanged,
+                    onInstructionsChanged = viewModel::onPreviewInstructionsChanged,
+                    onDiscard = viewModel::discardPreview,
+                    onConfirm = viewModel::confirmPreviewImport,
+                )
+            }
             WhatHappensNextCard()
         }
     }
@@ -155,7 +175,12 @@ private fun PasteTextDialog(
 }
 
 @Composable
-private fun ImportFromUrlCard(uiState: ImportUiState, onUrlChanged: (String) -> Unit, onImportClick: () -> Unit) {
+private fun ImportFromUrlCard(
+    uiState: ImportUiState,
+    onUrlChanged: (String) -> Unit,
+    onImportClick: () -> Unit,
+    onReviewClick: () -> Unit,
+) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surface,
@@ -178,19 +203,86 @@ private fun ImportFromUrlCard(uiState: ImportUiState, onUrlChanged: (String) -> 
                 isError = uiState.errorMessage != null,
                 supportingText = uiState.errorMessage?.let { { Text(it) } },
             )
-            Button(
-                onClick = onImportClick,
-                enabled = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(modifier = Modifier.size(18.dp), color = MaterialTheme.colorScheme.onPrimary)
-                    Spacer(Modifier.width(10.dp))
-                    Text("Importing…")
-                } else {
-                    Icon(Icons.Filled.Download, contentDescription = null)
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(
+                    onClick = onReviewClick,
+                    enabled = !uiState.isLoading,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Icon(Icons.Filled.RateReview, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Import Recipe")
+                    Text("Review First")
+                }
+                Button(
+                    onClick = onImportClick,
+                    enabled = !uiState.isLoading,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    if (uiState.isLoading) {
+                        CircularProgressIndicator(modifier = Modifier.size(18.dp), color = MaterialTheme.colorScheme.onPrimary)
+                        Spacer(Modifier.width(10.dp))
+                        Text("Importing…")
+                    } else {
+                        Icon(Icons.Filled.Download, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Import Recipe")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ImportPreviewCard(
+    preview: PreviewUiState,
+    onTitleChanged: (String) -> Unit,
+    onIngredientsChanged: (String) -> Unit,
+    onInstructionsChanged: (String) -> Unit,
+    onDiscard: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text("Import Preview", style = MaterialTheme.typography.titleLarge)
+            Text(
+                preview.domain.ifBlank { preview.publisher },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedTextField(
+                value = preview.title,
+                onValueChange = onTitleChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Title") },
+                singleLine = true,
+            )
+            OutlinedTextField(
+                value = preview.ingredientsText,
+                onValueChange = onIngredientsChanged,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 100.dp),
+                label = { Text("Ingredients (one per line)") },
+            )
+            OutlinedTextField(
+                value = preview.instructionsText,
+                onValueChange = onInstructionsChanged,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 100.dp),
+                label = { Text("Instructions (one per line)") },
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                OutlinedButton(onClick = onDiscard, enabled = !preview.isSaving, modifier = Modifier.weight(1f)) {
+                    Text("Discard")
+                }
+                Button(onClick = onConfirm, enabled = !preview.isSaving, modifier = Modifier.weight(1f)) {
+                    if (preview.isSaving) {
+                        CircularProgressIndicator(modifier = Modifier.size(18.dp), color = MaterialTheme.colorScheme.onPrimary)
+                    } else {
+                        Text("Import This Recipe")
+                    }
                 }
             }
         }

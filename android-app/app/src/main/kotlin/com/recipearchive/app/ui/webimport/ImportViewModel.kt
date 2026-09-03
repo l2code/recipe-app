@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.webimport.CredentialStore
+import com.recipearchive.app.data.webimport.FetchAndParseOutcome
+import com.recipearchive.app.data.webimport.ImportHistoryEntryUi
+import com.recipearchive.app.data.webimport.ParsedRecipe
 import com.recipearchive.app.data.webimport.SavedLinkUi
 import com.recipearchive.app.data.webimport.WebImportOutcome
 import com.recipearchive.app.data.webimport.WebRecipeImportService
@@ -38,6 +41,16 @@ data class NytAccountUiState(
     val statusMessage: String? = null,
 )
 
+data class PreviewUiState(
+    val url: String,
+    val domain: String,
+    val publisher: String,
+    val title: String,
+    val ingredientsText: String,
+    val instructionsText: String,
+    val isSaving: Boolean = false,
+)
+
 sealed class ImportEvent {
     data class Imported(val recipeId: String) : ImportEvent()
 }
@@ -58,7 +71,13 @@ class ImportViewModel(
     )
     val nytAccountState: StateFlow<NytAccountUiState> = _nytAccountState.asStateFlow()
 
+    private val _previewState = MutableStateFlow<PreviewUiState?>(null)
+    val previewState: StateFlow<PreviewUiState?> = _previewState.asStateFlow()
+
     val savedLinks: StateFlow<List<SavedLinkUi>> = webRecipeImportService.observeSavedLinks()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val history: StateFlow<List<ImportHistoryEntryUi>> = webRecipeImportService.observeHistory()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _events = Channel<ImportEvent>(Channel.BUFFERED)
@@ -116,6 +135,73 @@ class ImportViewModel(
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
         viewModelScope.launch {
             handleOutcome(webRecipeImportService.importFromUrl(url))
+        }
+    }
+
+    /** Fetches + parses the URL but doesn't save -- populates the editable preview instead. */
+    fun reviewBeforeImport() {
+        val url = _uiState.value.url.trim()
+        if (url.isBlank()) {
+            _uiState.update { it.copy(errorMessage = "Paste a recipe URL first") }
+            return
+        }
+        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        viewModelScope.launch {
+            when (val result = webRecipeImportService.fetchAndParse(url)) {
+                is FetchAndParseOutcome.Success -> {
+                    _uiState.update { it.copy(isLoading = false, url = "") }
+                    _previewState.value = PreviewUiState(
+                        url = result.url,
+                        domain = result.domain,
+                        publisher = result.publisher,
+                        title = result.parsed.title,
+                        ingredientsText = result.parsed.ingredients.joinToString("\n"),
+                        instructionsText = result.parsed.instructions.joinToString("\n"),
+                    )
+                }
+                is FetchAndParseOutcome.NotFound -> _uiState.update {
+                    it.copy(isLoading = false, errorMessage = "Couldn't find a recipe there.")
+                }
+                is FetchAndParseOutcome.NetworkError -> _uiState.update {
+                    it.copy(isLoading = false, errorMessage = "Couldn't reach that page: ${result.message}")
+                }
+                is FetchAndParseOutcome.ParseError -> _uiState.update {
+                    it.copy(isLoading = false, errorMessage = result.message)
+                }
+            }
+        }
+    }
+
+    fun onPreviewTitleChanged(title: String) {
+        _previewState.update { it?.copy(title = title) }
+    }
+
+    fun onPreviewIngredientsChanged(text: String) {
+        _previewState.update { it?.copy(ingredientsText = text) }
+    }
+
+    fun onPreviewInstructionsChanged(text: String) {
+        _previewState.update { it?.copy(instructionsText = text) }
+    }
+
+    fun discardPreview() {
+        _previewState.value = null
+    }
+
+    fun confirmPreviewImport() {
+        val preview = _previewState.value ?: return
+        _previewState.update { it?.copy(isSaving = true) }
+        viewModelScope.launch {
+            val parsed = ParsedRecipe(
+                title = preview.title,
+                ingredients = preview.ingredientsText.lines().map { it.trim() }.filter { it.isNotBlank() },
+                instructions = preview.instructionsText.lines().map { it.trim() }.filter { it.isNotBlank() },
+                imageUrl = null,
+                recipeYield = null,
+            )
+            val outcome = webRecipeImportService.saveParsedRecipe(parsed, preview.url, preview.domain, preview.publisher)
+            _previewState.value = null
+            handleOutcome(outcome)
         }
     }
 

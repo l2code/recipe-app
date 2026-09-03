@@ -174,4 +174,36 @@ class WebRecipeImportServiceTest {
 
         assertTrue(outcome is WebImportOutcome.NotFound)
     }
+
+    @Test
+    fun `fetchAndParse does not save or record history`() = runTest {
+        server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+
+        val result = service.fetchAndParse(url)
+
+        assertTrue(result is FetchAndParseOutcome.Success)
+        result as FetchAndParseOutcome.Success
+        assertEquals("Weeknight Tacos", result.parsed.title)
+        assertEquals(0, database.recipeDao().count())
+        assertTrue(service.observeHistory().first().isEmpty())
+    }
+
+    @Test
+    fun `saving a reviewed preview records exactly one history entry`() = runTest {
+        server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+        val result = service.fetchAndParse(url) as FetchAndParseOutcome.Success
+
+        val edited = result.parsed.copy(title = "Weeknight Tacos (edited)")
+        val outcome = service.saveParsedRecipe(edited, result.url, result.domain, result.publisher)
+
+        assertTrue(outcome is WebImportOutcome.Success)
+        outcome as WebImportOutcome.Success
+        assertEquals("Weeknight Tacos (edited)", outcome.title)
+
+        val history = service.observeHistory().first()
+        assertEquals(1, history.size)
+        assertEquals("Weeknight Tacos (edited)", history.first().title)
+    }
 }

@@ -44,6 +44,7 @@ import com.recipearchive.app.ui.detail.DetailScreen
 import com.recipearchive.app.ui.detail.DetailViewModel
 import com.recipearchive.app.ui.library.LibraryScreen
 import com.recipearchive.app.ui.library.LibraryViewModel
+import com.recipearchive.app.ui.webimport.ImportHistoryScreen
 import com.recipearchive.app.ui.webimport.ImportScreen
 import com.recipearchive.app.ui.webimport.ImportViewModel
 
@@ -53,6 +54,7 @@ private const val ROUTE_SHOPPING = "shopping"
 private const val ROUTE_PANTRY = "pantry"
 private const val ROUTE_HISTORY = "history"
 private const val ROUTE_IMPORT = "import"
+private const val ROUTE_IMPORT_HISTORY = "import_history"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
 private const val ARG_RECIPE_ID = "recipeId"
@@ -152,6 +154,14 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                         ImportScreen(
                             viewModel = importViewModel,
                             onImported = { recipeId -> navController.navigate("detail/$recipeId") },
+                            onOpenHistory = { navController.navigate(ROUTE_IMPORT_HISTORY) },
+                        )
+                    }
+                    composable(ROUTE_IMPORT_HISTORY) {
+                        ImportHistoryScreen(
+                            viewModel = importViewModel,
+                            onBack = { navController.popBackStack() },
+                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
                         )
                     }
                     composable(

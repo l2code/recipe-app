@@ -44,41 +44,41 @@ class WebRecipeImportService(
 ) {
     suspend fun importFromUrl(url: String, sourcePublisherOverride: String? = null): WebImportOutcome =
         withContext(ioDispatcher) {
-            val normalizedUrl = normalizeUrl(url)
-            if (normalizedUrl == null) {
-                return@withContext recordHistory(WebImportOutcome.ParseError("Not a valid URL"), url.trim(), "", "")
+            when (val result = fetchAndParse(url, sourcePublisherOverride)) {
+                is FetchAndParseOutcome.Success ->
+                    saveParsedRecipe(result.parsed, result.url, result.domain, result.publisher)
+                is FetchAndParseOutcome.NotFound ->
+                    recordHistory(WebImportOutcome.NotFound, normalizeUrl(url) ?: url.trim(), "", "")
+                is FetchAndParseOutcome.NetworkError ->
+                    recordHistory(WebImportOutcome.NetworkError(result.message), normalizeUrl(url) ?: url.trim(), "", "")
+                is FetchAndParseOutcome.ParseError ->
+                    recordHistory(WebImportOutcome.ParseError(result.message), normalizeUrl(url) ?: url.trim(), "", "")
             }
+        }
+
+    /** Fetches and parses a URL without saving -- backs the "Review Before Import" preview. */
+    suspend fun fetchAndParse(url: String, sourcePublisherOverride: String? = null): FetchAndParseOutcome =
+        withContext(ioDispatcher) {
+            val normalizedUrl = normalizeUrl(url)
+                ?: return@withContext FetchAndParseOutcome.ParseError("Not a valid URL")
             val domain = normalizedUrl.toHttpUrlOrNull()?.host?.removePrefix("www.").orEmpty()
             val publisher = sourcePublisherOverride?.takeIf { it.isNotBlank() } ?: domain
 
             val html = try {
                 fetch(normalizedUrl)
             } catch (e: IOException) {
-                return@withContext recordHistory(
-                    WebImportOutcome.NetworkError(e.message ?: "Network error"),
-                    normalizedUrl,
-                    domain,
-                    "",
-                )
+                return@withContext FetchAndParseOutcome.NetworkError(e.message ?: "Network error")
             }
 
             val parsed = try {
                 parser.parse(html)
             } catch (e: Exception) {
-                return@withContext recordHistory(
-                    WebImportOutcome.ParseError(e.message ?: "Failed to parse recipe"),
-                    normalizedUrl,
-                    domain,
-                    "",
-                )
+                return@withContext FetchAndParseOutcome.ParseError(e.message ?: "Failed to parse recipe")
             }
 
-            if (parsed == null || parsed.isEmpty) {
-                return@withContext recordHistory(WebImportOutcome.NotFound, normalizedUrl, domain, "")
-            }
+            if (parsed == null || parsed.isEmpty) return@withContext FetchAndParseOutcome.NotFound
 
-            val outcome = saveParsedRecipe(parsed, normalizedUrl, domain, publisher)
-            recordHistory(outcome, normalizedUrl, domain, parsed.title)
+            FetchAndParseOutcome.Success(parsed, normalizedUrl, domain, publisher)
         }
 
     suspend fun importPastedText(text: String): WebImportOutcome = withContext(ioDispatcher) {
@@ -86,17 +86,20 @@ class WebRecipeImportService(
         if (parsed.isEmpty) {
             return@withContext recordHistory(WebImportOutcome.NotFound, "", PASTED_TEXT_LABEL, "")
         }
-        val outcome = saveParsedRecipe(parsed, url = "", domain = PASTED_TEXT_LABEL, publisher = PASTED_TEXT_LABEL)
-        recordHistory(outcome, "", PASTED_TEXT_LABEL, parsed.title)
+        saveParsedRecipe(parsed, url = "", domain = PASTED_TEXT_LABEL, publisher = PASTED_TEXT_LABEL)
     }
 
-    /** Persists an already-parsed recipe. Shared by both import paths and by the review-before-import flow. */
+    /**
+     * Persists an already-parsed recipe and records the save to history. Shared by both import
+     * paths and by the review-before-import flow's final "Import This Recipe" commit.
+     */
     suspend fun saveParsedRecipe(parsed: ParsedRecipe, url: String, domain: String, publisher: String): WebImportOutcome {
         val now = clock()
         val (recipeId, wasNew) = database.withTransaction {
             persistRecipe(parsed, url, domain, publisher, now)
         }
-        return WebImportOutcome.Success(recipeId, parsed.title.ifBlank { "Untitled recipe" }, wasNew)
+        val outcome = WebImportOutcome.Success(recipeId, parsed.title.ifBlank { "Untitled recipe" }, wasNew)
+        return recordHistory(outcome, url, domain, outcome.title)
     }
 
     fun observeSavedLinks(limit: Int = 10): Flow<List<SavedLinkUi>> =
