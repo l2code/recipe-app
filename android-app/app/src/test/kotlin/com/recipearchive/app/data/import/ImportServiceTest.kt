@@ -2,6 +2,9 @@ package com.recipearchive.app.data.import
 
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.local.entity.ImportStatus
+import com.recipearchive.app.data.webimport.ParsedRecipe
+import com.recipearchive.app.data.webimport.WebImportOutcome
+import com.recipearchive.app.data.webimport.WebRecipeImportService
 import com.recipearchive.app.testutil.TestBundleFixtures
 import com.recipearchive.app.testutil.TestDatabaseFactory
 import kotlinx.coroutines.flow.first
@@ -156,6 +159,30 @@ class ImportServiceTest {
         assertNotNull(database.recipeDao().getById("R0002"))
         assertTrue(database.ingredientDao().observeForRecipe("R0001").first().isEmpty())
         assertNull(database.recipeAppStateDao().getForRecipe("R0001"))
+    }
+
+    @Test
+    fun `bundle reimport never deletes a recipe imported from a URL`() = runTest {
+        val webImportService = WebRecipeImportService(database)
+        val webOutcome = webImportService.saveParsedRecipe(
+            ParsedRecipe(
+                title = "Weeknight Tacos",
+                ingredients = listOf("Tortillas"),
+                instructions = listOf("Assemble."),
+                imageUrl = null,
+                recipeYield = null,
+            ),
+            url = "https://example.com/tacos",
+            domain = "example.com",
+            publisher = "example.com",
+        ) as WebImportOutcome.Success
+
+        val bundle = TestBundleFixtures.envelope(recipesJson = TestBundleFixtures.chickenSoup)
+        val outcome = importService.import(bundle) as ImportOutcome.Completed
+
+        assertEquals(0, outcome.deletedCount)
+        assertNotNull(database.recipeDao().getById(webOutcome.recipeId))
+        assertEquals(2, database.recipeDao().count())
     }
 
     @Test

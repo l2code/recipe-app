@@ -91,7 +91,7 @@ class ImportService(
                 }
                 val bundleIds = validRecipes.mapTo(mutableSetOf()) { it.id }
                 val recipeDao = database.recipeDao()
-                for (existingId in recipeDao.getAllIds()) {
+                for (existingId in recipeDao.getArchiveManagedIds()) {
                     if (existingId !in bundleIds) {
                         recipeDao.deleteById(existingId)
                         deletedCount++

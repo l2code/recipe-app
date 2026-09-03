@@ -29,6 +29,13 @@ interface RecipeDao {
     @Query("SELECT id FROM recipes")
     suspend fun getAllIds(): List<String>
 
+    // Excludes recipes saved via the URL/paste-text importer (arrangementStatus = 'web_import'):
+    // those never appear in the offline archive bundle, so ImportService's "delete recipes that
+    // disappeared from the bundle" sync must never consider them, or it would wipe every
+    // web-imported recipe on the very next bundle reimport.
+    @Query("SELECT id FROM recipes WHERE arrangementStatus != 'web_import'")
+    suspend fun getArchiveManagedIds(): List<String>
+
     @Query("DELETE FROM recipes WHERE id = :id")
     suspend fun deleteById(id: String)
 
