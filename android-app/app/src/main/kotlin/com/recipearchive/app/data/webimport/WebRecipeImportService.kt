@@ -166,7 +166,10 @@ class WebRecipeImportService(
                         quantity = "",
                         unit = "",
                         item = text,
-                        parseStatus = "needs_review",
+                        // Unlike the archive OCR pipeline, this text comes straight from the
+                        // page's own structured data (or was typed/pasted directly) -- there's
+                        // no scan-quality uncertainty to flag for cleanup.
+                        parseStatus = "confirmed",
                     )
                 },
             )
@@ -181,7 +184,7 @@ class WebRecipeImportService(
                         recipeId = id,
                         displayOrder = index + 1,
                         text = text,
-                        parseStatus = "needs_review",
+                        parseStatus = "confirmed",
                     )
                 },
             )
