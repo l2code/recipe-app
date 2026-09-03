@@ -25,7 +25,10 @@ Where the --data file looks like:
 
 All fields are optional; only the ones with a real value need to be
 supplied. `title`, `sourceUrl`, `sourceStatus`, and `note` can each be set
-independently of ingredients/instructions.
+independently of ingredients/instructions. This merges keys into any
+existing override for the recipe rather than replacing it wholesale, so
+running this again with just e.g. {"ingredients": [...]} won't wipe out
+a `title` or `reviewFlags` set by an earlier call.
 """
 
 from __future__ import annotations
@@ -52,7 +55,8 @@ def main() -> int:
     overrides.setdefault("recipe_content_overrides", {})
 
     override_body = json.loads(args.data.read_text(encoding="utf-8"))
-    overrides["recipe_content_overrides"][args.recipe_id] = override_body
+    existing = overrides["recipe_content_overrides"].setdefault(args.recipe_id, {})
+    existing.update(override_body)
 
     overrides_path.write_text(json.dumps(overrides, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Merged content override for {args.recipe_id} into {overrides_path}")
