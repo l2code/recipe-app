@@ -271,6 +271,7 @@ fun DetailContent(
                     verticalArrangement = Arrangement.spacedBy(18.dp),
                 ) {
                     item { InstructionsCard(detail) }
+                    if (detail.handwrittenNotes.any { it.transcription.isNotBlank() }) item { HandwrittenNotesCard(detail) }
                     item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
                     if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
                 }
@@ -286,6 +287,7 @@ fun DetailContent(
             if (detail.reviewFlags.isNotEmpty()) item { ReviewFlagsSection(detail.reviewFlags.map { it.flagValue }) }
             item { IngredientsCard(detail, companion, onPantryStatusChanged, onAddUnavailableToShopping) }
             item { InstructionsCard(detail) }
+            if (detail.handwrittenNotes.any { it.transcription.isNotBlank() }) item { HandwrittenNotesCard(detail) }
             item { NotesSection(detail.appState?.personalNotes.orEmpty(), onNotesChanged) }
             if (companion.sessions.isNotEmpty()) item { CookingHistoryCard(companion.sessions) }
         }
@@ -1139,18 +1141,9 @@ private fun ReviewFlagsSection(flags: List<String>) {
 private fun HandwrittenNotesCard(detail: RecipeDetailUi) {
     ContentCard(title = "Notes from the original", icon = Icons.AutoMirrored.Filled.StickyNote2) {
         Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            detail.handwrittenNotes.forEach { note ->
+            detail.handwrittenNotes.filter { it.transcription.isNotBlank() }.forEach { note ->
                 Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.55f)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            note.transcription.ifBlank { "Transcription pending" },
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontStyle = if (note.transcription.isBlank()) FontStyle.Italic else FontStyle.Normal,
-                        )
-                        if (note.ocrDraft.isNotBlank() && note.ocrDraft != note.transcription) {
-                            Text("OCR draft: ${note.ocrDraft}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
-                        }
-                    }
+                    Text(note.transcription, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(16.dp))
                 }
             }
         }
