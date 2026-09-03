@@ -5,6 +5,7 @@ import com.recipearchive.app.data.import.ImportService
 import com.recipearchive.app.data.companion.CookingCompanionRepository
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.repository.RecipeRepository
+import com.recipearchive.app.data.webimport.WebRecipeImportService
 
 /** Hand-rolled dependency container: one Room database, one repository, shared app-wide. */
 class AppContainer(context: Context) {
@@ -12,4 +13,5 @@ class AppContainer(context: Context) {
     private val importService: ImportService = ImportService(database)
     val recipeRepository: RecipeRepository = RecipeRepository(database, importService)
     val cookingCompanionRepository: CookingCompanionRepository = CookingCompanionRepository(database)
+    val webRecipeImportService: WebRecipeImportService = WebRecipeImportService(database)
 }

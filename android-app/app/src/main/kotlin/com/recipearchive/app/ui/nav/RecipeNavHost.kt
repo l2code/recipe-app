@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Kitchen
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -43,12 +44,15 @@ import com.recipearchive.app.ui.detail.DetailScreen
 import com.recipearchive.app.ui.detail.DetailViewModel
 import com.recipearchive.app.ui.library.LibraryScreen
 import com.recipearchive.app.ui.library.LibraryViewModel
+import com.recipearchive.app.ui.webimport.ImportScreen
+import com.recipearchive.app.ui.webimport.ImportViewModel
 
 private const val ROUTE_LIBRARY = "library"
 private const val ROUTE_PLAN = "plan"
 private const val ROUTE_SHOPPING = "shopping"
 private const val ROUTE_PANTRY = "pantry"
 private const val ROUTE_HISTORY = "history"
+private const val ROUTE_IMPORT = "import"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
 private const val ARG_RECIPE_ID = "recipeId"
@@ -62,6 +66,7 @@ private val mainDestinations = listOf(
     MainDestination(ROUTE_SHOPPING, "Shopping", Icons.Filled.ShoppingCart),
     MainDestination(ROUTE_PANTRY, "Pantry", Icons.Filled.Kitchen),
     MainDestination(ROUTE_HISTORY, "History", Icons.Filled.History),
+    MainDestination(ROUTE_IMPORT, "Import", Icons.Filled.Download),
 )
 
 @Composable
@@ -78,6 +83,9 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
     )
     val companionViewModel: CompanionViewModel = viewModel(
         factory = CompanionViewModel.Factory(container.cookingCompanionRepository),
+    )
+    val importViewModel: ImportViewModel = viewModel(
+        factory = ImportViewModel.Factory(container.webRecipeImportService),
     )
 
     fun navigateMain(route: String) {
@@ -138,6 +146,12 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                         HistoryScreen(
                             viewModel = companionViewModel,
                             onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+                        )
+                    }
+                    composable(ROUTE_IMPORT) {
+                        ImportScreen(
+                            viewModel = importViewModel,
+                            onImported = { recipeId -> navController.navigate("detail/$recipeId") },
                         )
                     }
                     composable(
