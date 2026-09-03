@@ -58,6 +58,13 @@ class DetailViewModel(
         }
     }
 
+    fun deleteRecipe(onDeleted: () -> Unit) {
+        viewModelScope.launch {
+            repository.deleteRecipe(recipeId)
+            onDeleted()
+        }
+    }
+
     fun startCooking(onStarted: (String) -> Unit) {
         viewModelScope.launch { onStarted(companionRepository.startCooking(recipeId)) }
     }

@@ -170,6 +170,20 @@ class RecipeRepository(
         }
     }
 
+    /**
+     * Deliberately not wrapped in [withTransaction]: the recipe detail screen keeps a live
+     * observer on this same recipe while its own delete action runs, and Room's transaction
+     * commit re-triggers that observer's query synchronously (via the invalidation tracker)
+     * before the transaction is considered fully closed, which Room rejects. Two plain deletes
+     * (the child search-index row, then the recipe row -- whose ingredients/instructions/etc.
+     * cascade via FK) is safe here: this is a single-user local database with no concurrent
+     * writers, so there's nothing else that could observe a state between the two deletes.
+     */
+    suspend fun deleteRecipe(recipeId: String) {
+        database.recipeSearchDao().deleteDocument(recipeId)
+        database.recipeDao().deleteById(recipeId)
+    }
+
     suspend fun createCollection(name: String): String? {
         val cleaned = name.trim().replace(Regex("\\s+"), " ")
         if (cleaned.isBlank()) return null

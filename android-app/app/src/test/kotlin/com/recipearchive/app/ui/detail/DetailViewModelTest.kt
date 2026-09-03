@@ -82,4 +82,19 @@ class DetailViewModelTest {
         assertEquals(true, viewModel.uiState.value?.appState?.isFavorite)
         job.cancel()
     }
+
+    @Test
+    fun `deleting the recipe removes it and invokes the callback`() = runTest(testDispatcher) {
+        val viewModel = DetailViewModel(repository, companionRepository, "R0001")
+        val job = launch { viewModel.uiState.collect { } }
+        advanceUntilIdle()
+
+        var deleted = false
+        viewModel.deleteRecipe { deleted = true }
+        advanceUntilIdle()
+
+        assertTrue(deleted)
+        assertNull(database.recipeDao().getById("R0001"))
+        job.cancel()
+    }
 }

@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.RestaurantMenu
@@ -48,6 +49,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
@@ -106,6 +108,7 @@ fun DetailScreen(
     widthSizeClass: WindowWidthSizeClass,
     onBack: () -> Unit,
     onCookingStarted: (String) -> Unit = {},
+    onRecipeDeleted: () -> Unit = onBack,
     modifier: Modifier = Modifier,
 ) {
     val detail by viewModel.uiState.collectAsState()
@@ -182,6 +185,7 @@ fun DetailScreen(
                 onAddToMealPlan = viewModel::addToMealPlan,
                 onShowOriginalRecipe = { showOriginalRecipe = true },
                 onFavoriteChanged = viewModel::toggleFavorite,
+                onDeleteRecipe = { viewModel.deleteRecipe(onRecipeDeleted) },
                 useTwoColumns = widthSizeClass == WindowWidthSizeClass.Expanded,
                 modifier = Modifier.padding(padding),
             )
@@ -232,6 +236,7 @@ fun DetailContent(
     onAddToMealPlan: (LocalDate) -> Unit = {},
     onShowOriginalRecipe: () -> Unit = {},
     onFavoriteChanged: (Boolean) -> Unit = {},
+    onDeleteRecipe: () -> Unit = {},
     useTwoColumns: Boolean = false,
 ) {
     val header: @Composable () -> Unit = {
@@ -247,6 +252,7 @@ fun DetailContent(
             onAddUnavailableToShopping = onAddUnavailableToShopping,
             onShowOriginalRecipe = onShowOriginalRecipe,
             onFavoriteChanged = onFavoriteChanged,
+            onDeleteRecipe = onDeleteRecipe,
             expanded = useTwoColumns,
         )
     }
@@ -307,11 +313,13 @@ private fun RecipeHero(
     onAddUnavailableToShopping: () -> Unit,
     onShowOriginalRecipe: () -> Unit,
     onFavoriteChanged: (Boolean) -> Unit,
+    onDeleteRecipe: () -> Unit,
     expanded: Boolean,
 ) {
     var showOrganizer by remember { mutableStateOf(false) }
     var showPlanDialog by remember { mutableStateOf(false) }
     var showMoreMenu by remember { mutableStateOf(false) }
+    var showDeleteConfirm by remember { mutableStateOf(false) }
     val favorite = detail.appState?.isFavorite ?: false
     val metadata: @Composable () -> Unit = {
         RecipeMetadata(
@@ -360,9 +368,31 @@ private fun RecipeHero(
                         leadingIcon = { Icon(if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, contentDescription = null) },
                         onClick = { showMoreMenu = false; onFavoriteChanged(favorite) },
                     )
+                    HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text("Delete recipe", color = MaterialTheme.colorScheme.error) },
+                        leadingIcon = { Icon(Icons.Filled.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        onClick = { showMoreMenu = false; showDeleteConfirm = true },
+                    )
                 }
             }
         }
+    }
+    if (showDeleteConfirm) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirm = false },
+            title = { Text("Delete this recipe?") },
+            text = { Text("\"${detail.recipe.title}\" will be permanently removed from your library. This can't be undone.") },
+            confirmButton = {
+                TextButton(
+                    onClick = { showDeleteConfirm = false; onDeleteRecipe() },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                ) { Text("Delete") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirm = false }) { Text("Cancel") }
+            },
+        )
     }
     if (expanded) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
