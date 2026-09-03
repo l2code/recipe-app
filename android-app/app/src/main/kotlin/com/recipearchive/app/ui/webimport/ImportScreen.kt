@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,16 +19,21 @@ import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.RestaurantMenu
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -39,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.recipearchive.app.data.webimport.SavedLinkUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +55,7 @@ fun ImportScreen(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val savedLinks by viewModel.savedLinks.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
@@ -55,6 +63,15 @@ fun ImportScreen(
                 is ImportEvent.Imported -> onImported(event.recipeId)
             }
         }
+    }
+
+    if (uiState.pasteTextDialogOpen) {
+        PasteTextDialog(
+            text = uiState.pastedText,
+            onTextChanged = viewModel::onPastedTextChanged,
+            onConfirm = viewModel::importPastedText,
+            onDismiss = viewModel::dismissPasteTextDialog,
+        )
     }
 
     Scaffold(
@@ -78,12 +95,42 @@ fun ImportScreen(
             ImportFromUrlCard(uiState, viewModel::onUrlChanged, viewModel::importRecipe)
             QuickSourcesCard(
                 infoMessage = uiState.infoMessage,
+                savedLinksExpanded = uiState.savedLinksExpanded,
+                savedLinks = savedLinks,
                 onSourceSelected = viewModel::onQuickSourceSelected,
                 onDismissInfo = viewModel::dismissInfoMessage,
+                onSavedLinkSelected = viewModel::importSavedLink,
             )
             WhatHappensNextCard()
         }
     }
+}
+
+@Composable
+private fun PasteTextDialog(
+    text: String,
+    onTextChanged: (String) -> Unit,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Paste recipe text") },
+        text = {
+            OutlinedTextField(
+                value = text,
+                onValueChange = onTextChanged,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 180.dp),
+                placeholder = { Text("Paste a title, ingredients, and instructions...") },
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onConfirm, enabled = text.isNotBlank()) { Text("Import") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        },
+    )
 }
 
 @Composable
@@ -132,8 +179,11 @@ private fun ImportFromUrlCard(uiState: ImportUiState, onUrlChanged: (String) -> 
 @Composable
 private fun QuickSourcesCard(
     infoMessage: String?,
+    savedLinksExpanded: Boolean,
+    savedLinks: List<SavedLinkUi>,
     onSourceSelected: (QuickSource) -> Unit,
     onDismissInfo: () -> Unit,
+    onSavedLinkSelected: (SavedLinkUi) -> Unit,
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
@@ -170,6 +220,41 @@ private fun QuickSourcesCard(
                         style = MaterialTheme.typography.labelLarge,
                     )
                 }
+            }
+            if (savedLinksExpanded) {
+                HorizontalDivider()
+                if (savedLinks.isEmpty()) {
+                    Text(
+                        "No saved links yet. Recipes you import from a URL show up here for one-tap reimport.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth().heightIn(max = 260.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        items(savedLinks, key = { it.url }) { link -> SavedLinkRow(link, onSavedLinkSelected) }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SavedLinkRow(link: SavedLinkUi, onClick: (SavedLinkUi) -> Unit) {
+    Surface(
+        onClick = { onClick(link) },
+        shape = MaterialTheme.shapes.small,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+    ) {
+        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Link, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.width(10.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(link.title.ifBlank { "Untitled recipe" }, style = MaterialTheme.typography.titleMedium)
+                Text(link.domain, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }

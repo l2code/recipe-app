@@ -2,6 +2,7 @@ package com.recipearchive.app.data.webimport
 
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.testutil.TestDatabaseFactory
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -111,5 +112,66 @@ class WebRecipeImportServiceTest {
         val outcome = service.importFromUrl("   ")
 
         assertTrue(outcome is WebImportOutcome.ParseError)
+    }
+
+    @Test
+    fun `successful url imports show up as a saved link`() = runTest {
+        server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+
+        service.importFromUrl(url)
+
+        val savedLinks = service.observeSavedLinks().first()
+        assertEquals(1, savedLinks.size)
+        assertEquals(url, savedLinks.first().url)
+        assertEquals("Weeknight Tacos", savedLinks.first().title)
+    }
+
+    @Test
+    fun `every import attempt is recorded in history, including failures`() = runTest {
+        server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
+        server.enqueue(MockResponse().setResponseCode(500))
+        service.importFromUrl(server.url("/tacos").toString())
+        service.importFromUrl(server.url("/broken").toString())
+
+        val history = service.observeHistory().first()
+        assertEquals(2, history.size)
+        assertTrue(history.any { it.status == com.recipearchive.app.data.local.entity.WebImportOutcomeStatus.SUCCESS })
+        assertTrue(history.any { it.status == com.recipearchive.app.data.local.entity.WebImportOutcomeStatus.NETWORK_ERROR })
+    }
+
+    @Test
+    fun `imports pasted text without fetching, and each save is a new recipe`() = runTest {
+        val text = """
+            Weeknight Chili
+            Ingredients:
+            1 lb ground beef
+            1 can kidney beans
+            Instructions:
+            Brown the beef.
+            Simmer for 20 minutes.
+        """.trimIndent()
+
+        val first = service.importPastedText(text) as WebImportOutcome.Success
+        val second = service.importPastedText(text) as WebImportOutcome.Success
+
+        assertEquals("Weeknight Chili", first.title)
+        assertTrue(first.wasNew)
+        assertTrue(second.wasNew)
+        assertTrue(first.recipeId != second.recipeId)
+        assertEquals(2, database.recipeDao().count())
+
+        val ingredients = database.ingredientDao().getForRecipe(first.recipeId)
+        assertEquals(2, ingredients.size)
+
+        // Pasted-text imports have no URL, so they never show up as a "Saved Link".
+        assertTrue(service.observeSavedLinks().first().isEmpty())
+    }
+
+    @Test
+    fun `blank pasted text returns NotFound`() = runTest {
+        val outcome = service.importPastedText("   \n  ")
+
+        assertTrue(outcome is WebImportOutcome.NotFound)
     }
 }

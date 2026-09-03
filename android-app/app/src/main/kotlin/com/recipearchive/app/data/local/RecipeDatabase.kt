@@ -22,6 +22,7 @@ import com.recipearchive.app.data.local.dao.RecipeReviewFlagDao
 import com.recipearchive.app.data.local.dao.RecipeSearchDao
 import com.recipearchive.app.data.local.dao.ShoppingDao
 import com.recipearchive.app.data.local.dao.SourceEvidenceDao
+import com.recipearchive.app.data.local.dao.WebImportHistoryDao
 import com.recipearchive.app.data.local.entity.HandwrittenNoteEntity
 import com.recipearchive.app.data.local.entity.CollectionEntity
 import com.recipearchive.app.data.local.entity.CookingSessionEntity
@@ -40,6 +41,7 @@ import com.recipearchive.app.data.local.entity.RecipeSearchFts
 import com.recipearchive.app.data.local.entity.SourceEvidenceEntity
 import com.recipearchive.app.data.local.entity.ShoppingItemEntity
 import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
+import com.recipearchive.app.data.local.entity.WebImportHistoryEntity
 
 @Database(
     entities = [
@@ -61,8 +63,9 @@ import com.recipearchive.app.data.local.entity.ShoppingItemSourceEntity
         ShoppingItemEntity::class,
         ShoppingItemSourceEntity::class,
         MealPlanEntryEntity::class,
+        WebImportHistoryEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -82,6 +85,7 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun pantryDao(): PantryDao
     abstract fun shoppingDao(): ShoppingDao
     abstract fun mealPlanDao(): MealPlanDao
+    abstract fun webImportHistoryDao(): WebImportHistoryDao
 
     companion object {
         private const val DATABASE_NAME = "recipe-archive.db"
@@ -231,6 +235,25 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS web_import_history (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        url TEXT NOT NULL,
+                        title TEXT NOT NULL,
+                        domain TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        errorMessage TEXT,
+                        recipeId TEXT,
+                        importedAt INTEGER NOT NULL
+                    )
+                    """.trimIndent(),
+                )
+            }
+        }
+
         @Volatile private var instance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase =
@@ -240,7 +263,7 @@ abstract class RecipeDatabase : RoomDatabase() {
 
         private fun build(context: Context): RecipeDatabase =
             Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                 .build()
     }
 }

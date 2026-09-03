@@ -7,11 +7,15 @@ import com.recipearchive.app.data.local.entity.InstructionEntity
 import com.recipearchive.app.data.local.entity.RecipeAppStateEntity
 import com.recipearchive.app.data.local.entity.RecipeEntity
 import com.recipearchive.app.data.local.entity.RecipeSearchDocumentEntity
+import com.recipearchive.app.data.local.entity.WebImportHistoryEntity
+import com.recipearchive.app.data.local.entity.WebImportOutcomeStatus
 import com.recipearchive.app.data.organization.RecipeCategories
 import java.io.IOException
 import java.util.UUID
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
@@ -19,12 +23,17 @@ import okhttp3.Request
 
 /**
  * Fetches an arbitrary recipe URL, parses its `schema.org/Recipe` JSON-LD via
- * [RecipeJsonLdParser], and upserts the result into the same Room tables the
+ * [RecipeJsonLdParser] (or splits pasted text heuristically via
+ * [PastedTextParser]), and upserts the result into the same Room tables the
  * offline archive [com.recipearchive.app.data.import.ImportService] writes to.
  *
- * Recipes saved this way get a random UUID id (never an `R####` archive id),
- * and are deduplicated by [RecipeEntity.sourceUrl]: reimporting the same URL
- * updates the existing row in place instead of creating a second copy.
+ * Recipes saved this way get a random UUID id (never an `R####` archive id).
+ * URL imports are deduplicated by [RecipeEntity.sourceUrl]: reimporting the
+ * same URL updates the existing row in place instead of creating a second
+ * copy. Pasted-text imports have no URL to dedupe on, so each save creates a
+ * new recipe. Every attempt -- successful or not -- is recorded to
+ * [WebImportHistoryEntity], which backs both the "Saved Link" quick-reimport
+ * shortcut and the full Import History screen.
  */
 class WebRecipeImportService(
     private val database: RecipeDatabase,
@@ -37,33 +46,69 @@ class WebRecipeImportService(
         withContext(ioDispatcher) {
             val normalizedUrl = normalizeUrl(url)
             if (normalizedUrl == null) {
-                return@withContext WebImportOutcome.ParseError("Not a valid URL")
+                return@withContext recordHistory(WebImportOutcome.ParseError("Not a valid URL"), url.trim(), "", "")
             }
+            val domain = normalizedUrl.toHttpUrlOrNull()?.host?.removePrefix("www.").orEmpty()
+            val publisher = sourcePublisherOverride?.takeIf { it.isNotBlank() } ?: domain
 
             val html = try {
                 fetch(normalizedUrl)
             } catch (e: IOException) {
-                return@withContext WebImportOutcome.NetworkError(e.message ?: "Network error")
+                return@withContext recordHistory(
+                    WebImportOutcome.NetworkError(e.message ?: "Network error"),
+                    normalizedUrl,
+                    domain,
+                    "",
+                )
             }
 
             val parsed = try {
                 parser.parse(html)
             } catch (e: Exception) {
-                return@withContext WebImportOutcome.ParseError(e.message ?: "Failed to parse recipe")
+                return@withContext recordHistory(
+                    WebImportOutcome.ParseError(e.message ?: "Failed to parse recipe"),
+                    normalizedUrl,
+                    domain,
+                    "",
+                )
             }
 
             if (parsed == null || parsed.isEmpty) {
-                return@withContext WebImportOutcome.NotFound
+                return@withContext recordHistory(WebImportOutcome.NotFound, normalizedUrl, domain, "")
             }
 
-            val domain = normalizedUrl.toHttpUrlOrNull()?.host?.removePrefix("www.").orEmpty()
-            val publisher = sourcePublisherOverride?.takeIf { it.isNotBlank() } ?: domain
-            val now = clock()
+            val outcome = saveParsedRecipe(parsed, normalizedUrl, domain, publisher)
+            recordHistory(outcome, normalizedUrl, domain, parsed.title)
+        }
 
-            val (recipeId, wasNew) = database.withTransaction {
-                writeRecipe(parsed, normalizedUrl, domain, publisher, now)
+    suspend fun importPastedText(text: String): WebImportOutcome = withContext(ioDispatcher) {
+        val parsed = PastedTextParser.parse(text)
+        if (parsed.isEmpty) {
+            return@withContext recordHistory(WebImportOutcome.NotFound, "", PASTED_TEXT_LABEL, "")
+        }
+        val outcome = saveParsedRecipe(parsed, url = "", domain = PASTED_TEXT_LABEL, publisher = PASTED_TEXT_LABEL)
+        recordHistory(outcome, "", PASTED_TEXT_LABEL, parsed.title)
+    }
+
+    /** Persists an already-parsed recipe. Shared by both import paths and by the review-before-import flow. */
+    suspend fun saveParsedRecipe(parsed: ParsedRecipe, url: String, domain: String, publisher: String): WebImportOutcome {
+        val now = clock()
+        val (recipeId, wasNew) = database.withTransaction {
+            persistRecipe(parsed, url, domain, publisher, now)
+        }
+        return WebImportOutcome.Success(recipeId, parsed.title.ifBlank { "Untitled recipe" }, wasNew)
+    }
+
+    fun observeSavedLinks(limit: Int = 10): Flow<List<SavedLinkUi>> =
+        database.webImportHistoryDao().observeRecentSuccessful(limit).map { entries ->
+            entries.distinctBy { it.url }.map { SavedLinkUi(it.url, it.title, it.domain, it.importedAt) }
+        }
+
+    fun observeHistory(limit: Int = 50): Flow<List<ImportHistoryEntryUi>> =
+        database.webImportHistoryDao().observeRecent(limit).map { entries ->
+            entries.map {
+                ImportHistoryEntryUi(it.id, it.url, it.title, it.domain, it.status, it.errorMessage, it.recipeId, it.importedAt)
             }
-            WebImportOutcome.Success(recipeId, parsed.title, wasNew)
         }
 
     private fun fetch(url: String): String {
@@ -74,7 +119,7 @@ class WebRecipeImportService(
         }
     }
 
-    private suspend fun writeRecipe(
+    private suspend fun persistRecipe(
         parsed: ParsedRecipe,
         url: String,
         domain: String,
@@ -82,7 +127,7 @@ class WebRecipeImportService(
         now: Long,
     ): Pair<String, Boolean> {
         val recipeDao = database.recipeDao()
-        val existing = recipeDao.getBySourceUrl(url)
+        val existing = if (url.isNotBlank()) recipeDao.getBySourceUrl(url) else null
         val id = existing?.id ?: UUID.randomUUID().toString()
         val createdAt = existing?.createdAt ?: now
         val title = parsed.title.takeIf { it.isNotBlank() } ?: "Untitled recipe"
@@ -165,8 +210,36 @@ class WebRecipeImportService(
         return id to (existing == null)
     }
 
+    private suspend fun recordHistory(outcome: WebImportOutcome, url: String, domain: String, fallbackTitle: String): WebImportOutcome {
+        val status = when (outcome) {
+            is WebImportOutcome.Success -> WebImportOutcomeStatus.SUCCESS
+            is WebImportOutcome.NotFound -> WebImportOutcomeStatus.NOT_FOUND
+            is WebImportOutcome.NetworkError -> WebImportOutcomeStatus.NETWORK_ERROR
+            is WebImportOutcome.ParseError -> WebImportOutcomeStatus.PARSE_ERROR
+        }
+        val title = (outcome as? WebImportOutcome.Success)?.title ?: fallbackTitle
+        val errorMessage = when (outcome) {
+            is WebImportOutcome.NetworkError -> outcome.message
+            is WebImportOutcome.ParseError -> outcome.message
+            else -> null
+        }
+        database.webImportHistoryDao().insert(
+            WebImportHistoryEntity(
+                url = url,
+                title = title,
+                domain = domain,
+                status = status,
+                errorMessage = errorMessage,
+                recipeId = (outcome as? WebImportOutcome.Success)?.recipeId,
+                importedAt = clock(),
+            ),
+        )
+        return outcome
+    }
+
     companion object {
         private const val USER_AGENT = "Mozilla/5.0 (compatible; RecipeArchiveApp/1.0)"
+        private const val PASTED_TEXT_LABEL = "Pasted text"
 
         internal fun normalizeUrl(input: String): String? {
             val trimmed = input.trim()
