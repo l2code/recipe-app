@@ -30771,144 +30771,130 @@
       "reviewFlags": []
     },
     "R0397": {
-      "title": "Peanut Butter Baked Oatmeal Bars",
+      "ingredients": [
+        {
+          "rawText": "3 small overripe bananas, mashed",
+          "quantity": "3",
+          "unit": "small",
+          "item": "overripe bananas, mashed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup creamy peanut butter",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "creamy peanut butter",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon vanilla extract",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup pure maple syrup",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "pure maple syrup",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large egg, lightly beaten",
+          "quantity": "1",
+          "unit": "large",
+          "item": "egg, lightly beaten",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup whole milk",
+          "quantity": "3/4",
+          "unit": "cup",
+          "item": "whole milk",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cups rolled oats",
+          "quantity": "2",
+          "unit": "cups",
+          "item": "rolled oats",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon baking powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "baking powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon sea salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "sea salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon ground cinnamon",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "ground cinnamon",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon nutmeg",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "nutmeg",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chocolate chips (topping)",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chocolate chips (topping)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup creamy peanut butter (topping)",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "creamy peanut butter (topping)",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Preheat Oven",
-          "parseStatus": "candidate"
+          "text": "Preheat the oven to 350°F (175°C). Grease a 9x9-inch square baking pan and set aside.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "Preheat your oven to 350°F (175°C). Grease a 9x9-inch square baking pan and set",
-          "parseStatus": "candidate"
+          "text": "In a large bowl, combine the mashed bananas and peanut butter. Stir in the vanilla extract, maple syrup, and egg, then add the milk and mix well.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "aside.",
-          "parseStatus": "candidate"
+          "text": "Add the rolled oats, baking powder, sea salt, cinnamon, and nutmeg to the wet ingredients and stir until the batter is uniform.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "Combine Wet Ingredients",
-          "parseStatus": "candidate"
+          "text": "Pour the batter into the prepared baking dish and top with the chocolate chips. Bake for 25 minutes, or until the top springs back slightly when touched and the edges are just barely browned.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "cn te",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "extract, maple syrup, and egg. Acid the milk and mix well.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "3 small overripe bananas, “% cup creamy peanut butter, 1 teaspoon vanilla extract,",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "Ya Cup pure maple syrup, 1 large egg, % cup whole milk",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Add Dry Ingredients",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "Add the rolled oats, baking powder, sea salt, ground cinnamon, and nutmeg to the",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "wet ingredients. Stir until the batter is uniferm throughout.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "2 cups rolled oats, 1 teaspoon aking powder, ’2 teaspoon sea salt,",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "1 teaspoon ground cinnamon, teaspoon nutmeg",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Bake",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "Pour the mixture into the prepared baking dish. Top with chocoale chips Bake for",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "25 minutes, or until the top slightly springs back when touched and the edges are",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "just barely brown.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "Ys, cup Chocolate chips",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "Drizzle and Serve",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "if desired, drizzle the top with additional peanut butter. vat cool slightly before",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "cutting into squares. Serve warm or cold. Store in the refrigerator and reheat in the",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 22,
-          "text": "microwave if desired.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 23,
-          "text": "Ye Cup Creamy peanut butter",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 24,
-          "text": "Nutrition",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 25,
-          "text": "Serving: 1serving",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 26,
-          "text": "v fooddolls.com/feoddolis, print/peanut-butier- baked -ostmeai- bark -routue 12/37/24, GOO RM",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 27,
-          "text": "Page 2 of 2",
-          "parseStatus": "candidate"
+          "text": "If desired, drizzle the top with the remaining peanut butter. Let cool slightly before cutting into squares. Serve warm or cold, and store leftovers in the refrigerator, reheating in the microwave if desired.",
+          "parseStatus": "confirmed"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.fooddolls.com/baked-oatmeal-bars/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against fooddolls.com (Alia and Radwa / Food Dolls), 2026-09-02; instructions paraphrased. Fixed OCR typos (e.g. sea salt was misread as '2 teaspoon' instead of '1/2 teaspoon', milk fraction garbled). Full recipe is titled 'Peanut Butter Banana Baked Oatmeal Bars' on the site, but the recipe card itself is named 'Peanut Butter Baked Oatmeal Bars Recipe', matching the archived title, so the title was left as-is. Original scan had a page-footer artifact ('Page 2 of 2') mixed into the text, which is removed here.",
+      "title": "Peanut Butter Baked Oatmeal Bars"
     },
     "R0256": {
       "ingredients": [
@@ -33055,6 +33041,129 @@
       "title": "Bhuna Chicken"
     },
     "R0335": {
+      "ingredients": [
+        {
+          "rawText": "5 tablespoons oyster sauce",
+          "quantity": "5",
+          "unit": "tablespoons",
+          "item": "oyster sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 tablespoons soy sauce",
+          "quantity": "4",
+          "unit": "tablespoons",
+          "item": "soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "6 tablespoons sweet soy sauce",
+          "quantity": "6",
+          "unit": "tablespoons",
+          "item": "sweet soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tablespoons rice vinegar",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "rice vinegar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 teaspoons fish sauce",
+          "quantity": "4",
+          "unit": "teaspoons",
+          "item": "fish sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "10 ounces flat, wide rice noodles, cooked",
+          "quantity": "10",
+          "unit": "ounces",
+          "item": "flat, wide rice noodles, cooked",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium onion, sliced",
+          "quantity": "1",
+          "unit": "medium",
+          "item": "onion, sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 medium red bell peppers, sliced",
+          "quantity": "2",
+          "unit": "medium",
+          "item": "red bell peppers, sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 cloves garlic, minced",
+          "quantity": "4",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 4 bird's eye chili, finely chopped (or use 1/2 teaspoon crushed red pepper flakes if you can't find bird's eye chili), adjust to your spice tolerance",
+          "quantity": "2 to 4",
+          "unit": "",
+          "item": "bird's eye chili, finely chopped (or 1/2 teaspoon crushed red pepper flakes)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Handful of fresh Thai basil leaves",
+          "quantity": "",
+          "unit": "",
+          "item": "fresh Thai basil leaves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "14 ounces extra firm tofu, cubed, pressed and drained",
+          "quantity": "14",
+          "unit": "ounces",
+          "item": "extra firm tofu, cubed, pressed and drained",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons vegetable oil",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "vegetable oil",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a small bowl, whisk together the oyster sauce, soy sauce, sweet soy sauce, rice vinegar, and fish sauce to make the sauce. Set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Bring a pot of water to a boil and cook the rice noodles according to the package directions.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Heat a wok over high heat and add the vegetable oil. Once hot, add the onion and bell pepper and cook until soft and tender, about 4-5 minutes. Stir in the garlic, chili, and basil.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Reduce the heat to medium and pour in the sauce, stirring to combine. Add the drained noodles and toss to coat, then add the tofu and gently toss again until everything is evenly distributed.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Serve warm and enjoy.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://www.tablefortwoblog.com/drunken-noodles-with-tofu/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against tablefortwoblog.com (Julie Chiou), 2026-09-02; instructions paraphrased. The site's current recipe card shows a smaller 2-serving batch, but per-serving nutrition (308 kcal) matches the archived 4-serving quantities exactly, confirming it's the same recipe at a different scale - the larger archived quantities were kept. Original scan had garbled/reversed OCR text tacked onto the end of the instructions, which is removed here.",
       "title": "Drunken Noodles with Tofu"
     },
     "R0233": {
@@ -33668,6 +33777,160 @@
       "reviewFlags": []
     },
     "R0429": {
+      "ingredients": [
+        {
+          "rawText": "1 kilogram beef",
+          "quantity": "1",
+          "unit": "kilogram",
+          "item": "beef",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 onion",
+          "quantity": "3",
+          "unit": "",
+          "item": "onion",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 green chillies",
+          "quantity": "3",
+          "unit": "",
+          "item": "green chillies",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "salt",
+          "quantity": "",
+          "unit": "",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "curry leaves",
+          "quantity": "",
+          "unit": "",
+          "item": "curry leaves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup water",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "coriander leaves (optional)",
+          "quantity": "",
+          "unit": "",
+          "item": "coriander leaves, optional",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tablespoons ginger, to grind",
+          "quantity": "1 1/2",
+          "unit": "tablespoons",
+          "item": "ginger, to grind",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tablespoons garlic, to grind",
+          "quantity": "1 1/2",
+          "unit": "tablespoons",
+          "item": "garlic, to grind",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon pepper powder",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "pepper powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon chilli powder",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "chilli powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tablespoons coriander powder",
+          "quantity": "1 1/2",
+          "unit": "tablespoons",
+          "item": "coriander powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon turmeric powder",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "turmeric powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon garam masala",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "garam masala",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon fennel powder (perinjeerakam)",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "fennel powder (perinjeerakam)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 teaspoons vinegar",
+          "quantity": "3",
+          "unit": "teaspoons",
+          "item": "vinegar",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat oil in a pan or pressure cooker. Add finely sliced onion, green chillies, and curry leaves, and cook until light brown.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Grind together the ginger, garlic, pepper powder, chilli powder, coriander powder, turmeric powder, garam masala, fennel powder, and vinegar into a paste.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Add the ground spice mixture to the pan and fry well.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Add the water and enough salt for the gravy, mix well, then add the beef and mix again.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Cook until the beef is done, about 2 whistles if using a pressure cooker. The onions will have browned further by this time.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Stir in the coriander leaves and boil until the gravy reaches your desired thick consistency. For extra heat, add a little more pepper powder at this stage. The coriander leaves are optional.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Serve with boiled rice, ghee rice, appam, parotta, puttu, or chapathi.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "",
+      "sourceStatus": "confirmed",
+      "note": "Transcribed directly from the archived scan, 2026-09-02 - the card had no publisher/site attribution and appears to be a personal family recipe. Cleaned up stray bullet characters and OCR line-wrap artifacts; instructions paraphrased.",
       "title": "Beef Curry (Kerala Style)"
     },
     "R0159": {
@@ -34055,7 +34318,8 @@
       "sourceUrl": "",
       "sourceStatus": "confirmed",
       "note": "Transcribed directly from the archived scan, 2026-09-02, which was fully legible; instructions paraphrased. No specific publisher was identified on the card, but the ingredient list and method were clear and complete as scanned.",
-      "reviewFlags": []
+      "reviewFlags": [],
+      "title": "Christmas Fruit Cake with Rum-Soaked Dry Fruit"
     },
     "R0119": {
       "title": "Crispy and Crunchy Fried Chicken",
@@ -34642,6 +34906,123 @@
       "title": "Garlic Butter Salmon Recipe"
     },
     "R0019": {
+      "ingredients": [
+        {
+          "rawText": "2 1/2 lb rack of lamb, frenched",
+          "quantity": "2 1/2",
+          "unit": "lb",
+          "item": "rack of lamb, frenched",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "salt, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "salt, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "pepper, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "pepper, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "5 tablespoons olive oil, divided",
+          "quantity": "5",
+          "unit": "tablespoons",
+          "item": "olive oil, divided",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 cloves garlic, peeled and smashed",
+          "quantity": "8",
+          "unit": "cloves",
+          "item": "garlic, peeled and smashed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 cup bread crumbs",
+          "quantity": "3/4",
+          "unit": "cup",
+          "item": "bread crumbs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup fresh flat-leaf parsley",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "fresh flat-leaf parsley",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tablespoons fresh rosemary",
+          "quantity": "1 1/2",
+          "unit": "tablespoons",
+          "item": "fresh rosemary",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup grated parmesan cheese",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "grated parmesan cheese",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tablespoons whole grain dijon mustard",
+          "quantity": "1 1/2",
+          "unit": "tablespoons",
+          "item": "whole grain dijon mustard",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Preheat the oven to 400°F (200°C).",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Season the lamb generously with salt and pepper.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Heat a cast iron skillet over medium-high heat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Add 4 tablespoons of the olive oil to the hot pan along with the lamb and garlic. Sear all sides of the lamb until browned, about 3-4 minutes, then move the lamb to a baking sheet.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Transfer the seared garlic to a food processor along with the breadcrumbs, parsley, parmesan, rosemary, and the remaining tablespoon of olive oil. Pulse until combined and pour onto a large plate.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Brush the top and sides of the lamb with the mustard.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Press the breadcrumb mixture onto the top and sides of the lamb and roast for 20-25 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Let the lamb rest before slicing and serving.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://tasty.co/recipe/garlic-herb-crusted-roast-rack-of-lamb",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Tasty's recipe by Kiano Moju, 2026-09-02; instructions paraphrased. The archived scan's recipe content matched exactly through the final step; a block of garbled/reversed handwritten cook's-notes text below it had been numbered as additional instruction steps and is removed here.",
       "title": "Garlic Herb Crusted Roast Rack of Lamb",
       "reviewFlags": []
     },
@@ -35639,113 +36020,202 @@
     },
     "R0457": {
       "title": "Kerala Chicken Roast (Adapted from Salu's Kitchen)",
+      "ingredients": [
+        {
+          "rawText": "2.5 lb chicken breast with ribs",
+          "quantity": "2.5",
+          "unit": "lb",
+          "item": "chicken breast with ribs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1 tbsp ground black pepper",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "ground black pepper, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1/2 tsp garam masala",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "garam masala, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1 tsp turmeric powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "turmeric powder, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 2 tsp Kashmiri chili powder",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "Kashmiri chili powder, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1 tsp salt",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "salt, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1 tbsp lemon juice",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "lemon juice, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For marinade: 1 sprig curry leaves",
+          "quantity": "1",
+          "unit": "sprig",
+          "item": "curry leaves, for marinade",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 4 medium onions, sliced thin",
+          "quantity": "4",
+          "unit": "medium",
+          "item": "onions, sliced thin, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1 small tomato, sliced",
+          "quantity": "1",
+          "unit": "small",
+          "item": "tomato, sliced, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 4 garlic cloves",
+          "quantity": "4",
+          "unit": "cloves",
+          "item": "garlic, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1.5 inch ginger",
+          "quantity": "1.5",
+          "unit": "inch",
+          "item": "ginger, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 2 large green chilis",
+          "quantity": "2",
+          "unit": "large",
+          "item": "green chilis, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 2 sprigs curry leaves",
+          "quantity": "2",
+          "unit": "sprigs",
+          "item": "curry leaves, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1/4 cup coconut slivers (optional)",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "coconut slivers, optional, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1/2 tsp garam masala",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "garam masala, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1/2 tsp black pepper",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "black pepper, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1/2 tsp Kashmiri chili powder",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "Kashmiri chili powder, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 1/2 tsp turmeric",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "turmeric, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 2 tsp coriander powder",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "coriander powder, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 3/4 tsp salt",
+          "quantity": "3/4",
+          "unit": "teaspoon",
+          "item": "salt, for curry",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "For curry: 3-4 tbsp vegetable oil (coconut oil preferred)",
+          "quantity": "3-4",
+          "unit": "tablespoons",
+          "item": "vegetable oil, coconut oil preferred, for curry",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Cut the chicken into 2\" pieces and place into a bowl. Add lemon juice and mix. Add all the other",
-          "parseStatus": "candidate"
+          "text": "Cut the chicken into 2-inch pieces. Add the lemon juice, black pepper, garam masala, turmeric, chili powder, and salt, and mix thoroughly. Stir in the curry leaves, cover, and let marinate for 1 hour.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "spices (black pepper, garam masala, turmeric, chili powder) and salt, then mix thoroughly. Finally add",
-          "parseStatus": "candidate"
+          "text": "Heat oil in a heavy pot or wok over medium-high heat. Fry the coconut slivers until golden brown, then remove and set aside.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "curry leaves. Cover and let the chicken marinade for 1 hr.",
-          "parseStatus": "candidate"
+          "text": "In the same oil, cook the chicken pieces a few at a time without crowding the pan, for about 4-5 minutes, without fully cooking through. Remove and set aside, then repeat with the remaining chicken. Pour off some of the oil if there's too much left in the pan.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "Heat oil in a heavy pot or wok on medium high heat. Add coconut slivers, fry till golden brown and",
-          "parseStatus": "candidate"
+          "text": "Add the onions and fry until soft, about 4-5 minutes. Season with salt and cook until slightly browned, another 4-5 minutes. Add the ginger, garlic, curry leaves, and green chili, and cook for 2-3 minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "remove from pan. To the same oil, add the chicken pieces few at a time without crowding the pan for 4",
-          "parseStatus": "candidate"
+          "text": "Add the sliced tomatoes, mix well, and cook until softened, about 4 minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 6,
-          "text": "smins. Dont completely cook the chicken. Remove chicken and keep aside. Repeat with remaining",
-          "parseStatus": "candidate"
+          "text": "Return the fried chicken to the pan and mix thoroughly. Cover, lower the heat, and cook for about 10 minutes, or until the chicken is fully cooked.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 7,
-          "text": "chicken pieces. Remove some of the oil if it is too much.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "Add the onions to the pan and fry until soft (about 4-Smins). Add salt and cook until slightly",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "browned pou 4-5mins). Then add ginger, garlic, curry leaves and green chili and cook for 2-3 mins.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "Add the sliced tomatoes, mix well, and cook until softened about 4mins.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "Add the fried ‘chicken pieces and mix thoroughly. Cover and lower heat, cook for 10mins or until the",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "chicken is completely cooked.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "Open the lid and cook until liquid evaporates and sauce thickens. Add fried cocunut and mix.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Lagred ee ~ aM b*IN iO eal bor | f oa v",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": ", Fy OM ep, xpd 1% pre ig) aeyS OY ‘du Ped ye",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "said ay 4iG % 400 dw) © BMS md",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "Jaded 4 79/9 ds 2 | WDA Le Ly Pala eg | Y25(\\",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": ") SY age",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "PIpopuL ~ pro 5708, Z yy a7 “ way IND qe sq] 7 pea()*",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "ook Bad 4oe rsd)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "‘3.4 “6 Sih (41[ 91/17 Za gdouiy",
-          "parseStatus": "candidate"
+          "text": "Uncover and cook until the liquid evaporates and the sauce thickens. Stir in the fried coconut and mix well before serving.",
+          "parseStatus": "confirmed"
         }
       ],
+      "sourceUrl": "",
+      "sourceStatus": "confirmed",
+      "note": "Transcribed directly from the archived scan, 2026-09-02 - the recipe title credits 'Salu's Kitchen' but no findable written source page exists (YouTube-only channel). Fixed line-wrapped ingredients, dropped a stretch of illegible handwritten margin notes at the end of the scan, and paraphrased instructions.",
       "reviewFlags": []
     },
     "R0327": {
@@ -36901,60 +37371,299 @@
       "reviewFlags": []
     },
     "R0174": {
-      "title": "Punjabi Chole Masala Recipe",
+      "ingredients": [
+        {
+          "rawText": "1 cup (200 g) dried white chickpeas (garbanzo beans, kabuli chana)",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "dried white chickpeas (garbanzo beans, kabuli chana)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups water, for soaking the chickpeas",
+          "quantity": "3",
+          "unit": "cups",
+          "item": "water, for soaking the chickpeas",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2.5 to 3 cups water, for pressure cooking the chickpeas",
+          "quantity": "2.5 to 3",
+          "unit": "cups",
+          "item": "water, for pressure cooking the chickpeas",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 3 dried amla (Indian gooseberry) or 1 black tea bag, optional",
+          "quantity": "2 to 3",
+          "unit": "",
+          "item": "dried amla (Indian gooseberry) or 1 black tea bag, optional",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp salt (for cooking the chickpeas)",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "salt (for cooking the chickpeas)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/3 cup finely chopped onions",
+          "quantity": "1/3",
+          "unit": "cup",
+          "item": "finely chopped onions",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup finely chopped tomatoes",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "finely chopped tomatoes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp ginger-garlic paste (or 2 to 3 small garlic cloves + 1/2 inch ginger, crushed to a paste)",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "ginger-garlic paste (or 2 to 3 small garlic cloves + 1/2 inch ginger, crushed to a paste)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp turmeric powder",
+          "quantity": "1/4",
+          "unit": "tsp",
+          "item": "turmeric powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp red chili powder",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "red chili powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp garam masala, optional",
+          "quantity": "1/4",
+          "unit": "tsp",
+          "item": "garam masala, optional",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3/4 to 1 tsp amchur powder (dry mango powder), optional, only if you don't have dry pomegranate seeds",
+          "quantity": "3/4 to 1",
+          "unit": "tsp",
+          "item": "amchur powder (dry mango powder), optional, only if you don't have dry pomegranate seeds",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 3 green chilies, slit",
+          "quantity": "2 to 3",
+          "unit": "",
+          "item": "green chilies, slit",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 to 1.25 cups water or the reserved stock the chickpeas were cooked in",
+          "quantity": "1 to 1.25",
+          "unit": "cups",
+          "item": "water or the reserved stock the chickpeas were cooked in",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1.5 to 2 tbsp oil",
+          "quantity": "1.5 to 2",
+          "unit": "tbsp",
+          "item": "oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "salt, as required",
+          "quantity": "",
+          "unit": "",
+          "item": "salt, as required",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 black cardamoms",
+          "quantity": "2",
+          "unit": "",
+          "item": "black cardamoms",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 inch cinnamon",
+          "quantity": "1",
+          "unit": "inch",
+          "item": "cinnamon",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 to 4 black peppercorns",
+          "quantity": "3 to 4",
+          "unit": "",
+          "item": "black peppercorns",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cloves",
+          "quantity": "2",
+          "unit": "",
+          "item": "cloves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium tej patta (Indian bay leaf)",
+          "quantity": "1",
+          "unit": "medium",
+          "item": "tej patta (Indian bay leaf)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp carom seeds (ajwain)",
+          "quantity": "1/4",
+          "unit": "tsp",
+          "item": "carom seeds (ajwain)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp cumin seeds",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "cumin seeds",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp coriander seeds",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "coriander seeds",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp fennel seeds",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "fennel seeds",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp dry pomegranate seeds, optional",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "dry pomegranate seeds, optional",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 to 2 dried red chilies",
+          "quantity": "1 to 2",
+          "unit": "",
+          "item": "dried red chilies",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 to 3 tbsp chopped coriander leaves, for garnish",
+          "quantity": "2 to 3",
+          "unit": "tbsp",
+          "item": "chopped coriander leaves, for garnish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 to 1 inch ginger, julienned, for garnish",
+          "quantity": "1/2 to 1",
+          "unit": "inch",
+          "item": "ginger, julienned, for garnish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 onion, sliced or chopped, for garnish",
+          "quantity": "1",
+          "unit": "",
+          "item": "onion, sliced or chopped, for garnish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tomato, sliced or chopped, for garnish",
+          "quantity": "1",
+          "unit": "",
+          "item": "tomato, sliced or chopped, for garnish",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 lemon or lime, sliced or quartered, for garnish",
+          "quantity": "1",
+          "unit": "",
+          "item": "lemon or lime, sliced or quartered, for garnish",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "rinse and soak the chole (chickpeas) in enough water overnight. add enough amount of water as the cho’",
-          "parseStatus": "candidate"
+          "text": "Rinse the chickpeas a couple of times, then soak them in the 3 cups of water overnight or for 8-9 hours. Drain and rinse again.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "increase in size after soaking it. rinse the soaked chickpeas.",
-          "parseStatus": "candidate"
+          "text": "Traditionally, dried amla is cooked with the chickpeas for a darker color and a faint tang; a black tea bag can be used instead.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "to give a dark color to the chana, traditionally dried amla (indian gooseberries) are added. these also 9’",
-          "parseStatus": "candidate"
+          "text": "Add the soaked chickpeas to a pressure cooker along with the amla pieces or tea bag and the pressure-cooking water; season with the 1/2 teaspoon salt.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "sourness to the stock. if you do not have dried amla, then add 1 black tea bag.",
-          "parseStatus": "candidate"
+          "text": "Pressure cook for about 12-15 whistles (roughly 15-18 minutes) on medium heat, until the chickpeas are soft enough to mash easily. Remove and discard the amla or tea bag.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "in a pressure cooker add the chole along with the 3 to 4 dried amla pieces or a tea bag. taj tea bags",
-          "parseStatus": "candidate"
+          "text": "Meanwhile, dry-roast the whole chole masala spices (cardamom, cinnamon, peppercorns, cloves, bay leaf, carom seeds, cumin seeds, coriander seeds, fennel seeds, pomegranate seeds, and dried red chilies) over low heat, stirring often, until well browned but not burnt. Cool, then grind to a fine powder.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 6,
-          "text": "well. then add water",
-          "parseStatus": "candidate"
+          "text": "Heat the oil in a pan and saute the ginger-garlic paste briefly until its raw smell fades, then add the chopped onions and cook until translucent to light brown.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 7,
-          "text": "season with salt and pressure cook the chana for 18 to 20 whistles. the chana should be cooked wv",
-          "parseStatus": "candidate"
+          "text": "Add the tomatoes and cook until they soften and the oil starts to separate from the mixture.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 8,
-          "text": "Cee Me 1 ae ed Dd",
-          "parseStatus": "candidate"
+          "text": "Lower the heat and stir in the ground spice powder along with the red chili powder, turmeric, and optional garam masala, then add the slit green chilies.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 9,
-          "text": "Sere Sees med as cthile ow makes oe tn nln ee allel ek et sm tenes mw LG .",
-          "parseStatus": "candidate"
+          "text": "Add the cooked chickpeas and about 1 to 1.25 cups of the reserved cooking stock (or water); season with salt as needed.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 10,
-          "text": "nn,",
-          "parseStatus": "candidate"
+          "text": "Cover and simmer on low to medium heat (or simmer uncovered for a thicker gravy), mashing some of the chickpeas with a spoon to thicken the sauce to your preferred consistency.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 11,
+          "text": "If dry pomegranate seeds weren't used earlier, stir in the amchur powder now for tang.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 12,
+          "text": "Garnish with chopped onion, tomato, coriander leaves, and ginger julienne, and serve hot with bhatura, poori, roti, or naan, with lemon wedges on the side.",
+          "parseStatus": "confirmed"
         }
       ],
-      "reviewFlags": []
+      "sourceUrl": "https://www.vegrecipesofindia.com/punjabi-chole-chickpeas-in-a-spicy-gravy/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Dassana Amit's Chole Recipe (Punjabi Chole Masala) on vegrecipesofindia.com (the archived scan's byline 'dassana' matches), 2026-09-02; instructions paraphrased. The archived scan cut off partway through the pressure-cooking step, immediately followed by a stretch of garbled/reversed OCR text that had been numbered as further instruction steps; both the truncation and the garbled tail are fixed here with the full recipe from the source.",
+      "reviewFlags": [],
+      "title": "Punjabi Chole Masala Recipe"
     },
     "R0389": {
       "title": "Rigatoni Pasta + Grilled Brats Recipe"
@@ -37124,8 +37833,122 @@
       ]
     },
     "R0378": {
-      "title": "Skillet Chicken with Tomatoes, Pancetta and Mozzarella",
-      "reviewFlags": []
+      "ingredients": [
+        {
+          "rawText": "3 1/2 pounds bone-in chicken pieces (or use a 3 1/2 pound chicken cut into 8 pieces)",
+          "quantity": "3 1/2",
+          "unit": "pounds",
+          "item": "bone-in chicken pieces (or a 3 1/2 pound chicken cut into 8 pieces)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons kosher salt",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "kosher salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 teaspoon black pepper",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon extra-virgin olive oil",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "extra-virgin olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "5 ounces pancetta, diced",
+          "quantity": "5",
+          "unit": "ounces",
+          "item": "pancetta, diced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 garlic cloves, thinly sliced",
+          "quantity": "3",
+          "unit": "cloves",
+          "item": "garlic, thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 anchovy fillets",
+          "quantity": "2",
+          "unit": "",
+          "item": "anchovy fillets",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon red pepper flakes",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "red pepper flakes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 28-ounce can whole plum tomatoes",
+          "quantity": "1",
+          "unit": "28-ounce can",
+          "item": "whole plum tomatoes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 large basil sprig, plus more chopped basil for serving",
+          "quantity": "1",
+          "unit": "large",
+          "item": "basil sprig, plus more chopped basil for serving",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "8 ounces bocconcini, halved (or use mozzarella cut into 1/2-inch pieces)",
+          "quantity": "8",
+          "unit": "ounces",
+          "item": "bocconcini, halved (or mozzarella cut into 1/2-inch pieces)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Heat the oven to 400 degrees. Pat the chicken dry and season with the salt and pepper.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Warm the oil in a large oven-proof skillet over medium-high heat. Add the pancetta and cook, stirring frequently, until browned. Transfer the pancetta to a paper-towel-lined plate with a slotted spoon.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Add the chicken to the skillet and sear, turning only occasionally, until well browned on all sides, about 10 minutes. Transfer the chicken to a large plate and pour off all but 1 tablespoon of the fat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Add the garlic, anchovy, and red pepper flakes to the skillet and fry for 1 minute. Stir in the tomatoes and basil, breaking up the tomatoes with a spatula, and cook until the sauce thickens somewhat, about 10 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Return the chicken to the skillet, transfer to the oven, and cook uncovered until the chicken is no longer pink, about 30 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Scatter the pancetta and bocconcini or mozzarella pieces over the chicken. Return the skillet to the oven and broil until the cheese is melted and bubbling, watching closely so it doesn't burn, 2 to 3 minutes. Garnish with chopped basil and pancetta before serving.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://cooking.nytimes.com/recipes/1017910-skillet-chicken-with-tomatoes-pancetta-and-mozzarella",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-09-02; instructions paraphrased, including step 6 which was printed mirror-reversed in the original scan (readable once flipped) describing scattering pancetta/bocconcini over the chicken and broiling until melted. The rest of the garbled trailing OCR noise from the reversed page was discarded.",
+      "reviewFlags": [],
+      "title": "Skillet Chicken with Tomatoes, Pancetta and Mozzarella"
     },
     "R0418": {
       "title": "Small Potato Curry Recipe (Small Potato Fry)",
@@ -37206,80 +38029,112 @@
       "title": "Spicy Braised Tofu"
     },
     "R0139": {
-      "title": "Spicy Hash Browns for Breakfast",
+      "ingredients": [
+        {
+          "rawText": "3 Medium Size Potatoes",
+          "quantity": "3",
+          "unit": "medium",
+          "item": "potatoes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 Tbsp All Purpose Flour",
+          "quantity": "4",
+          "unit": "tbsp",
+          "item": "all purpose flour",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 Tbsp Mozzarella Cheese, Shredded",
+          "quantity": "4",
+          "unit": "tbsp",
+          "item": "mozzarella cheese, shredded",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 Large Egg",
+          "quantity": "1",
+          "unit": "large",
+          "item": "egg",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 Small Onion, Finely Chopped",
+          "quantity": "1",
+          "unit": "small",
+          "item": "onion, finely chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 Tsp Garlic, Grated",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "garlic, grated",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 Tbsp Coriander, Freshly Chopped",
+          "quantity": "1",
+          "unit": "tbsp",
+          "item": "coriander, freshly chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 Tsp Salt",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 Tsp Red Chili Powder (or paprika powder)",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "red chili powder (or paprika powder)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 Tsp Black Pepper",
+          "quantity": "1/4",
+          "unit": "tsp",
+          "item": "black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 Tbsp Vegetable Oil, For Frying",
+          "quantity": "4",
+          "unit": "tbsp",
+          "item": "vegetable oil, for frying",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Shred potatoes using a vegetable grater. Rinse shredded potatoes with cold water until water is clear, then drain",
-          "parseStatus": "candidate"
+          "text": "Shred the potatoes with a vegetable grater. Rinse the shredded potatoes under cold water until the water runs clear, then drain and squeeze dry (this removes excess starch and makes the hash browns crispier).",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "and squeeze dry. (rinsing shredded potatoes with cold water helps remove excess starch and make potatotes",
-          "parseStatus": "candidate"
+          "text": "Place the potatoes in a bowl and add the flour, cheese, egg, onion, garlic, coriander, salt, red chili powder, and black pepper. Mix until everything is combined.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "more crispy)",
-          "parseStatus": "candidate"
+          "text": "Heat about 3-4 tablespoons of oil in a large frying pan over medium heat. Once sizzling hot, shape the potato mixture into 1/2-inch-thick patties (rectangles or whatever shape you like) and add to the pan, cooking 2-3 at a time (or more in a larger skillet). Cook each side for about 4 minutes, until golden brown.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "Place them in a bowl and add in the flour, cheese, egg, onion, garlic, coriander, salt, red chili powder, and black",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 5,
-          "text": "pepper powder. Then mix everything until combined.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "In a large frying pan heat about 3-4 tbsp oil over medium heat. When oil is sizzling hot, place potatoes into the",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "pan in a 1/2 inch thick layer and shape them in a rectangle or whatever shape you like. Cook each side for about",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "4 minutes or until golden brown. You can cook 2-3 in one batch or more if youre using a larger skillet.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Take them off the pan and place them on paper towels. Serve immediately with ketchup or any sauce of your",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "choice. Enjoy!",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "| Nutrition",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "Serving: 5Pieces | Calories: 293kca! | Carbohydrates: 27.4g | Protein: 10.7g | Fat: 16.1g | Saturated Fat: 4.9g |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "| Cholesterol: 49mg | Sodium: 161mg | Potassium: 569mg | Fiber: 3.7g | Sugar: 2.2g | Calcium: 30mg | Iron: 1.3mg",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "s",
-          "parseStatus": "candidate"
+          "text": "Remove from the pan and drain on paper towels. Serve immediately with ketchup or your favorite sauce.",
+          "parseStatus": "confirmed"
         }
       ],
-      "reviewFlags": []
+      "sourceUrl": "https://www.spicebangla.com/hash-browns-recipe/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Toma Rahman's recipe on spicebangla.com, 2026-09-02; instructions paraphrased. This scan did not have a garbled reversed-text tail like the others in this batch; the only cleanup needed was normalizing OCR bullet glyphs and spacing in the ingredient list and dropping the trailing nutrition-facts block that had been folded into the instructions.",
+      "reviewFlags": [],
+      "title": "Spicy Hash Browns for Breakfast"
     },
     "R0215": {
       "title": "Thenga Arachu Chertha Meen Curry",
@@ -47974,128 +48829,133 @@
       "reviewFlags": []
     },
     "R0115": {
+      "title": "Cranberry Orange Muffins",
+      "ingredients": [
+        {
+          "rawText": "2 cups all-purpose flour, + 2 teaspoons for coating fresh cranberries, if used",
+          "quantity": "2",
+          "unit": "cups",
+          "item": "all-purpose flour, + 2 teaspoons for coating fresh cranberries, if used",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 teaspoons baking powder",
+          "quantity": "1 1/2",
+          "unit": "teaspoons",
+          "item": "baking powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cups fresh cranberries, or 1 cup dried cranberries",
+          "quantity": "2",
+          "unit": "cups",
+          "item": "fresh cranberries, or 1 cup dried cranberries",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup (1 stick) unsalted butter, room temperature",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "unsalted butter, room temperature",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup granulated sugar",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "granulated sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 large eggs",
+          "quantity": "2",
+          "unit": "large",
+          "item": "eggs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons pure vanilla extract",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "pure vanilla extract",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "zest of 1 orange",
+          "quantity": "",
+          "unit": "",
+          "item": "zest of 1 orange",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup milk",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "milk",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tablespoons orange juice",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "orange juice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 cup confectioner's sugar",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "confectioner's sugar",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Preheat oven to 375° F. Spray muffin tins with bakers spray or coat weil with shortening or",
-          "parseStatus": "candidate"
+          "text": "Preheat oven to 375°F. Spray muffin tins with baking spray, or coat well with shortening or butter and flour, tapping out any excess flour.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "butter and flour, making sure to discard any excess flour from the tins after coating.",
-          "parseStatus": "candidate"
+          "text": "Sift together the flour, baking powder, and salt in a medium bowl; set aside.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "Sift together flour, baking powder, and salt in a medium bowl. Set aside.",
-          "parseStatus": "candidate"
+          "text": "In a separate bowl, toss the fresh cranberries with 2 teaspoons of flour to coat them; set aside. Skip this step if using dried cranberries.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "Toss together fresh cranberries and 2 teaspoons of flour to coat cranberries in a separate",
-          "parseStatus": "candidate"
+          "text": "Cream the butter and sugar together until lightened in color, about 3 minutes. Beat in the eggs one at a time, fully incorporating each before adding the next, then mix in the vanilla and orange zest.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "bowl. Set aside. If using dried cranberries, simply skip this step.",
-          "parseStatus": "candidate"
+          "text": "Gently fold in the flour mixture, alternating with the milk, stirring just until combined. Fold in the cranberries, then scoop the batter into the prepared muffin tins, filling each about 2/3 to 3/4 full. Bake until a toothpick inserted in the center comes out clean, about 30 minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 6,
-          "text": "Cream together butter and sugar until lightened in color, about 3 minutes. Add an egg, one",
-          "parseStatus": "candidate"
+          "text": "While the muffins bake, stir together the orange juice and confectioner's sugar to make the glaze.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 7,
-          "text": "at a time, taking care to fully incorporate before adding the other. Mix in vanilia and orange",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "zest.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Gently fold in flour mixture, alternating with milk. Stir until just combined. Fold in cranberries",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "(fresh or dried) and scoop mixture into prepared muffin tins, filling about 2/3 to 3/4 full.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "Bake until a toothpick cr skewer inserted in the middle comes out clean, about 30 minutes.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "Prepare orange glaze topping for muffins while the muffins are baking by stirring together",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "until well-combined.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "“i",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": ". Once muffins have baked, remove from the oven and allow to cool slightly in the muffin tin.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "Then, remove each muffin and drizzle with oranas giaze, Place onto a plate te finish coolina",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "©",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "|",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "NUCRION",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "Calories: 278kcal | Carbohydrates: 46g | Protein: 4g | Fat: 99 | Saturated Fat: 5g | Cholesterol: 57mg |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "Sodium: 117mg | Potassium: 119mg | Fiber: ig | Sugar: 28g | Vitamin A: 3201u | Vitamin C: 4mg |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 22,
-          "text": "Calcium: 45mg | Iron: Img",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 23,
-          "text": "Cranberry Orange Muffins Recipe hitus.’/addapineh.com/cranberry-orange-muffins-recipe/",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 24,
-          "text": "%",
-          "parseStatus": "candidate"
+          "text": "Once baked, let the muffins cool slightly in the tin, then remove them and drizzle with the orange glaze. Set on a plate to finish cooling.",
+          "parseStatus": "confirmed"
         }
-      ]
+      ],
+      "sourceUrl": "https://addapinch.com/cranberry-orange-muffins-recipe/",
+      "sourceStatus": "confirmed",
+      "note": "Title corrected from OCR typo 'Muifins' to 'Muffins'. Ingredients and steps confirmed against addapinch.com (Robyn Stone), 2026-09-02; instructions paraphrased. Original scan had garbled/reversed OCR text mixed into the final instructions and notes, which is fixed here."
     },
     "R0125": {
       "ingredients": [
@@ -48302,238 +49162,290 @@
       "note": "Ingredients and steps confirmed against Omnivore's Cookbook (Maggie Zhu), 2026-09-02; instructions paraphrased. Original scan had 'Noodles'/'Spice Mix'/'Meat & Marinade'/'Sauce'/'Stir Fry' section headers captured as fake standalone ingredient entries, which is fixed here."
     },
     "R0162": {
+      "ingredients": [
+        {
+          "rawText": "6 eggs",
+          "quantity": "6",
+          "unit": "",
+          "item": "eggs",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 big onion",
+          "quantity": "4",
+          "unit": "",
+          "item": "big onion",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium piece ginger",
+          "quantity": "1",
+          "unit": "medium piece",
+          "item": "ginger",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 cloves garlic",
+          "quantity": "4",
+          "unit": "cloves",
+          "item": "garlic",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 green chilli",
+          "quantity": "3",
+          "unit": "",
+          "item": "green chilli",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp fennel seeds",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "fennel seeds",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp pepper",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "curry leaves",
+          "quantity": "",
+          "unit": "",
+          "item": "curry leaves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp Kashmiri chilli powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "Kashmiri chilli powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp chilli powder",
+          "quantity": "1",
+          "unit": "teaspoon",
+          "item": "chilli powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tsp coriander powder",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "coriander powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp garam masala",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "garam masala",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 tbsp coconut oil",
+          "quantity": "3",
+          "unit": "tablespoons",
+          "item": "coconut oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tomato",
+          "quantity": "1",
+          "unit": "",
+          "item": "tomato",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "salt",
+          "quantity": "",
+          "unit": "",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp sugar (optional)",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "sugar, optional",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Boil eggs for 1imins in salted water and place into cold water. Peel the shells carefully.",
-          "parseStatus": "candidate"
+          "text": "Boil the eggs for about 11 minutes in salted water, then place into cold water and peel.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "Slice the eggs vertically to allow sauce to infuse into the egg.",
-          "parseStatus": "candidate"
+          "text": "Slice the eggs vertically so the sauce can infuse into them.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "Lightly smash ginger -garlic-fennel-pepper",
-          "parseStatus": "candidate"
+          "text": "Lightly crush the ginger, garlic, fennel, and pepper together.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "Heat oil in a pan",
-          "parseStatus": "candidate"
+          "text": "Heat the coconut oil in a pan.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "Add ginger-garlc paste to hot oil mix and saute for few mins",
-          "parseStatus": "candidate"
+          "text": "Add the ginger-garlic paste to the hot oil and saute for a few minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 6,
-          "text": "add onion ,green chilli ,curry leaves and salt and saute till onions brown (10mins),",
-          "parseStatus": "candidate"
+          "text": "Add the onion, green chilli, curry leaves, and salt, and saute until the onions brown, about 10 minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 7,
-          "text": "continue to saute for a few more mins.",
-          "parseStatus": "candidate"
+          "text": "Continue to saute for a few more minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 8,
-          "text": "Add Chili powder, Kashmiri Chili powder, Coriander powder and Garam Masala and saute for",
-          "parseStatus": "candidate"
+          "text": "Add the chilli powder, Kashmiri chilli powder, coriander powder, and garam masala, and saute for a few more minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 9,
-          "text": "few mins",
-          "parseStatus": "candidate"
+          "text": "Add the tomato and cook well until it has softened and incorporated into the sauce.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 10,
-          "text": "Add tomato and cook well, till the tomatoes have cooked down and incorporated into the",
-          "parseStatus": "candidate"
+          "text": "Add 1/2 cup boiled water and cook for a few minutes.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 11,
-          "text": "sauce,",
-          "parseStatus": "candidate"
+          "text": "Optionally, add the sugar to sweeten the dish.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 12,
-          "text": "Adc 1/2 cup boiled water and cook for a few mins",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "[Optional] add 1/4 tsp sugar to sweeten the dish",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Finally add boiled egg and continue to cook for a few mins until the sauce darkens.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "Sfic|20 — 4x",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "aoe i oy ,",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "Neded a \\ittle more saute to My onion grey (a he",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "7 ae ee 1 7)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "oO } . di {",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "N} > A j ded - T3p hy af O mesl+ Cran Sk wn [ae hee",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "L1AaeP J",
-          "parseStatus": "candidate"
+          "text": "Add the boiled eggs and continue to cook for a few minutes until the sauce darkens and thickens.",
+          "parseStatus": "confirmed"
         }
       ],
+      "sourceUrl": "",
+      "sourceStatus": "confirmed",
+      "note": "Transcribed directly from the archived scan, 2026-09-02 - the card had no publisher/site attribution and appears to be a personal recipe. Fixed OCR typos ('Coconut Oi1' -> 'coconut oil', 'itsp' -> '1 tsp') and dropped a stretch of illegible handwritten margin notes at the end of the scan; instructions paraphrased.",
       "reviewFlags": []
     },
     "R0454": {
+      "ingredients": [
+        {
+          "rawText": "1 1/2 lb salmon fillet, no skin",
+          "quantity": "1 1/2",
+          "unit": "lb",
+          "item": "salmon fillet, no skin",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 green onions, chopped",
+          "quantity": "2",
+          "unit": "",
+          "item": "green onions, chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cloves garlic, minced",
+          "quantity": "3",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp fresh ginger, minced",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "fresh ginger, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup olive oil",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup soy sauce, low sodium",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "soy sauce, low sodium",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp brown sugar",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp crushed red pepper flakes",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "crushed red pepper flakes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tbsp Sriracha sauce",
+          "quantity": "1",
+          "unit": "tbsp",
+          "item": "Sriracha sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp ground black pepper",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "ground black pepper",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "In a small bowl whisk all the marinade ingredients together.",
-          "parseStatus": "candidate"
+          "text": "Whisk all the marinade ingredients (garlic, ginger, olive oil, soy sauce, brown sugar, red pepper flakes, Sriracha, and black pepper) together in a small bowl.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "Place salmon in a baking dish and pour marinade over the salmon. Rub the marinade over both sides making",
-          "parseStatus": "candidate"
+          "text": "Put the salmon in a baking dish and pour the marinade over it, rubbing it over both sides so the salmon is fully coated. Cover with plastic wrap and refrigerate for at least 2 hours, up to 24 hours.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "Sure the entire salmon is covered. Cover the baking dish with plastic wrap and let it marinate in the fridge for 2",
-          "parseStatus": "candidate"
+          "text": "Preheat the oven to 375°F (190°C).",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "hours up to 24 hours.",
-          "parseStatus": "candidate"
+          "text": "Uncover the baking dish and bake the salmon for 15 to 20 minutes, until cooked through. Baking time will vary with the thickness of the fillet.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "Preheat oven to 375 F degrees.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "Remove the plastic wrap from the baking dish and bake for 15 to 20 minutes. Note that the baking time could",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "vary depending on the thickness of the salmon.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "Garnish with chopped green onions and serve immediately.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Notes",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "Feel free to adjust the amount of sriracha and pepper flakes to your preference.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "You can use skin-on salmon if that's what's available to you.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "Total time does not include time required to marinade the salmon.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "Please keep in mind that nutritional information is a rough estimate and can vary greatly based on products used.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Nutrition",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "Serving: 1g | Calories: 394kcal | Carbohydrates: 8.2g | Protein: 34.3g | Fat: 25.8g | Saturated Fat: 3.7g | Cholesterol",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "78mg | Sodium: 638mg | Fiber: 0.7g | Sugar: 5.1g",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "“Ten -20-20 2K s|",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "Kec ive Was mild Flavored Compared tri th Maple Soy R alan",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "Also ala cutting UP N+ hs allowed iy longer Cooht-g",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "fine eae (15 mn(@bBok) ard 3 more mins baila40 at",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "Sone jennp )",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 22,
-          "text": "~ Gok ith sush: vie ard byocall; os Sides |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 23,
-          "text": "Havoy of Warned Shrulf have ly een syniectey aud Spicy",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 24,
-          "text": "ae",
-          "parseStatus": "candidate"
+          "text": "Garnish with the chopped green onions and serve right away.",
+          "parseStatus": "confirmed"
         }
       ],
+      "sourceUrl": "https://www.jocooks.com/recipes/firecracker-salmon/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against jocooks.com (Joanna Cismaru), 2026-09-02; instructions paraphrased. This is a distinct recipe from the sibling card R0343 (also called Firecracker Salmon but from cafedelites.com) - the ingredient lists and author differ. Original scan had a stretch of garbled/reversed OCR text tacked onto the end of the instructions/notes, which is removed here.",
       "reviewFlags": []
     },
     "R0163": {
@@ -48910,208 +49822,185 @@
       "reviewFlags": []
     },
     "R0372": {
+      "ingredients": [
+        {
+          "rawText": "1 tablespoon olive oil",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "olive oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 yellow onion, diced, divided",
+          "quantity": "1",
+          "unit": "",
+          "item": "yellow onion, diced, divided",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 lb ground beef",
+          "quantity": "2",
+          "unit": "lb",
+          "item": "ground beef",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp chili powder",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "chili powder",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp paprika",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "paprika",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp cumin",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "cumin",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp crushed red pepper",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "crushed red pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp ground black pepper",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "ground black pepper",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 (14.5-oz) can pinto beans, chili beans, or ranch-style beans",
+          "quantity": "1 can",
+          "unit": "14.5 oz",
+          "item": "pinto beans, chili beans, or ranch-style beans",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup hot water",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "hot water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "6 Roma tomatoes, diced",
+          "quantity": "6",
+          "unit": "",
+          "item": "Roma tomatoes, diced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 jalapeno, diced finely",
+          "quantity": "1",
+          "unit": "",
+          "item": "jalapeno, diced finely",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 bunch cilantro leaves, chopped",
+          "quantity": "1/2",
+          "unit": "bunch",
+          "item": "cilantro leaves, chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Juice of 1 lime",
+          "quantity": "1",
+          "unit": "",
+          "item": "lime, juiced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Tortilla chips",
+          "quantity": "",
+          "unit": "",
+          "item": "tortilla chips",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 cups grated cheddar cheese, divided",
+          "quantity": "1 1/2",
+          "unit": "cups",
+          "item": "grated cheddar cheese, divided",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 cups Monterey Jack cheese",
+          "quantity": "1 1/2",
+          "unit": "cups",
+          "item": "Monterey Jack cheese",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 avocado, pitted and diced",
+          "quantity": "1",
+          "unit": "",
+          "item": "avocado, pitted and diced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "Sour cream (optional)",
+          "quantity": "",
+          "unit": "",
+          "item": "sour cream, optional",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "In a skillet over medium-high heat, add the olive oil and half the",
-          "parseStatus": "candidate"
+          "text": "In a skillet over medium-high heat, add the olive oil and half the diced onion. Cook until it starts to soften, then add the ground beef and cook until totally browned. Drain the fat, then stir in the chili powder, paprika, cumin, crushed red pepper, salt, and pepper. Add the beans and hot water, stir, and reduce the heat to low to simmer while you prepare the other ingredients.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "onion. Cook it until starting to soften, then add the ground beef.",
-          "parseStatus": "candidate"
+          "text": "For the pico de gallo, combine the remaining diced onion with the tomato, jalapeno, cilantro, lime juice, and 1/2 teaspoon salt in a medium bowl. Stir together and set aside.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "Cook the meat until it's totally browned, then drain the fat. Add the",
-          "parseStatus": "candidate"
+          "text": "To build the nachos, layer tortilla chips on a platter, top with the beef/bean mixture and most of the cheddar, then repeat with another layer of chips, beef/bean mixture, and the Monterey Jack. Finish with a final small layer of chips, beef and beans, and a sprinkling of cheddar.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "chili powder, paprika, cumin, crushed red pepper, salt, and pepper",
-          "parseStatus": "candidate"
+          "text": "Microwave in 45-second increments until the cheese is melted and bubbly (or place the heatproof platter in a 325°F oven until the cheese melts).",
+          "parseStatus": "confirmed"
         },
         {
           "order": 5,
-          "text": "and stir to combine. Add the beans and hot water and stir. Reduce",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "the heat to low and simmer while you prepare the other",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "ingredients.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "To make the pico de gallo, combine the other half of the onion with",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "the tomato, jalapeno, cilantro, lime juice, and 1/2 teaspoon salt. Stir it",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "together and set. jt.aside.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "To build the nachos, place a layer of tortilla chips on a platter or",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "plate. Top with a layer of the beef/bean mixture, then all but 1/4 cup",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "of the cheddar cheese. Add another layer of chips, another layer of",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "the beef/bean mixture, and the Monterey Jack cheese. Add a final",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "small layer of chips, then a small layer of beef and beans, then a final",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "sprinkling of cheddar. “",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "Microwave in 45 second increments until the cheese is melted and",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "bubbly. (You may also place the platter into a 325 degree oven if it's",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "heatproof. Just leave it in until the cheese is melted.)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "immediately sprinkle on the diced avocado and plenty of pico de",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "y %402 aBe",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 22,
-          "text": "Wd LPOL rile",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 23,
-          "text": "29yy O[) paddoyre dsqj l",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 24,
-          "text": "p21p | 7235 | owdvpol |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 25,
-          "text": "5 P2?yO Anno] |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 26,
-          "text": "f22219 . UoIud ¥ fe",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 27,
-          "text": "room apee Y= dale",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 28,
-          "text": "aay. anh ee",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 29,
-          "text": "sp: SR",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 30,
-          "text": "| & aut) iy w",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 31,
-          "text": "Aapred | \"YW? 19 wary S74 d5/ S",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 32,
-          "text": "+, soared yp dy Y",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 33,
-          "text": "[oar UY X | ie [M+ MwA? “| DWBOG big?",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 34,
-          "text": "ox? “OuO |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 35,
-          "text": "| eta frou ssa} osn 4p “| ol/Ob f22q ran b qi |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 36,
-          "text": "; dior I?",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 37,
-          "text": "wy Loar Xl",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 38,
-          "text": "2S fo soyouid h-¢",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 39,
-          "text": "[eanly Ean)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 40,
-          "text": "nlf jog ag yoo0b Fd: 46 400 mW SOYDON. 2",
-          "parseStatus": "candidate"
+          "text": "Immediately sprinkle on the diced avocado and plenty of pico de gallo, add dollops of sour cream if desired, and serve right away.",
+          "parseStatus": "confirmed"
         }
       ],
+      "sourceUrl": "https://www.thepioneerwoman.com/food-cooking/recipes/a11642/loaded-nachos/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against The Pioneer Woman (Ree Drummond), 2026-09-02; instructions paraphrased. Original scan had two ingredient-list line-wraps merged incorrectly and a long stretch of garbled/reversed OCR text tacked onto the end of the instructions, both fixed here.",
       "reviewFlags": []
     },
     "R0391": {
@@ -49545,108 +50434,152 @@
       "note": "Ingredients and steps confirmed against ruchiskitchen.com (Ruchi), 2026-09-02; instructions paraphrased. The scan's original URL (murgh-mailai-tikka) had been replaced by the current permalink; content matches the scan's legible fragments (cashew paste, cream, mozzarella, kasoori methi marinade). Section headers (FIRST MARINADE / FIRST SET OF INGREDIENTS / SECOND SET OF INGREDIENTS) and barcode/illegible OCR fragments have been removed from the ingredient list."
     },
     "R0315": {
+      "ingredients": [
+        {
+          "rawText": "1 instant ramen noodle",
+          "quantity": "1",
+          "unit": "",
+          "item": "instant ramen noodle",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "16 pieces Korean rice cakes (180 g / 6.3 ounces), separated - if using pre-packaged rice cakes, separate them first then soak in warm water for 10 minutes before use",
+          "quantity": "16",
+          "unit": "pieces",
+          "item": "Korean rice cakes (180 g / 6.3 ounces), separated",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 sheets Korean fish cakes (110 g / 3.9 ounces), rinsed under hot running water for 1 min, chopped into small rectangular pieces",
+          "quantity": "2",
+          "unit": "sheets",
+          "item": "Korean fish cakes (110 g / 3.9 ounces), rinsed and chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "80 g cabbage leaves (2.8 ounces), chopped into small pieces",
+          "quantity": "80",
+          "unit": "g",
+          "item": "cabbage leaves (2.8 ounces), chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 small onion (60 g / 2.1 ounces), thinly sliced",
+          "quantity": "1/2",
+          "unit": "",
+          "item": "small onion (60 g / 2.1 ounces), thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 deep fried seaweed spring rolls (100 g / 3.5 ounces), store-bought or homemade",
+          "quantity": "4",
+          "unit": "",
+          "item": "deep fried seaweed spring rolls (100 g / 3.5 ounces)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 frozen Korean dumplings (45 g / 1.6 ounces)",
+          "quantity": "2",
+          "unit": "",
+          "item": "frozen Korean dumplings (45 g / 1.6 ounces)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 hard boiled eggs, cut into halves",
+          "quantity": "2",
+          "unit": "",
+          "item": "hard boiled eggs, cut into halves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups water",
+          "quantity": "3",
+          "unit": "cups",
+          "item": "water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "5 g dried kelp (0.2 ounces)",
+          "quantity": "5",
+          "unit": "g",
+          "item": "dried kelp (0.2 ounces)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "15 g dried anchovy (0.5 ounces), head and black innards removed",
+          "quantity": "15",
+          "unit": "g",
+          "item": "dried anchovy (0.5 ounces), head and black innards removed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 Tbsp gochujang, Korean chilli paste",
+          "quantity": "4",
+          "unit": "Tbsp",
+          "item": "gochujang, Korean chilli paste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 Tbsp raw sugar",
+          "quantity": "1 1/2",
+          "unit": "Tbsp",
+          "item": "raw sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp minced garlic",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "minced garlic",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp gochugaru, Korean chilli flakes",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "gochugaru, Korean chilli flakes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 stalk green onion (20 g / 0.7 ounces), thinly chopped",
+          "quantity": "1",
+          "unit": "stalk",
+          "item": "green onion (20 g / 0.7 ounces), thinly chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "some toasted sesame seeds",
+          "quantity": "",
+          "unit": "",
+          "item": "toasted sesame seeds",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Put the water (3 cups) in a medium pot and add the dried kelp and anchovies. Boil it for 10",
-          "parseStatus": "candidate"
+          "text": "Put the water, dried kelp, and anchovies in a medium pot. Boil uncovered for 10 minutes on medium heat, then remove and discard the kelp. Keep boiling for another 10 minutes, then remove the anchovies. Strain the broth through a damp cloth to remove small particles if desired - this should give you about 400ml of broth.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "mins uncovered on medium heat. Take out (& discard) the kelp and continue boiling for a",
-          "parseStatus": "candidate"
+          "text": "Pour the broth into a wider pot, stir in the sauce (gochujang, sugar, garlic, gochugaru), and bring to a boil over medium-high heat.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "further 10 mins. Take out the anchovy. Sieve through the boiled broth over damp cheese/linen",
-          "parseStatus": "candidate"
+          "text": "Once boiling, reduce the heat to medium-low, add the remaining main ingredients, and stir occasionally as everything cooks.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "cloth to remove small particles from the kelp and anchovies. (If you don't mind these",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 5,
-          "text": "particles, you can skip sieving.) This should result in about 400ml of broth. (Check here if you",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "need step by step photo instructions for this process.)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "Pour the broth into a wider pot, add the sauce and stir it well. Boil it over medium high heat. (I",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "used a shallow pot and portable gas burner to enjoy Rabokki like a hot pot dish at the table.)",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Once the broth starts.to boil, reduce the heat to medium low. Add the rest of ingredients and",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "as they cook, stir around occasionally.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "(If you're cooking at the table) Add the garnish ingredients and start eating them as they get",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "ready. Otherwise, serve when everything is cooked. Add the garnish ingredients just before",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "serving.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Notes",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "1 Tbsp = 15 ml, 1 cup = 250 ml",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "Nutrition",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "| Calories: 478kcal | Carbohydrates: 76g | Protein: 18g | Fat: 10g | Saturated Fat: 2g | Cholesterol",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "| 201mg | Sodium: 733mg | Potassium: 341mg | Fiber: 1g | Sugar: 16g | Vitamin A: 9101U | Vitamin C",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "8mg | Calcium: 82mg | Iron: 2.1mg",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "Rabokki - Ramen + Tteokbokki - https://mykoreankitchen.com/rabokki/ © 2006-2021 My Korean Kitchen",
-          "parseStatus": "candidate"
+          "text": "Add the garnish (green onion and sesame seeds) just before serving, and serve once everything is cooked through.",
+          "parseStatus": "confirmed"
         }
       ],
+      "sourceUrl": "https://mykoreankitchen.com/rabokki/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against mykoreankitchen.com (Sue Pressey), 2026-09-02; instructions paraphrased. Original scan had a long stretch of garbled/reversed OCR text tacked onto the sauce ingredients, which is fixed here.",
       "reviewFlags": []
     },
     "R0303": {
@@ -49710,296 +50643,393 @@
       "reviewFlags": []
     },
     "R0226": {
-      "instructions": [
+      "ingredients": [
         {
-          "order": 1,
-          "text": "To a large bowl, add a pinch of salt and 2 tablespoons of potato starch to tofu chunks. Gently toss the tofu",
-          "parseStatus": "candidate"
+          "rawText": "1 16-ounce block extra firm tofu, pressed and chopped into 1/2 inch bite-sized chunks",
+          "quantity": "1",
+          "unit": "16-ounce block",
+          "item": "extra firm tofu, pressed and chopped into 1/2 inch bite-sized chunks",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 2,
-          "text": "to make sure they are all evenly coated. Set aside.",
-          "parseStatus": "candidate"
+          "rawText": "Kosher salt, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "kosher salt, to taste",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 3,
-          "text": "Prep your vegetables by mincing the garlic, dicing the onion, slicing the Korean chilis, and chopping up the",
-          "parseStatus": "candidate"
+          "rawText": "2 Tablespoons potato starch, plus 1 extra teaspoon",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "potato starch, plus 1 extra teaspoon",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 4,
-          "text": "scallions.",
-          "parseStatus": "candidate"
+          "rawText": "7 cloves garlic, minced",
+          "quantity": "7",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 5,
-          "text": "Prepare the sauce by mixing together gochugaru, soy sauce, white wine vinegar, maple syrup, mirin, and 1",
-          "parseStatus": "candidate"
+          "rawText": "1/4 red onion, diced",
+          "quantity": "1/4",
+          "unit": "",
+          "item": "red onion, diced",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 6,
-          "text": "teaspoon of potato starch. Set aside.",
-          "parseStatus": "candidate"
+          "rawText": "2 Korean green chilis, sliced (can sub seeded jalapenos)",
+          "quantity": "2",
+          "unit": "",
+          "item": "Korean green chilis, sliced (can sub seeded jalapenos)",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 7,
-          "text": "4, To a very large non-stick pan, add 4 tablespoons of vegetable oil over high heat. When oil is very hot, add",
-          "parseStatus": "candidate"
+          "rawText": "2 whole scallions, white parts chopped, green parts sliced on a bias",
+          "quantity": "2",
+          "unit": "whole",
+          "item": "scallions, white parts chopped, green parts sliced on a bias",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 8,
-          "text": "coated tofu chunks in one layer,making sure they are not touching each other. If they touch, they will stick to",
-          "parseStatus": "candidate"
+          "rawText": "1 Tablespoon gochugaru",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "gochugaru",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 9,
-          "text": "one another.",
-          "parseStatus": "candidate"
+          "rawText": "1 to 1 1/2 Tablespoon soy sauce",
+          "quantity": "1 to 1 1/2",
+          "unit": "tablespoon",
+          "item": "soy sauce",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 10,
-          "text": "Cook the tofu and flip them one by one, until they are brown on all sides (approximately 7 minutes). Remove",
-          "parseStatus": "candidate"
+          "rawText": "1 Tablespoon white wine vinegar",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "white wine vinegar",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 11,
-          "text": "the tofu chunks from the pan and set them aside on a cooling rack to drain the excess oil. Repeat with the",
-          "parseStatus": "candidate"
+          "rawText": "2 Tablespoons maple syrup",
+          "quantity": "2",
+          "unit": "tablespoons",
+          "item": "maple syrup",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 12,
-          "text": "remaining tofu.",
-          "parseStatus": "candidate"
+          "rawText": "1/2 Tablespoon mirin (optional)",
+          "quantity": "1/2",
+          "unit": "tablespoon",
+          "item": "mirin (optional)",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 13,
-          "text": "When all of the tofu has been fried, in the same pan, add 1 tablespoon of oil. Then add the garlic, onions,",
-          "parseStatus": "candidate"
+          "rawText": "5 Tablespoons vegetable oil, divided (4 Tablespoons + 1 Tablespoon)",
+          "quantity": "5",
+          "unit": "tablespoons",
+          "item": "vegetable oil, divided (4 tablespoons + 1 tablespoon)",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 14,
-          "text": "chilis, and scallions and saute the vegetables until the garlic starts to brown.",
-          "parseStatus": "candidate"
+          "rawText": "1/8 cup dried red chilis (optional)",
+          "quantity": "1/8",
+          "unit": "cup",
+          "item": "dried red chilis (optional)",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 15,
-          "text": "Reduce the heat to medium-high and add the sauce, stirring it with a wooden spoon until it reduces down",
-          "parseStatus": "candidate"
+          "rawText": "1/2 Tablespoon sesame oil",
+          "quantity": "1/2",
+          "unit": "tablespoon",
+          "item": "sesame oil",
+          "parseStatus": "confirmed"
         },
         {
-          "order": 16,
-          "text": "into a thick sauce (approximately 30 seconds). Turn off the heat.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "Gently add back the fried tofu and stir everything together, so that the tofu chunks are evenly coated in your",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "sauce. —",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "BPs/2 4",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "hho Nas Goa, but AUCE wer sp f yeally areal = ir",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 21,
-          "text": "Was &« Swe} Grd Sivy fave ¥ bo ae | Seamed to be",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 22,
-          "text": "Wissing somcfhing - ot could have ben Spark end",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 23,
-          "text": "Spy sk Cui Trou he Vine pr)",
-          "parseStatus": "candidate"
-        }
-      ]
-    },
-    "R0260": {
-      "instructions": [
-        {
-          "order": 1,
-          "text": "Preheat oven to 400 F degrees. Line a baking sheet with parchment paper; set aside.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 2,
-          "text": "In a large bowl, add ail the meatball ingredients and mix with your hands to combine. Form",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 3,
-          "text": "the meatballs into small 1 inch balls. Place the meatballs on the prepared baking sheet and",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 4,
-          "text": "bake for about 20 to 25 minutes or until done to your liking.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 5,
-          "text": "Meanwhile, in a medium bowl whisk together ail the glaze ingredients. Add the meatballs and",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "toss well until all the meatbalis are glazed.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "Garnish with chopped chives if preferred and serve immediately over cooked rice or as an",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "appetizer.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "Notes",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "This recipe will yield about 36 meatballs, but depencs on size of meatballs.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "You can use ground chicken, turkey, or pork instead of beef.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "You can use orange marmalade instead of apricot jam if that's more convenient for you.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "You can use gochujang instead of sriracha.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 14,
-          "text": "Nutritional information is per meatball.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 15,
-          "text": "Please keep in mind that nutritional information is a rough estimate and can vary greatly",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 16,
-          "text": "based on products used.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 17,
-          "text": "Nutrition ;",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 18,
-          "text": "Serving: meatball | Calories: 35kcal | Carbohydrates: 2g | Protein: 4g | Fat: 1g | Saturated Fat: 1g |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 19,
-          "text": "Cholesterol: 16mg | Sodium: 143mg | Potassium: 77mg | Fiber: 1g | Sugar: 1g | Vitamin A: 201u |",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 20,
-          "text": "Vitamin C: 1mg | Calciurn: 7mg | Iron: 1mg",
-          "parseStatus": "candidate"
-        }
-      ]
-    },
-    "R0135": {
-      "instructions": [
-        {
-          "order": 1,
-          "text": "Ina small bowl, whisk together brown sugar, soy sauce, sesame oil, red pepper flakes and ginger.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 2,
-          "text": "Heat vegetable oil in a large skillet over medium high heat. Add garlic and cook, stirring constantly, until",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 3,
-          "text": "fragrant, about 1 minute. Add ground beef and cook until browned, about 3-5 minutes, making sure to crumble",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 4,
-          "text": "the beef as it cooks; drain excess fat.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 5,
-          "text": "Stir in soy sauce mixture and green onions until well combined, allowing to simmer until heated through, about",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "2 minutes.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "Serve immediately, garnished with green onion and sesame seeds, if desired.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "Adapted from Six Sisters’ Stuff",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "This delicious recipe brought to you by DAMN DELICIOUS",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "https://damndelicious.net/2013/07/07/korean-beef-bowl",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "| } VAT “i hy H",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "/yex tr Pn Used Vey [SP",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 13,
-          "text": "4",
-          "parseStatus": "candidate"
+          "rawText": "1 Tablespoon toasted sesame seeds",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "toasted sesame seeds",
+          "parseStatus": "confirmed"
         }
       ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a large bowl, toss the tofu chunks with a pinch of salt and 2 tablespoons of potato starch until evenly coated. Set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Prep the vegetables: mince the garlic, dice the onion, slice the Korean chilis, and chop the scallions.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Make the sauce by whisking together the gochugaru, soy sauce, vinegar, maple syrup, mirin, and the remaining teaspoon of potato starch. Set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Heat 4 tablespoons of vegetable oil in a very large non-stick pan over high heat. Once very hot, add the coated tofu in a single layer, keeping the pieces from touching each other.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Fry the tofu, turning each piece individually, until browned on all sides, about 7 minutes total. Transfer to a cooling rack to drain excess oil and repeat with any remaining tofu.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Once all the tofu is fried, add 1 tablespoon of oil to the same pan and saute the garlic, onion, chilis, and scallions until the garlic starts to brown.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Reduce the heat to medium-high, pour in the sauce, and stir with a wooden spoon until it reduces to a thick glaze, about 30 seconds. Turn off the heat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Fold the fried tofu back into the pan and toss until evenly coated in the sauce.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 9,
+          "text": "Finish with the sesame oil and toasted sesame seeds, then serve immediately.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://thekoreanvegan.com/spicy-crunchy-garlic-tofu-kkanpoong-tofu/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Joanne Molinaro's original recipe from The Korean Vegan, 2026-09-02 (verified via a credited reprint at scheckeats.com since the original URL now 404s); instructions paraphrased. The archived scan's legible portion matched this recipe exactly through step 8; a long stretch of garbled/reversed handwritten review notes had been numbered as additional instruction steps and is removed here, with the missing final step (sesame oil/seed garnish and serve) restored from the source."
+    },
+    "R0260": {
+      "ingredients": [
+        {
+          "rawText": "1 1/2 lb lean ground beef",
+          "quantity": "1 1/2",
+          "unit": "lb",
+          "item": "lean ground beef",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 green onions, chopped",
+          "quantity": "4",
+          "unit": "",
+          "item": "green onions, chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup breadcrumbs, such as Panko",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "breadcrumbs, such as Panko",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cloves garlic, minced",
+          "quantity": "3",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 egg",
+          "quantity": "1",
+          "unit": "",
+          "item": "egg",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp Sriracha sauce",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "Sriracha sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp ground ginger",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "ground ginger",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tsp salt, or to taste",
+          "quantity": "1",
+          "unit": "tsp",
+          "item": "salt, or to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp pepper, or to taste",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "pepper, or to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup apricot jam",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "apricot jam",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tbsp soy sauce",
+          "quantity": "1",
+          "unit": "tbsp",
+          "item": "soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp Sriracha sauce",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "Sriracha sauce (for the glaze)",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Preheat the oven to 400°F. Line a baking sheet with parchment paper and set aside.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "In a large bowl, combine all the meatball ingredients and mix by hand. Shape into small 1-inch balls, place on the prepared baking sheet, and bake for about 20-25 minutes, until done to your liking.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Meanwhile, whisk together all the glaze ingredients in a medium bowl.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Add the baked meatballs to the glaze and toss until fully coated.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Garnish with chopped chives if you like, and serve immediately over cooked rice or as an appetizer.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://www.jocooks.com/recipes/sweet-spicy-korean-meatballs/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Joanna Cismaru's recipe on jocooks.com, 2026-09-02; instructions paraphrased. The archived scan matches an earlier version of the recipe that calls for Sriracha rather than the site's current Gochujang, which is kept here since it matches what's printed on the card (the site itself lists Sriracha as a valid substitute). This scan did not have a garbled reversed-text tail; cleanup was limited to normalizing OCR bullet glyphs and minor typos (e.g. 'ail' to 'all', 'meatbalis' to 'meatballs')."
+    },
+    "R0135": {
+      "title": "Korean Beef Bowl",
+      "ingredients": [
+        {
+          "rawText": "1/4 cup brown sugar, packed",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "brown sugar, packed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup reduced sodium soy sauce",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "reduced sodium soy sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 teaspoons sesame oil",
+          "quantity": "2",
+          "unit": "teaspoons",
+          "item": "sesame oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon crushed red pepper flakes, or more to taste",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "crushed red pepper flakes, or more to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon ground ginger",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "ground ginger",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 tablespoon vegetable oil",
+          "quantity": "1",
+          "unit": "tablespoon",
+          "item": "vegetable oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cloves garlic, minced",
+          "quantity": "3",
+          "unit": "cloves",
+          "item": "garlic, minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound ground beef",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "ground beef",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 green onions, thinly sliced",
+          "quantity": "2",
+          "unit": "",
+          "item": "green onions, thinly sliced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 teaspoon sesame seeds",
+          "quantity": "1/4",
+          "unit": "teaspoon",
+          "item": "sesame seeds",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "In a small bowl, whisk together the brown sugar, soy sauce, sesame oil, red pepper flakes, and ginger.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Heat the vegetable oil in a large skillet over medium-high heat. Add the garlic and cook, stirring constantly, until fragrant, about 1 minute.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Add the ground beef and cook until browned, about 3-5 minutes, breaking it up as it cooks. Drain off any excess fat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Stir in the soy sauce mixture and green onions, and let it simmer until heated through, about 2 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Serve immediately, garnished with green onion and sesame seeds if desired.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://damndelicious.net/2013/07/07/korean-beef-bowl/",
+      "sourceStatus": "confirmed",
+      "note": "This card's title was archived as 'Sweet Red Bean Paste (Tsubuan) (Continuation)', assumed to be a second page of the R0134 tsubuan card, but the legible OCR text on this scan is actually a full, distinct recipe -- Korean Beef Bowl by Chungah Rhee of Damn Delicious (the site URL is even printed at the bottom of the card) -- with no connection to the anko/tsubuan recipe. Retitled and content confirmed against damndelicious.net, 2026-09-02; instructions paraphrased. A short stretch of garbled/reversed handwritten review notes at the end of the scan, numbered as extra instruction steps, has been removed.",
       "reviewFlags": []
     },
     "R0456": {
@@ -50067,68 +51097,75 @@
       ]
     },
     "R0229": {
+      "ingredients": [
+        {
+          "rawText": "6 tbsp water",
+          "quantity": "6",
+          "unit": "tbsp",
+          "item": "water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp sugar",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "sugar",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1.5 tbsp freshly squeezed lime or lemon juice",
+          "quantity": "1.5",
+          "unit": "tbsp",
+          "item": "freshly squeezed lime or lemon juice",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp fish sauce",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "fish sauce",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 clove garlic, minced (optional)",
+          "quantity": "1/2",
+          "unit": "clove",
+          "item": "garlic, minced (optional)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 bird's eye or Thai chile, finely sliced (optional)",
+          "quantity": "1/2",
+          "unit": "",
+          "item": "bird's eye or Thai chile, finely sliced (optional)",
+          "parseStatus": "confirmed"
+        }
+      ],
       "instructions": [
         {
           "order": 1,
-          "text": "Combine water and sugar in a bowl. Optional: heat 1/3 of the water, then mix in",
-          "parseStatus": "candidate"
+          "text": "Combine the water and sugar in a bowl. For quicker dissolving, you can warm about a third of the water, stir in the sugar, then add the rest of the water.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 2,
-          "text": "to make dissolving the sugar easier, then add the rest of the water.",
-          "parseStatus": "candidate"
+          "text": "Add the lime or lemon juice a little at a time, tasting as you go, until it tastes about as balanced as lemonade or limeade.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 3,
-          "text": "Add lime or lemon juice in increments until you like how it tastes. A good guide is",
-          "parseStatus": "candidate"
+          "text": "Add the fish sauce in small increments, tasting until you like the balance -- it should taste fairly strong since it will be paired with unseasoned food.",
+          "parseStatus": "confirmed"
         },
         {
           "order": 4,
-          "text": "it should taste like lemonade/limeade.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 5,
-          "text": "Add fish sauce in small increments until you like how it tastes. It should be a little",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 6,
-          "text": "strong since it will be paired with unseasoned food.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 7,
-          "text": "Top with garlic and chilies then serve.",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 8,
-          "text": "Course: Dipping Sauces Cuisine: Vietnamese Keyword: fish sauce, sauce",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 9,
-          "text": "O Did you cook this recipe?",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 10,
-          "text": "Tag @HungryrHuy or #hungryhuy--I'd love to see it!",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 11,
-          "text": "HungryHuy.com - Vietnamese Dipping Fish Sauce Recipe (Nutte Cham/Nude Mam Cham) - https://www.hungryhuy.com/vietnamese-dipping-fish-sauce",
-          "parseStatus": "candidate"
-        },
-        {
-          "order": 12,
-          "text": "recipe-nuoc-cham-nuoc-mam-cham/ - December 5, 2012",
-          "parseStatus": "candidate"
+          "text": "Top with the garlic and chilies, then serve.",
+          "parseStatus": "confirmed"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.hungryhuy.com/vietnamese-dipping-fish-sauce-recipe-nuoc-cham-nuoc-mam-cham/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against Huy Vu's recipe on HungryHuy.com (the site URL is printed at the bottom of the scanned card itself), 2026-09-02; instructions paraphrased. Original scan was otherwise clean but had OCR-mangled bullet glyphs on the ingredient list, now cleaned up; no garbled tail was present beyond the site's own footer text."
     },
     "R0228": {
       "title": "Vietnamese Pork Chops (Suon Nuong)",
@@ -51378,9 +52415,320 @@
       "reviewFlags": []
     },
     "R0059": {
+      "title": "Sage, Sausage and Apple Dressing",
+      "ingredients": [
+        {
+          "rawText": "1 16-ounce bag stuffing cubes",
+          "quantity": "1",
+          "unit": "",
+          "item": "16-ounce bag stuffing cubes",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "6 tablespoons unsalted butter, plus more for greasing the pan and topping",
+          "quantity": "6",
+          "unit": "tablespoons",
+          "item": "unsalted butter, plus more for greasing the pan and topping",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound fresh sage sausage, casings removed",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "fresh sage sausage, casings removed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium onion, chopped",
+          "quantity": "1",
+          "unit": "medium",
+          "item": "onion, chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 cooking apples, such as Gravenstein, Rome, or Golden Delicious, peeled, cored, and chopped",
+          "quantity": "2",
+          "unit": "",
+          "item": "cooking apples, peeled, cored, and chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 to 2 ribs celery with leaves, chopped",
+          "quantity": "1 to 2",
+          "unit": "ribs",
+          "item": "celery with leaves, chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 teaspoon kosher salt",
+          "quantity": "1/2",
+          "unit": "teaspoon",
+          "item": "kosher salt",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 cups chicken broth, homemade or low-sodium canned",
+          "quantity": "3",
+          "unit": "cups",
+          "item": "chicken broth, homemade or low-sodium canned",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 cup chopped fresh flat-leaf parsley",
+          "quantity": "1/4",
+          "unit": "cup",
+          "item": "chopped fresh flat-leaf parsley",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 cup walnut pieces, toasted",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "walnut pieces, toasted",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 large eggs, beaten",
+          "quantity": "2",
+          "unit": "large",
+          "item": "eggs, beaten",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Preheat the oven to 325°F.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Put the stuffing cubes in a large bowl and set aside. Butter a 3-quart casserole dish.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Melt 2 tablespoons of butter in a large skillet over medium-high heat. Add the sausage and break it up with a wooden spoon, cooking until it loses most of its pink color but isn't dry, about 5 minutes. Add the sausage and its drippings to the stuffing cubes. Melt the remaining butter in the same pan, then add the onion, apple, celery, and salt, and cook until the vegetables soften, about 5 minutes. Add the broth and parsley and bring to a boil.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Pour the vegetable mixture over the stuffing cubes and toss until evenly moistened. Mix in the walnuts and eggs, then loosely pack the dressing into the prepared casserole dish. Bake uncovered until the top forms a crust, about 40 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Drizzle about 2 tablespoons of turkey pan drippings or melted butter over the top and continue baking until the top is crisp and golden, about 20 more minutes. Serve immediately or warm.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://www.foodnetwork.com/recipes/food-network-kitchen/sage-sausage-and-apple-dressing-recipe-1941694",
+      "sourceStatus": "confirmed",
+      "note": "Title completed to 'Sage, Sausage and Apple Dressing' (was truncated in the archived title). Ingredients and steps confirmed against Food Network Kitchen's recipe (from the How to Boil Water episode 'A Starter Thanksgiving'), 2026-09-02; instructions paraphrased. Original scan had garbled/reversed OCR text mixed into the notes area, which is removed here.",
       "reviewFlags": []
     },
     "R0015": {
+      "ingredients": [
+        {
+          "rawText": "1 tbsp oil",
+          "quantity": "1",
+          "unit": "tbsp",
+          "item": "oil",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp cumin seed",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "cumin seed",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 green cardamom pods",
+          "quantity": "3",
+          "unit": "",
+          "item": "green cardamom pods",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2\" piece of cinnamon (torn into two pieces)",
+          "quantity": "1",
+          "unit": "",
+          "item": "2\" piece of cinnamon (torn into two pieces)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 medium red onion, diced (about 1 to 1.5 cups)",
+          "quantity": "1",
+          "unit": "medium",
+          "item": "red onion, diced (about 1 to 1.5 cups)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "4 cloves garlic, smashed and minced",
+          "quantity": "4",
+          "unit": "cloves",
+          "item": "garlic, smashed and minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2\" to 3/4\" piece fresh ginger, smashed and minced",
+          "quantity": "1",
+          "unit": "",
+          "item": "1/2\" to 3/4\" piece fresh ginger, smashed and minced",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "3 dried red chilies (optional)",
+          "quantity": "3",
+          "unit": "",
+          "item": "dried red chilies (optional)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/4 tsp ground nutmeg",
+          "quantity": "1/4",
+          "unit": "tsp",
+          "item": "ground nutmeg",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 bay leaves",
+          "quantity": "2",
+          "unit": "",
+          "item": "bay leaves",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 1/2 tsp ground coriander",
+          "quantity": "1 1/2",
+          "unit": "tsp",
+          "item": "ground coriander",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp ground cumin",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "ground cumin",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp turmeric",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "turmeric",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1/2 tsp garam masala",
+          "quantity": "1/2",
+          "unit": "tsp",
+          "item": "garam masala",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 pound ground meat (lamb)",
+          "quantity": "1",
+          "unit": "pound",
+          "item": "ground meat (lamb)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "about 1/2 cup diced roma tomatoes (optional)",
+          "quantity": "1/2",
+          "unit": "cup",
+          "item": "diced roma tomatoes (optional)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1 c. green peas (frozen works just fine)",
+          "quantity": "1",
+          "unit": "cup",
+          "item": "green peas (frozen works just fine)",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "1-1.5 cup water",
+          "quantity": "1-1.5",
+          "unit": "cup",
+          "item": "water",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "2 tbsp yogurt, whipped",
+          "quantity": "2",
+          "unit": "tbsp",
+          "item": "yogurt, whipped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "handful fresh coriander (cilantro), chopped",
+          "quantity": "",
+          "unit": "handful",
+          "item": "fresh coriander (cilantro), chopped",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "salt, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "salt, to taste",
+          "parseStatus": "confirmed"
+        },
+        {
+          "rawText": "pepper, to taste",
+          "quantity": "",
+          "unit": "",
+          "item": "pepper, to taste",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "instructions": [
+        {
+          "order": 1,
+          "text": "Let the ground meat come to room temperature and get all the ingredients ready. Heat the oil in a medium dutch oven or heavy lidded skillet over medium-high heat.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 2,
+          "text": "Once the oil is hot, add the cumin seeds, cardamom pods, cinnamon, bay leaves, and dried chilies. Once they start to crackle, add the diced onion.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 3,
+          "text": "Cook until the onion caramelizes and turns light brown, then stir in the minced garlic, ginger, and dry spices. Cook until the garlic and ginger no longer smell raw and the mixture is fragrant.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 4,
+          "text": "Add the ground meat and let it brown, stirring occasionally.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 5,
+          "text": "Once the meat is browned, stir in the tomatoes and cook for about 10 minutes.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 6,
+          "text": "Add the peas, chopped coriander, and water. Cover and simmer for at least 30 minutes and up to an hour, checking occasionally.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 7,
+          "text": "Remove the lid, stir in the whipped yogurt, and continue cooking uncovered until the excess liquid evaporates and the curry reaches your preferred consistency.",
+          "parseStatus": "confirmed"
+        },
+        {
+          "order": 8,
+          "text": "Season with salt and pepper to taste, and serve with rice or rotis.",
+          "parseStatus": "confirmed"
+        }
+      ],
+      "sourceUrl": "https://myfancypantry.com/2013/03/27/lamb-keema-matar-minced-meat-curry-with-peas/",
+      "sourceStatus": "confirmed",
+      "note": "Ingredients and steps confirmed against My Fancy Pantry's Lamb Keema Matar recipe (the site URL is printed on the scanned card itself), 2026-09-02; instructions paraphrased. The archived scan had extensive garbled/reversed handwritten margin notes interleaved between and after the real ingredient and instruction lines, which are removed here.",
       "reviewFlags": []
     },
     "R0402": {
