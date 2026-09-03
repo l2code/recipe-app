@@ -85,7 +85,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         factory = CompanionViewModel.Factory(container.cookingCompanionRepository),
     )
     val importViewModel: ImportViewModel = viewModel(
-        factory = ImportViewModel.Factory(container.webRecipeImportService),
+        factory = ImportViewModel.Factory(container.webRecipeImportService, container.credentialStore),
     )
 
     fun navigateMain(route: String) {

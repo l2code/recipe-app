@@ -3,6 +3,7 @@ package com.recipearchive.app.ui.webimport
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.recipearchive.app.data.webimport.CredentialStore
 import com.recipearchive.app.data.webimport.SavedLinkUi
 import com.recipearchive.app.data.webimport.WebImportOutcome
 import com.recipearchive.app.data.webimport.WebRecipeImportService
@@ -27,15 +28,35 @@ data class ImportUiState(
     val pasteTextDialogOpen: Boolean = false,
     val pastedText: String = "",
     val savedLinksExpanded: Boolean = false,
+    val manageAccountsDialogOpen: Boolean = false,
+)
+
+data class NytAccountUiState(
+    val email: String = "",
+    val password: String = "",
+    val isSaved: Boolean = false,
+    val statusMessage: String? = null,
 )
 
 sealed class ImportEvent {
     data class Imported(val recipeId: String) : ImportEvent()
 }
 
-class ImportViewModel(private val webRecipeImportService: WebRecipeImportService) : ViewModel() {
+class ImportViewModel(
+    private val webRecipeImportService: WebRecipeImportService,
+    private val credentialStore: CredentialStore,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ImportUiState())
     val uiState: StateFlow<ImportUiState> = _uiState.asStateFlow()
+
+    private val _nytAccountState = MutableStateFlow(
+        NytAccountUiState(
+            email = credentialStore.getEmail().orEmpty(),
+            password = credentialStore.getPassword().orEmpty(),
+            isSaved = credentialStore.hasCredentials(),
+        ),
+    )
+    val nytAccountState: StateFlow<NytAccountUiState> = _nytAccountState.asStateFlow()
 
     val savedLinks: StateFlow<List<SavedLinkUi>> = webRecipeImportService.observeSavedLinks()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -98,6 +119,51 @@ class ImportViewModel(private val webRecipeImportService: WebRecipeImportService
         }
     }
 
+    fun onNytEmailChanged(email: String) {
+        _nytAccountState.update { it.copy(email = email, statusMessage = null) }
+    }
+
+    fun onNytPasswordChanged(password: String) {
+        _nytAccountState.update { it.copy(password = password, statusMessage = null) }
+    }
+
+    fun saveNytCredentials() {
+        val state = _nytAccountState.value
+        if (state.email.isBlank() || state.password.isBlank()) {
+            _nytAccountState.update { it.copy(statusMessage = "Enter both an email and a password to save.") }
+            return
+        }
+        credentialStore.saveCredentials(state.email.trim(), state.password)
+        _nytAccountState.update { it.copy(isSaved = true, statusMessage = "Credentials saved to this device.") }
+    }
+
+    /**
+     * Only checks that the fields look like usable credentials. This never signs in to NYT --
+     * recipe pages are always fetched from the public page, never behind a login (see plan).
+     */
+    fun testNytLogin() {
+        val state = _nytAccountState.value
+        val message = if (state.email.contains("@") && state.password.isNotBlank()) {
+            "Looks good. We don't sign in to NYT Cooking -- recipes are fetched from the public page."
+        } else {
+            "Enter a valid email and password first."
+        }
+        _nytAccountState.update { it.copy(statusMessage = message) }
+    }
+
+    fun openManageAccounts() {
+        _uiState.update { it.copy(manageAccountsDialogOpen = true) }
+    }
+
+    fun dismissManageAccounts() {
+        _uiState.update { it.copy(manageAccountsDialogOpen = false) }
+    }
+
+    fun removeNytCredentials() {
+        credentialStore.clearCredentials()
+        _nytAccountState.update { NytAccountUiState() }
+    }
+
     private suspend fun handleOutcome(outcome: WebImportOutcome) {
         when (outcome) {
             is WebImportOutcome.Success -> {
@@ -116,11 +182,14 @@ class ImportViewModel(private val webRecipeImportService: WebRecipeImportService
         }
     }
 
-    class Factory(private val webRecipeImportService: WebRecipeImportService) : ViewModelProvider.Factory {
+    class Factory(
+        private val webRecipeImportService: WebRecipeImportService,
+        private val credentialStore: CredentialStore,
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass.isAssignableFrom(ImportViewModel::class.java))
-            return ImportViewModel(webRecipeImportService) as T
+            return ImportViewModel(webRecipeImportService, credentialStore) as T
         }
     }
 }

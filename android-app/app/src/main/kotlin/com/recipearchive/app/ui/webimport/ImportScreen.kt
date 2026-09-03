@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -29,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -44,6 +46,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.webimport.SavedLinkUi
 
@@ -56,6 +60,7 @@ fun ImportScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val savedLinks by viewModel.savedLinks.collectAsState()
+    val nytAccountState by viewModel.nytAccountState.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
@@ -71,6 +76,14 @@ fun ImportScreen(
             onTextChanged = viewModel::onPastedTextChanged,
             onConfirm = viewModel::importPastedText,
             onDismiss = viewModel::dismissPasteTextDialog,
+        )
+    }
+
+    if (uiState.manageAccountsDialogOpen) {
+        ManageAccountsDialog(
+            nytAccountState = nytAccountState,
+            onRemoveNyt = viewModel::removeNytCredentials,
+            onDismiss = viewModel::dismissManageAccounts,
         )
     }
 
@@ -100,6 +113,14 @@ fun ImportScreen(
                 onSourceSelected = viewModel::onQuickSourceSelected,
                 onDismissInfo = viewModel::dismissInfoMessage,
                 onSavedLinkSelected = viewModel::importSavedLink,
+            )
+            NytAccountCard(
+                state = nytAccountState,
+                onEmailChanged = viewModel::onNytEmailChanged,
+                onPasswordChanged = viewModel::onNytPasswordChanged,
+                onSave = viewModel::saveNytCredentials,
+                onTestLogin = viewModel::testNytLogin,
+                onManageAccounts = viewModel::openManageAccounts,
             )
             WhatHappensNextCard()
         }
@@ -277,6 +298,107 @@ private fun QuickSourceTile(icon: ImageVector, label: String, modifier: Modifier
             Text(label, style = MaterialTheme.typography.labelLarge)
         }
     }
+}
+
+@Composable
+private fun NytAccountCard(
+    state: NytAccountUiState,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onSave: () -> Unit,
+    onTestLogin: () -> Unit,
+    onManageAccounts: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.RestaurantMenu, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(8.dp))
+                Text("NYT Cooking account", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = if (state.isSaved) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                ) {
+                    Text(
+                        if (state.isSaved) "Saved" else "Not connected",
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+            }
+            OutlinedTextField(
+                value = state.email,
+                onValueChange = onEmailChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Email") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            )
+            OutlinedTextField(
+                value = state.password,
+                onValueChange = onPasswordChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Password") },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            )
+            if (state.statusMessage != null) {
+                Text(state.statusMessage, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                OutlinedButton(onClick = onTestLogin, modifier = Modifier.weight(1f)) { Text("Test Login") }
+                Button(onClick = onSave, modifier = Modifier.weight(1f)) { Text("Save Credentials") }
+            }
+            Text(
+                "Credentials are stored securely on this device for your reference. We never sign in to " +
+                    "NYT Cooking -- recipe pages are fetched from the public page, the same content their " +
+                    "site serves to search engines.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            TextButton(onClick = onManageAccounts) { Text("Manage Source Accounts") }
+        }
+    }
+}
+
+@Composable
+private fun ManageAccountsDialog(
+    nytAccountState: NytAccountUiState,
+    onRemoveNyt: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Manage Source Accounts") },
+        text = {
+            Surface(
+                shape = MaterialTheme.shapes.small,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+            ) {
+                Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("NYT Cooking", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            if (nytAccountState.isSaved) "Credentials saved" else "Not connected",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    if (nytAccountState.isSaved) {
+                        TextButton(onClick = onRemoveNyt) { Text("Remove") }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Done") }
+        },
+    )
 }
 
 @Composable
