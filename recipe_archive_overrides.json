@@ -2060,7 +2060,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1021641-cranberry-lemon-bars",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0034": {
       "ingredients": [
@@ -3408,7 +3409,8 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1017709-steamed-mussels-with-garlic-and-parsley",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (David Tanis), 2026-08-30; instructions paraphrased. Top reader tip: some cooks pull mussels out with a slotted spoon as soon as they open (rather than waiting for the batch to finish) to avoid overcooking, keeping them warm while the broth reduces. This recipe is saved in your NYT Cooking Recipe Box, but has no private note attached.",
-      "title": "Steamed Mussels with Garlic and Parsley"
+      "title": "Steamed Mussels with Garlic and Parsley",
+      "reviewFlags": []
     },
     "R0076": {
       "ingredients": [
@@ -3826,7 +3828,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1019232-toll-house-chocolate-chip-cookies",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (The New York Times), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (The New York Times), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0030": {
       "ingredients": [
@@ -4875,9 +4878,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1019957-chocolate-lava-cake-for-two",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Yossy Arefi), 2026-08-30; instructions paraphrased.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0108": {
       "ingredients": [
@@ -5487,7 +5488,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1022963-flourless-chocolate-cake",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Genevieve Ko), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0152": {
       "ingredients": [
@@ -7099,9 +7101,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1024777-matcha-latte-cookies",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0261": {
       "ingredients": [
@@ -7477,7 +7477,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1017522-olive-oil-zucchini-bread",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased. Recipe is in user's NYT Recipe Box; no private notes found."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Melissa Clark), 2026-08-30; instructions paraphrased. Recipe is in user's NYT Recipe Box; no private notes found.",
+      "reviewFlags": []
     },
     "R0089": {
       "ingredients": [
@@ -8384,9 +8385,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1018354-pumpkin-maple-muffins",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Alison Roman), 2026-08-30; instructions paraphrased.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0409": {
       "ingredients": [
@@ -9253,9 +9252,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1019903-slow-cooker-chili",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Sarah DiGregorio), 2026-08-30; instructions paraphrased. Tip: you can also cook the chili in a Dutch oven on the stovetop in about 1 hour — in step 2, use 1 cup water instead of 1/2 cup, simmer over medium-high, then reduce heat to low, cover, and cook until the meat is tender, stirring occasionally, about 35 minutes.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0366": {
       "ingredients": [
@@ -10635,9 +10632,7 @@
       "sourceUrl": "https://cooking.nytimes.com/recipes/1023225-turkey-chili",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0277": {
       "ingredients": [
@@ -12493,7 +12488,8 @@
       ],
       "sourceUrl": "https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against joyfoodsunshine.com (Laura Sandford), 2026-08-30; instructions paraphrased. Storage: keep in an airtight container at room temperature for up to 5 days, or freeze for up to 2 months."
+      "note": "Ingredients and steps confirmed against joyfoodsunshine.com (Laura Sandford), 2026-08-30; instructions paraphrased. Storage: keep in an airtight container at room temperature for up to 5 days, or freeze for up to 2 months.",
+      "reviewFlags": []
     },
     "R0064": {
       "ingredients": [
@@ -13200,7 +13196,8 @@
       "sourceUrl": "https://www.allrecipes.com/recipe/56059/asian-coconut-rice/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Allrecipes (submitted by SILVREZS), 2026-08-30; instructions paraphrased. Cook's note: pandan leaves can be tied in a knot and added to the cooking water for a more traditional flavor, removed once rice is finished; top with chopped cilantro and toasted coconut for extra flavor.",
-      "title": "Asian Coconut Rice"
+      "title": "Asian Coconut Rice",
+      "reviewFlags": []
     },
     "R0002": {
       "ingredients": [
@@ -13881,7 +13878,8 @@
       "sourceUrl": "https://www.bonappetit.com/recipe/banana-bread",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Bon Appetit (Dawn Perry, 'BA's Best Banana Bread'), 2026-08-30; instructions paraphrased.",
-      "title": "BA's Best Banana Bread"
+      "title": "BA's Best Banana Bread",
+      "reviewFlags": []
     },
     "R0122": {
       "ingredients": [
@@ -16911,9 +16909,7 @@
       "sourceUrl": "https://www.justonecookbook.com/simple-chicken-curry/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against justonecookbook.com (Namiko Hirasawa Chen), 2026-08-30; instructions paraphrased. Storage: refrigerate up to 3 days or freeze up to a month (remove potatoes before freezing, as texture changes).",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0384": {
       "ingredients": [
@@ -17008,7 +17004,8 @@
       ],
       "sourceUrl": "https://foodwithfeeling.com/roasted-potatoes-and-green-beans/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against foodwithfeeling.com (Brita Britnell), 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against foodwithfeeling.com (Brita Britnell), 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0387": {
       "ingredients": [
@@ -17237,7 +17234,8 @@
       ],
       "sourceUrl": "https://www.sadafsculinaryadventures.com/2014/03/quick-sardine-curry-with-canned-sardines.html",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against sadafsculinaryadventures.com (Sadaf Afshan), 2026-08-30; instructions paraphrased. If using plain tomato sauce sardines instead of chili, increase the red chili powder to taste."
+      "note": "Ingredients and steps confirmed against sadafsculinaryadventures.com (Sadaf Afshan), 2026-08-30; instructions paraphrased. If using plain tomato sauce sardines instead of chili, increase the red chili powder to taste.",
+      "reviewFlags": []
     },
     "R0415": {
       "ingredients": [
@@ -18635,7 +18633,8 @@
       ],
       "sourceUrl": "https://www.twopeasandtheirpod.com/chocolate-banana-bread/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Two Peas & Their Pod (Maria Lichty), 2026-08-30; instructions paraphrased. Keeps well wrapped on the counter up to 4 days, or freeze the whole cooled loaf up to 1 month."
+      "note": "Ingredients and steps confirmed against Two Peas & Their Pod (Maria Lichty), 2026-08-30; instructions paraphrased. Keeps well wrapped on the counter up to 4 days, or freeze the whole cooled loaf up to 1 month.",
+      "reviewFlags": []
     },
     "R0450": {
       "ingredients": [
@@ -18804,7 +18803,8 @@
       ],
       "sourceUrl": "https://cooking.nytimes.com/recipes/1022132-gochugaru-salmon-with-crispy-rice",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased. Gochugaru freezes well, so it's fine to buy a larger bag."
+      "note": "Ingredients and steps confirmed against NYT Cooking (Eric Kim), 2026-08-30; instructions paraphrased. Gochugaru freezes well, so it's fine to buy a larger bag.",
+      "reviewFlags": []
     },
     "R0350": {
       "ingredients": [
@@ -19487,9 +19487,7 @@
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Maangchi's dakgangjeong (crispy Korean fried chicken) recipe, 2026-08-30; instructions paraphrased. This card is the first half of a two-part scan; see the continuation card for coating the fried chicken in the sauce.",
       "title": "Crispy and Crunchy Fried Chicken",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0323": {
       "ingredients": [
@@ -19542,9 +19540,7 @@
       "sourceUrl": "https://www.maangchi.com/recipe/easy-dakgangjeong",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Maangchi's dakgangjeong (crispy Korean fried chicken) recipe, 2026-08-30; instructions paraphrased. This card is the continuation of a two-part scan - see the first card for the chicken prep, starch coating, sauce, and frying steps.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0436": {
       "ingredients": [
@@ -21547,7 +21543,8 @@
       ],
       "sourceUrl": "https://bittmanproject.com/recipe/japanese-style-beef-stew/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Mark Bittman's Japanese-Style Beef Stew, originally published in NYT Cooking and archived at bittmanproject.com, 2026-08-30; instructions paraphrased."
+      "note": "Ingredients and steps confirmed against Mark Bittman's Japanese-Style Beef Stew, originally published in NYT Cooking and archived at bittmanproject.com, 2026-08-30; instructions paraphrased.",
+      "reviewFlags": []
     },
     "R0250": {
       "ingredients": [
@@ -22500,9 +22497,7 @@
       "sourceUrl": "https://www.kothiyavunu.com/2009/12/kerala-plum-cake-christmas-fruit-cake/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Kothiyavunu.com's Kerala Plum Cake-Christmas Fruit Cake recipe by Sangeetha, 2026-08-30; instructions paraphrased. Ingredient quantities (flour, butter, sugar, eggs, dried fruit amounts, caramel proportions) match the archived card closely; the source recipe also includes cherries in the fruit mix, which the archived scan cuts off before listing.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0150": {
       "ingredients": [
@@ -23164,7 +23159,8 @@
       ],
       "sourceUrl": "https://www.justonecookbook.com/miso-salmon/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Just One Cookbook (Namiko Hirasawa Chen), 2026-08-30; instructions paraphrased. OCR text explicitly names the site and author and matches ingredient quantities exactly."
+      "note": "Ingredients and steps confirmed against Just One Cookbook (Namiko Hirasawa Chen), 2026-08-30; instructions paraphrased. OCR text explicitly names the site and author and matches ingredient quantities exactly.",
+      "reviewFlags": []
     },
     "R0244": {
       "ingredients": [
@@ -25057,9 +25053,7 @@
       "sourceUrl": "https://www.seriouseats.com/the-best-roast-potatoes-ever-recipe",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Serious Eats, 'The Best Crispy Roast Potatoes Ever' by J. Kenji Lopez-Alt, 2026-08-30; instructions paraphrased. The archived scan's intro paragraph matches this recipe's headnote almost verbatim, confirming the source.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0009": {
       "ingredients": [
@@ -27123,7 +27117,8 @@
       ],
       "sourceUrl": "https://forward.com/food/recipes/410601/michael-solomonovs-5-minute-hummus-with-quick-tehina-sauce/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Michael Solomonov's Quick Tehina Sauce, reprinted at The Forward from 'Israeli Soul' by Michael Solomonov and Steven Cook, 2026-08-30; instructions paraphrased. The archived scan also includes Solomonov's Goldie Falafel recipe on the same page, which isn't part of this card's title."
+      "note": "Ingredients and steps confirmed against Michael Solomonov's Quick Tehina Sauce, reprinted at The Forward from 'Israeli Soul' by Michael Solomonov and Steven Cook, 2026-08-30; instructions paraphrased. The archived scan also includes Solomonov's Goldie Falafel recipe on the same page, which isn't part of this card's title.",
+      "reviewFlags": []
     },
     "R0212": {
       "ingredients": [
@@ -28084,7 +28079,8 @@
       "sourceUrl": "https://alittlebitofspice.com/kerala-style-pepper-chicken-nadan-kurumulaku-kozhi-recipe",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against alittlebitofspice.com (Jane Jojo), 2026-09-01 - marination quantities match the archived scan exactly. Instructions paraphrased. This is a semi-gravy version with fried coconut pieces (thengakothu) and optional vinegar for tang.",
-      "title": "Kerala Style Pepper Chicken (Nadan Kurumulaku Kozhi)"
+      "title": "Kerala Style Pepper Chicken (Nadan Kurumulaku Kozhi)",
+      "reviewFlags": []
     },
     "R0448": {
       "ingredients": [
@@ -30371,7 +30367,8 @@
       ],
       "sourceUrl": "https://flavorquotient.com/2016/01/kerala-fried-prawns/",
       "sourceStatus": "confirmed",
-      "note": "The archived card names an author \"Joey Matthew\"; NDTV Food was checked as a likely source but no matching Joey Matthew prawns recipe was found there. This is a comparable, well-regarded Kerala fried prawns recipe from Flavor Quotient (Priyanka), used as a stand-in for the archived card's content, 2026-09-01; instructions paraphrased. It closely matches the partial ingredient list already on the card (prawns, turmeric, pepper, coconut oil, mustard seeds, curry leaves, red chilli powder, onion, lemon, coriander)."
+      "note": "The archived card names an author \"Joey Matthew\"; NDTV Food was checked as a likely source but no matching Joey Matthew prawns recipe was found there. This is a comparable, well-regarded Kerala fried prawns recipe from Flavor Quotient (Priyanka), used as a stand-in for the archived card's content, 2026-09-01; instructions paraphrased. It closely matches the partial ingredient list already on the card (prawns, turmeric, pepper, coconut oil, mustard seeds, curry leaves, red chilli powder, onion, lemon, coriander).",
+      "reviewFlags": []
     },
     "R0265": {
       "ingredients": [
@@ -31455,7 +31452,8 @@
       "sourceUrl": "https://rasamalaysia.com/moist-banana-bread/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Rasa Malaysia's Moist Banana Bread (Rum Banana Bread), 2026-09-01; instructions paraphrased. This replaces the verified original: the scan's OCR-garbled ingredient quantities (walnuts, rum, vanilla) were confirmed against the live recipe page.",
-      "title": "Moist Banana Bread (Rum Banana Bread)"
+      "title": "Moist Banana Bread (Rum Banana Bread)",
+      "reviewFlags": []
     },
     "R0012": {
       "ingredients": [
@@ -32487,7 +32485,8 @@
       "sourceUrl": "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Allrecipes.com \"Best Chocolate Chip Cookies\" (by Dora), 2026-09-02; instructions paraphrased. Original scan had site-footer/copyright and nutrition-facts text mixed into the parsed steps, which is fixed here.",
-      "title": "Best Chocolate Chip Cookies"
+      "title": "Best Chocolate Chip Cookies",
+      "reviewFlags": []
     },
     "R0087": {
       "ingredients": [
@@ -35454,7 +35453,8 @@
       "sourceUrl": "",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps transcribed directly from the scanned card's own OCR text (a Kerala/Onam Sadya-style beetroot thoran recipe); instructions paraphrased, 2026-09-02. The blog name in the scan header is garbled and a specific matching source page could not be confidently identified online, so sourceUrl is left blank.",
-      "title": "Kerala Beetroot Thoran Recipe"
+      "title": "Kerala Beetroot Thoran Recipe",
+      "reviewFlags": []
     },
     "R0328": {
       "title": "Kerala Chicken Curry Recipe with Coconut Milk (Nadan Chicken Curry)",
@@ -35745,7 +35745,8 @@
           "text": "‘3.4 “6 Sih (41[ 91/17 Za gdouiy",
           "parseStatus": "candidate"
         }
-      ]
+      ],
+      "reviewFlags": []
     },
     "R0327": {
       "title": "Kerala Style Chicken Curry - Without Coconut (Nadan Kozhi Curry)",
@@ -36274,7 +36275,8 @@
       "sourceUrl": "https://damndelicious.net/2013/07/07/korean-beef-bowl/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against damndelicious.net (Chungah Rhee), 2026-09-02 - matches the archived scan's ingredients and URL fragment exactly. Instructions paraphrased.",
-      "title": "Korean Beef Bowl"
+      "title": "Korean Beef Bowl",
+      "reviewFlags": []
     },
     "R0428": {
       "ingredients": [
@@ -36895,7 +36897,8 @@
       "sourceUrl": "https://www.vegrecipesofindia.com/paneer-bhurji-scrambled-cottage-cheese-with-spices/",
       "sourceStatus": "confirmed",
       "note": "Ingredients transcribed from the archived scan (Dassana's Veg Recipes of India, 'paneer bhurji recipe'), which already contained the full ingredient list that the parser had mis-classified as instruction lines; instructions paraphrased, 2026-09-01. This is the verified original — the URL is even visible in the scan's raw OCR text.",
-      "title": "Paneer Bhurji Recipe"
+      "title": "Paneer Bhurji Recipe",
+      "reviewFlags": []
     },
     "R0174": {
       "title": "Punjabi Chole Masala Recipe",
@@ -37121,7 +37124,8 @@
       ]
     },
     "R0378": {
-      "title": "Skillet Chicken with Tomatoes, Pancetta and Mozzarella"
+      "title": "Skillet Chicken with Tomatoes, Pancetta and Mozzarella",
+      "reviewFlags": []
     },
     "R0418": {
       "title": "Small Potato Curry Recipe (Small Potato Fry)",
@@ -37886,7 +37890,8 @@
       "sourceUrl": "https://www.archanaskitchen.com/andhra-pepper-chicken-recipe",
       "sourceStatus": "confirmed",
       "note": "Ingredients already present in the archive; instructions reconstructed from the archived OCR text (which already contained the full numbered steps from Archana's Kitchen but had them mis-bucketed) and paraphrased. Verified original, 2026-09-01.",
-      "title": "Andhra Pepper Chicken Recipe"
+      "title": "Andhra Pepper Chicken Recipe",
+      "reviewFlags": []
     },
     "R0107": {
       "ingredients": [
@@ -39791,7 +39796,8 @@
       "sourceUrl": "https://www.vegrecipesofindia.com/dal-fry-how-to-make-prepare-dal-fry-recipe/",
       "sourceStatus": "confirmed",
       "note": "Ingredients transcribed from the archived scan (Dassana's Veg Recipes of India, 'dal fry - restaurant style dal fry recipe'), which already contained the full ingredient list that the parser had mis-classified as instruction lines; instructions paraphrased, 2026-09-01. This is the verified original — the URL is visible in the scan's raw OCR text.",
-      "title": "Restaurant-Style Dal Fry"
+      "title": "Restaurant-Style Dal Fry",
+      "reviewFlags": []
     },
     "R0052": {
       "ingredients": [
@@ -40038,7 +40044,8 @@
       "sourceUrl": "https://www.bonappetit.com/recipe/salmon-teriyaki",
       "sourceStatus": "confirmed",
       "note": "Instructions paraphrased from the archived scan, which already contained the complete recipe (Bon Appétit, recipe by Tadashi Ono & Harris Salat, published January 2016); the parser had mis-classified the instruction lines as ingredients and left them in scrambled page order. This is the verified original, 2026-09-01.",
-      "title": "Salmon Teriyaki"
+      "title": "Salmon Teriyaki",
+      "reviewFlags": []
     },
     "R0314": {
       "ingredients": [
@@ -40577,7 +40584,8 @@
       "sourceUrl": "https://www.foodnetwork.com/recipes/aarti-sequeira/cauliflower-and-potatoes-aloo-gobi-recipe.html",
       "sourceStatus": "confirmed",
       "note": "Ingredients (including the Ginger-Garlic Paste sub-recipe) were already present in the archive; instructions were missing from the scan entirely and have been reconstructed and paraphrased from Aarti Sequeira's published Food Network recipe, which is credited by name in the raw OCR text ('Recipe courtesy of Aarti Sequeira'). Verified original, 2026-09-01.",
-      "title": "Cauliflower and Potatoes: \"Aloo Gobi\""
+      "title": "Cauliflower and Potatoes: \"Aloo Gobi\"",
+      "reviewFlags": []
     },
     "R0144": {
       "ingredients": [
@@ -41750,9 +41758,7 @@
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against RecipeTin Eats' Ultra Crispy Smashed Potatoes by Nagi Maehashi, recipetineats.com, 2026-09-01; instructions paraphrased. Verified original source matching the recipetineats.com domain hint -- note the scanned card reflects an earlier version of the published recipe (e.g. 40-minute bake time vs. the site's current 45-55 minutes), so timings follow the card rather than the latest site revision.",
       "title": "Ultra Crispy Smashed Potatoes",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0046": {
       "ingredients": [
@@ -42384,7 +42390,8 @@
       "sourceUrl": "",
       "sourceStatus": "unconfirmed",
       "note": "This scanned card has no publisher or byline and appears to be a personal recipe; no matching original could be found online with high confidence. Ingredients and steps 1-11 are transcribed directly from the scanned card (which cut off mid-sentence on the final step); step 12 completes the recipe logically (tossing the fried chicken through the finished sauce and garnishing with the reserved scallion greens, which the ingredient list explicitly sets aside for garnish) and was cross-checked for plausibility against Tea for Turmeric's well-regarded Chilli Chicken recipe (teaforturmeric.com), a comparable Indo-Chinese crispy chili chicken technique, as a stand-in reference rather than a verified source.",
-      "title": "Ultimate Crispy Chili Chicken"
+      "title": "Ultimate Crispy Chili Chicken",
+      "reviewFlags": []
     },
     "R0336": {
       "ingredients": [
@@ -42493,9 +42500,7 @@
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Tati Chermayeff's Crispiest Air Fryer Chicken Cutlets Recipe, healthfulblondie.com, 2026-09-01 (domain corrected from the OCR'd 'neaithfulblondie.com' typo); instructions paraphrased. Verified original source -- the scan's readable ingredient/instruction fragments (two-temp 380F/400F method, panko + flour + egg dredge) matched the published recipe. Ingredient quantities on the card are exactly double the site's base recipe (4 breasts/8 cutlets vs. the site's 2 breasts/4 cutlets), matching the scan's own '8 servings' notation, so the doubled amounts were kept as scanned.",
       "title": "Unidentified Chicken Recipe (Pages 2-3)",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0400": {
       "ingredients": [
@@ -42636,7 +42641,8 @@
       "sourceUrl": "",
       "sourceStatus": "unconfirmed",
       "note": "This scanned card has no publisher or byline and reads as a personal/family recipe (in the style of other Kerala-style dishes in this archive); no matching published original was found online with sufficient confidence to cite as a source. Both ingredients and instructions are transcribed directly from the scanned card, which already contained the complete recipe -- the automated parser simply failed to structure the 'Steps:' section into individual instructions.",
-      "title": "Whole Chicken Roast Kerala Style"
+      "title": "Whole Chicken Roast Kerala Style",
+      "reviewFlags": []
     },
     "R0435": {
       "ingredients": [
@@ -45097,7 +45103,8 @@
       ],
       "sourceUrl": "https://www.foodnetwork.com/recipes/aarti-sequeira/saag-paneer1-1927603",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Food Network (Aarti Sequeira), 2026-09-02; instructions paraphrased. Original scan had instructions from a different recipe (an aloo-gobi-style cauliflower-and-potato dish) bled into the parsed steps, and the trailing Craftsy/Food Network copyright text mixed in; both fixed here."
+      "note": "Ingredients and steps confirmed against Food Network (Aarti Sequeira), 2026-09-02; instructions paraphrased. Original scan had instructions from a different recipe (an aloo-gobi-style cauliflower-and-potato dish) bled into the parsed steps, and the trailing Craftsy/Food Network copyright text mixed in; both fixed here.",
+      "reviewFlags": []
     },
     "R0061": {
       "ingredients": [
@@ -45285,7 +45292,8 @@
       ],
       "sourceUrl": "https://www.allrecipes.com/recipe/149975/beer-brats/",
       "sourceStatus": "confirmed",
-      "note": "Ingredients and steps confirmed against Allrecipes.com \"Beer Brats\" (by Zach), 2026-09-02; instructions paraphrased. Original scan had site-footer/copyright text mixed into the parsed steps, which is fixed here."
+      "note": "Ingredients and steps confirmed against Allrecipes.com \"Beer Brats\" (by Zach), 2026-09-02; instructions paraphrased. Original scan had site-footer/copyright text mixed into the parsed steps, which is fixed here.",
+      "reviewFlags": []
     },
     "R0180": {
       "ingredients": [
@@ -47963,9 +47971,7 @@
       "sourceUrl": "https://omnivorescookbook.com/cumin-lamb/",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Omnivore's Cookbook (Maggie Zhu), 2026-09-02; instructions paraphrased. Original scan's ingredient/instruction lines were severely OCR-garbled and interspersed with unrelated handwritten notes; rebuilt from the published recipe.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0115": {
       "instructions": [
@@ -49105,7 +49111,8 @@
           "text": "nlf jog ag yoo0b Fd: 46 400 mW SOYDON. 2",
           "parseStatus": "candidate"
         }
-      ]
+      ],
+      "reviewFlags": []
     },
     "R0391": {
       "ingredients": [
@@ -49639,7 +49646,8 @@
           "text": "Rabokki - Ramen + Tteokbokki - https://mykoreankitchen.com/rabokki/ © 2006-2021 My Korean Kitchen",
           "parseStatus": "candidate"
         }
-      ]
+      ],
+      "reviewFlags": []
     },
     "R0303": {
       "instructions": [
@@ -50564,9 +50572,7 @@
       "sourceUrl": "https://www.seriouseats.com/black-pepper-tofu-recipe",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Serious Eats (Blake Royer, adapted from Yotam Ottolenghi's Plenty), 2026-09-02; instructions paraphrased. Original scan had ingredients split across multiple line-wrapped entries that didn't get rejoined properly, which is fixed here.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0071": {
       "title": "Sheet-Pan Chicken With Potatoes, Arugula and Garlic Yogurt",
@@ -51357,9 +51363,7 @@
       "sourceUrl": "https://www.foodandwine.com/recipes/dhaba-chicken-curry",
       "sourceStatus": "confirmed",
       "note": "Ingredients and steps confirmed against Food & Wine (Sanjeev Kapoor), March 2011, 2026-09-02; instructions paraphrased.",
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0205": {
       "reviewFlags": []
@@ -51377,9 +51381,7 @@
       "reviewFlags": []
     },
     "R0015": {
-      "reviewFlags": [
-        "handwriting_review"
-      ]
+      "reviewFlags": []
     },
     "R0402": {
       "reviewFlags": []
