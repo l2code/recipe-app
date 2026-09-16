@@ -23,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -31,7 +30,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.recipearchive.app.AppContainer
@@ -77,9 +75,6 @@ private val mainDestinations = listOf(
 fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass) {
     val navController = rememberNavController()
     val appContext = LocalContext.current.applicationContext
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route ?: ROUTE_LIBRARY
-    val showMainNavigation = currentRoute in mainDestinations.map { it.route }
     val expanded = widthSizeClass == WindowWidthSizeClass.Expanded
 
     val libraryViewModel: LibraryViewModel = viewModel(
@@ -100,14 +95,142 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         }
     }
 
+    NavHost(
+        navController = navController,
+        startDestination = ROUTE_LIBRARY,
+        // The default cross-fade left the outgoing screen's text visible, fading through
+        // underneath the incoming one -- distracting on a text-heavy app like this. An instant
+        // swap reads cleaner than a fixed-up fade here.
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
+    ) {
+        composable(ROUTE_LIBRARY) {
+            MainScaffold(ROUTE_LIBRARY, expanded, ::navigateMain) {
+                LibraryScreen(
+                    viewModel = libraryViewModel,
+                    widthSizeClass = widthSizeClass,
+                    onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+                )
+            }
+        }
+        composable(ROUTE_PLAN) {
+            MainScaffold(ROUTE_PLAN, expanded, ::navigateMain) {
+                MealPlanScreen(
+                    viewModel = companionViewModel,
+                    onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+                )
+            }
+        }
+        composable(ROUTE_SHOPPING) {
+            MainScaffold(ROUTE_SHOPPING, expanded, ::navigateMain) { ShoppingScreen(companionViewModel) }
+        }
+        composable(ROUTE_PANTRY) {
+            MainScaffold(ROUTE_PANTRY, expanded, ::navigateMain) { PantryScreen(companionViewModel) }
+        }
+        composable(ROUTE_HISTORY) {
+            MainScaffold(ROUTE_HISTORY, expanded, ::navigateMain) {
+                HistoryScreen(
+                    viewModel = companionViewModel,
+                    onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+                )
+            }
+        }
+        composable(ROUTE_IMPORT) {
+            MainScaffold(ROUTE_IMPORT, expanded, ::navigateMain) {
+                ImportScreen(
+                    viewModel = importViewModel,
+                    onImported = { recipeId -> navController.navigate("detail/$recipeId") },
+                    onOpenHistory = { navController.navigate(ROUTE_IMPORT_HISTORY) },
+                )
+            }
+        }
+        composable(ROUTE_IMPORT_HISTORY) {
+            ImportHistoryScreen(
+                viewModel = importViewModel,
+                onBack = { navController.popBackStack() },
+                onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+            )
+        }
+        composable(
+            route = ROUTE_DETAIL,
+            arguments = listOf(navArgument(ARG_RECIPE_ID) { type = NavType.StringType }),
+        ) { detailEntry ->
+            val recipeId = detailEntry.arguments?.getString(ARG_RECIPE_ID)
+            if (recipeId != null) {
+                val detailViewModel: DetailViewModel = viewModel(
+                    key = recipeId,
+                    factory = DetailViewModel.Factory(
+                        container.recipeRepository,
+                        container.cookingCompanionRepository,
+                        recipeId,
+                    ),
+                )
+                DetailScreen(
+                    viewModel = detailViewModel,
+                    widthSizeClass = widthSizeClass,
+                    onBack = { navController.popBackStack() },
+                    onCookingStarted = { sessionId ->
+                        navController.navigate("cooking/$recipeId/$sessionId")
+                    },
+                )
+            }
+        }
+        composable(
+            route = ROUTE_COOKING,
+            arguments = listOf(
+                navArgument(ARG_RECIPE_ID) { type = NavType.StringType },
+                navArgument(ARG_SESSION_ID) { type = NavType.StringType },
+            ),
+        ) { cookingEntry ->
+            val recipeId = cookingEntry.arguments?.getString(ARG_RECIPE_ID)
+            val sessionId = cookingEntry.arguments?.getString(ARG_SESSION_ID)
+            if (recipeId != null && sessionId != null) {
+                val cookingViewModel: CookingViewModel = viewModel(
+                    key = sessionId,
+                    factory = CookingViewModel.Factory(
+                        container.recipeRepository,
+                        container.cookingCompanionRepository,
+                        recipeId,
+                        sessionId,
+                    ),
+                )
+                CookingScreen(
+                    viewModel = cookingViewModel,
+                    widthSizeClass = widthSizeClass,
+                    onBack = { navController.popBackStack() },
+                    onSessionComplete = { navController.popBackStack() },
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Wraps a main destination's content with the bottom nav bar (compact) or nav rail (expanded).
+ * This lives inside each main route's own `composable { }` block rather than at the NavHost
+ * level so the rail/bottom-bar can never be out of sync with the screen it wraps: both are part
+ * of the exact same composition as the destination that's actually on screen. Hoisting this to
+ * a shared wrapper keyed off a separately-observed "current route" caused a one-frame race on
+ * back navigation, where the rail would appear (from the new, already-updated back stack state)
+ * a frame before the destination itself actually swapped, squeezing the outgoing screen sideways.
+ */
+@Composable
+private fun MainScaffold(
+    currentRoute: String,
+    expanded: Boolean,
+    onNavigate: (String) -> Unit,
+    content: @Composable () -> Unit,
+) {
     Scaffold(
         bottomBar = {
-            if (showMainNavigation && !expanded) {
+            if (!expanded) {
                 NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
                     mainDestinations.forEach { destination ->
                         NavigationBarItem(
                             selected = currentRoute == destination.route,
-                            onClick = { navigateMain(destination.route) },
+                            onClick = { onNavigate(destination.route) },
                             icon = { Icon(destination.icon, contentDescription = null) },
                             label = { Text(destination.label) },
                         )
@@ -115,120 +238,21 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                 }
             }
         },
-    ) { outerPadding ->
-        Row(modifier = Modifier.fillMaxSize().padding(outerPadding)) {
-            if (showMainNavigation && expanded) {
+    ) { padding ->
+        Row(modifier = Modifier.fillMaxSize().padding(padding)) {
+            if (expanded) {
                 NavigationRail(containerColor = MaterialTheme.colorScheme.surface) {
                     mainDestinations.forEach { destination ->
                         NavigationRailItem(
                             selected = currentRoute == destination.route,
-                            onClick = { navigateMain(destination.route) },
+                            onClick = { onNavigate(destination.route) },
                             icon = { Icon(destination.icon, contentDescription = null) },
                             label = { Text(destination.label) },
                         )
                     }
                 }
             }
-            Box(modifier = Modifier.weight(1f)) {
-                NavHost(
-                    navController = navController,
-                    startDestination = ROUTE_LIBRARY,
-                    // The default cross-fade left the outgoing screen's text visible, fading
-                    // through underneath the incoming one -- distracting on a text-heavy app
-                    // like this. An instant swap reads cleaner than a fixed-up fade here.
-                    enterTransition = { EnterTransition.None },
-                    exitTransition = { ExitTransition.None },
-                    popEnterTransition = { EnterTransition.None },
-                    popExitTransition = { ExitTransition.None },
-                ) {
-                    composable(ROUTE_LIBRARY) {
-                        LibraryScreen(
-                            viewModel = libraryViewModel,
-                            widthSizeClass = widthSizeClass,
-                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
-                        )
-                    }
-                    composable(ROUTE_PLAN) {
-                        MealPlanScreen(
-                            viewModel = companionViewModel,
-                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
-                        )
-                    }
-                    composable(ROUTE_SHOPPING) { ShoppingScreen(companionViewModel) }
-                    composable(ROUTE_PANTRY) { PantryScreen(companionViewModel) }
-                    composable(ROUTE_HISTORY) {
-                        HistoryScreen(
-                            viewModel = companionViewModel,
-                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
-                        )
-                    }
-                    composable(ROUTE_IMPORT) {
-                        ImportScreen(
-                            viewModel = importViewModel,
-                            onImported = { recipeId -> navController.navigate("detail/$recipeId") },
-                            onOpenHistory = { navController.navigate(ROUTE_IMPORT_HISTORY) },
-                        )
-                    }
-                    composable(ROUTE_IMPORT_HISTORY) {
-                        ImportHistoryScreen(
-                            viewModel = importViewModel,
-                            onBack = { navController.popBackStack() },
-                            onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
-                        )
-                    }
-                    composable(
-                        route = ROUTE_DETAIL,
-                        arguments = listOf(navArgument(ARG_RECIPE_ID) { type = NavType.StringType }),
-                    ) { detailEntry ->
-                        val recipeId = detailEntry.arguments?.getString(ARG_RECIPE_ID)
-                        if (recipeId != null) {
-                            val detailViewModel: DetailViewModel = viewModel(
-                                key = recipeId,
-                                factory = DetailViewModel.Factory(
-                                    container.recipeRepository,
-                                    container.cookingCompanionRepository,
-                                    recipeId,
-                                ),
-                            )
-                            DetailScreen(
-                                viewModel = detailViewModel,
-                                widthSizeClass = widthSizeClass,
-                                onBack = { navController.popBackStack() },
-                                onCookingStarted = { sessionId ->
-                                    navController.navigate("cooking/$recipeId/$sessionId")
-                                },
-                            )
-                        }
-                    }
-                    composable(
-                        route = ROUTE_COOKING,
-                        arguments = listOf(
-                            navArgument(ARG_RECIPE_ID) { type = NavType.StringType },
-                            navArgument(ARG_SESSION_ID) { type = NavType.StringType },
-                        ),
-                    ) { cookingEntry ->
-                        val recipeId = cookingEntry.arguments?.getString(ARG_RECIPE_ID)
-                        val sessionId = cookingEntry.arguments?.getString(ARG_SESSION_ID)
-                        if (recipeId != null && sessionId != null) {
-                            val cookingViewModel: CookingViewModel = viewModel(
-                                key = sessionId,
-                                factory = CookingViewModel.Factory(
-                                    container.recipeRepository,
-                                    container.cookingCompanionRepository,
-                                    recipeId,
-                                    sessionId,
-                                ),
-                            )
-                            CookingScreen(
-                                viewModel = cookingViewModel,
-                                widthSizeClass = widthSizeClass,
-                                onBack = { navController.popBackStack() },
-                                onSessionComplete = { navController.popBackStack() },
-                            )
-                        }
-                    }
-                }
-            }
+            Box(modifier = Modifier.weight(1f)) { content() }
         }
     }
 }
