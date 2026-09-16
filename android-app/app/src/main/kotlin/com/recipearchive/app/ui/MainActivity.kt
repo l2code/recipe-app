@@ -9,6 +9,9 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.recipearchive.app.RecipeApplication
 import com.recipearchive.app.ui.nav.RecipeNavHost
 import com.recipearchive.app.ui.theme.RecipeArchiveTheme
@@ -18,12 +21,28 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hideStatusBar()
         val container = (application as RecipeApplication).container
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
             RecipeArchiveApp {
                 RecipeNavHost(container = container, widthSizeClass = windowSizeClass.widthSizeClass)
             }
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideStatusBar()
+    }
+
+    // This app is meant to sit as a fixed kitchen display -- the clock/battery/wifi status bar
+    // just adds clutter there. Swiping down from the top edge still reveals it briefly.
+    private fun hideStatusBar() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            hide(WindowInsetsCompat.Type.statusBars())
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 }
