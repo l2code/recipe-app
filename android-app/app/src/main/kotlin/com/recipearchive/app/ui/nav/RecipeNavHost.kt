@@ -1,5 +1,7 @@
 package com.recipearchive.app.ui.nav
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -128,7 +130,17 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                 }
             }
             Box(modifier = Modifier.weight(1f)) {
-                NavHost(navController = navController, startDestination = ROUTE_LIBRARY) {
+                NavHost(
+                    navController = navController,
+                    startDestination = ROUTE_LIBRARY,
+                    // The default cross-fade left the outgoing screen's text visible, fading
+                    // through underneath the incoming one -- distracting on a text-heavy app
+                    // like this. An instant swap reads cleaner than a fixed-up fade here.
+                    enterTransition = { EnterTransition.None },
+                    exitTransition = { ExitTransition.None },
+                    popEnterTransition = { EnterTransition.None },
+                    popExitTransition = { ExitTransition.None },
+                ) {
                     composable(ROUTE_LIBRARY) {
                         LibraryScreen(
                             viewModel = libraryViewModel,

@@ -47,6 +47,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -58,11 +59,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.recipearchive.app.data.organization.RecipeCategories
 import com.recipearchive.app.data.repository.RecipeSummary
 import com.recipearchive.app.data.local.entity.CollectionEntity
 import java.time.Instant
@@ -82,19 +86,26 @@ fun LibraryScreen(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text("My Recipe Box", style = MaterialTheme.typography.titleLarge)
-                        Text(
-                            "Family favorites, notes and discoveries",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
-            )
+            Column {
+                TopAppBar(
+                    title = {
+                        Column {
+                            Text(
+                                "My Recipe Box",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
+                            Text(
+                                "Family favorites, notes and discoveries",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                )
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            }
         },
     ) { padding ->
         LibraryContent(
@@ -325,7 +336,7 @@ private fun SearchField(query: String, onQueryChange: (String) -> Unit, modifier
                 Icon(Icons.Filled.Close, contentDescription = "Clear search")
             }
         },
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         singleLine = true,
     )
 }
@@ -380,26 +391,47 @@ private fun RecipeResults(
     }
 }
 
+// One color per category (matching the category pill shown on each card), so the avatar color
+// is informative -- you can spot entrées vs. desserts vs. sides at a glance -- rather than
+// arbitrary decoration. Recipes without a category fall back to a neutral gray.
+private val CategoryColors: Map<String, Pair<Color, Color>> = mapOf(
+    RecipeCategories.ENTREE to (Color(0xFF2F6B35) to Color(0xFF4F8F53)), // forest green
+    RecipeCategories.SIDE to (Color(0xFF3E7A68) to Color(0xFF5FA08C)), // teal
+    RecipeCategories.APPETIZER to (Color(0xFF8E4B8B) to Color(0xFFB273AE)), // plum
+    RecipeCategories.SNACK to (Color(0xFF9C6B1F) to Color(0xFFC28E3F)), // ochre
+    RecipeCategories.DESSERT to (Color(0xFFB8466B) to Color(0xFFD9749A)), // berry pink
+    RecipeCategories.BREAKFAST to (Color(0xFFB8662B) to Color(0xFFD98A4C)), // amber
+    RecipeCategories.DRINK to (Color(0xFF2F6C8E) to Color(0xFF4E8FB3)), // slate blue
+    RecipeCategories.SAUCE to (Color(0xFFA0522D) to Color(0xFFC27A54)), // rust
+    RecipeCategories.SOUP_SALAD to (Color(0xFF6B7A2F) to Color(0xFF8FA050)), // olive
+    RecipeCategories.OTHER to (Color(0xFF5C6470) to Color(0xFF7D8794)), // neutral slate
+)
+private val NoCategoryColors = CategoryColors.getValue(RecipeCategories.OTHER)
+
+private fun avatarBrushFor(category: String?): Brush {
+    val (start, end) = category?.let { CategoryColors[it] } ?: NoCategoryColors
+    return Brush.linearGradient(listOf(start, end))
+}
+
 @Composable
 private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, onToggleFavorite: (String, Boolean) -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Recipe: ${recipe.title}" },
         color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 0.dp,
-        shadowElevation = 0.dp,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 1.dp,
+        shadowElevation = 3.dp,
+        shape = MaterialTheme.shapes.large,
         onClick = { onRecipeClick(recipe.id) },
     ) {
         Row(modifier = Modifier.padding(15.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
-                modifier = Modifier.size(46.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                modifier = Modifier.size(46.dp).background(avatarBrushFor(recipe.category), CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     recipe.title.firstOrNull()?.uppercase() ?: "R",
                     style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = Color.White,
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -418,11 +450,14 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                     Spacer(Modifier.height(7.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                         recipe.category?.let { category ->
-                            Text(
-                                category,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
+                            Surface(shape = CircleShape, color = MaterialTheme.colorScheme.primaryContainer) {
+                                Text(
+                                    category,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                                )
+                            }
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
@@ -463,12 +498,17 @@ private fun RecipeCard(recipe: RecipeSummary, onRecipeClick: (String) -> Unit, o
                     }
                 }
             }
-            IconButton(onClick = { onToggleFavorite(recipe.id, recipe.isFavorite) }) {
-                Icon(
-                    if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = if (recipe.isFavorite) "Remove from favorites" else "Add to favorites",
-                    tint = if (recipe.isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            Surface(
+                shape = CircleShape,
+                color = if (recipe.isFavorite) MaterialTheme.colorScheme.errorContainer else Color.Transparent,
+            ) {
+                IconButton(onClick = { onToggleFavorite(recipe.id, recipe.isFavorite) }) {
+                    Icon(
+                        if (recipe.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                        contentDescription = if (recipe.isFavorite) "Remove from favorites" else "Add to favorites",
+                        tint = if (recipe.isFavorite) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
     }
