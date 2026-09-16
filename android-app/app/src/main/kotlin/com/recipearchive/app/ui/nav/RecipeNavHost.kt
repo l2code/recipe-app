@@ -55,6 +55,7 @@ import com.recipearchive.app.ui.settings.SettingsViewModel
 import com.recipearchive.app.ui.webimport.ImportHistoryScreen
 import com.recipearchive.app.ui.webimport.ImportScreen
 import com.recipearchive.app.ui.webimport.ImportViewModel
+import com.recipearchive.app.ui.webimport.NytRecipePreviewScreen
 import com.recipearchive.app.ui.webimport.NytSearchScreen
 
 private const val ROUTE_LIBRARY = "library"
@@ -65,6 +66,7 @@ private const val ROUTE_HISTORY = "history"
 private const val ROUTE_IMPORT = "import"
 private const val ROUTE_IMPORT_HISTORY = "import_history"
 private const val ROUTE_NYT_SEARCH = "nyt_search"
+private const val ROUTE_NYT_PREVIEW = "nyt_preview"
 private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
@@ -172,6 +174,14 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         composable(ROUTE_NYT_SEARCH) {
             NytSearchScreen(
                 viewModel = importViewModel,
+                onBack = { navController.popBackStack() },
+                onOpenPreview = { navController.navigate(ROUTE_NYT_PREVIEW) },
+            )
+        }
+        composable(ROUTE_NYT_PREVIEW) {
+            NytRecipePreviewScreen(
+                viewModel = importViewModel,
+                widthSizeClass = widthSizeClass,
                 onBack = { navController.popBackStack() },
             )
         }

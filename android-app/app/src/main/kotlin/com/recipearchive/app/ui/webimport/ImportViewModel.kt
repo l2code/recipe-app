@@ -53,6 +53,19 @@ data class NytSearchUiState(
     val message: String? = null,
 )
 
+/** Backs the read-only "view before importing" screen opened from a search/featured row. */
+data class NytPreviewUiState(
+    val url: String,
+    val title: String,
+    val byline: String?,
+    val ingredients: List<String> = emptyList(),
+    val instructions: List<String> = emptyList(),
+    val isLoading: Boolean = true,
+    val error: String? = null,
+    val isImporting: Boolean = false,
+    val imported: Boolean = false,
+)
+
 data class PreviewUiState(
     val url: String,
     val domain: String,
@@ -79,6 +92,9 @@ class ImportViewModel(
 
     private val _nytSearchState = MutableStateFlow(NytSearchUiState())
     val nytSearchState: StateFlow<NytSearchUiState> = _nytSearchState.asStateFlow()
+
+    private val _nytPreviewState = MutableStateFlow<NytPreviewUiState?>(null)
+    val nytPreviewState: StateFlow<NytPreviewUiState?> = _nytPreviewState.asStateFlow()
 
     val savedLinks: StateFlow<List<SavedLinkUi>> = webRecipeImportService.observeSavedLinks()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -188,6 +204,67 @@ class ImportViewModel(
     /** Backs out of search results to the "Today on NYT Cooking" list. */
     fun clearNytSearch() {
         _nytSearchState.update { it.copy(query = "", results = emptyList(), hasSearched = false, searchError = null) }
+    }
+
+    /** Opens the read-only preview for a search/featured row and fetches its full recipe. */
+    fun openNytPreview(result: NytSearchResult) {
+        val alreadyImported = result.url in _nytSearchState.value.existingUrls
+        _nytPreviewState.value = NytPreviewUiState(
+            url = result.url,
+            title = result.title,
+            byline = result.byline,
+            isLoading = true,
+            imported = alreadyImported,
+        )
+        viewModelScope.launch {
+            when (val outcome = webRecipeImportService.fetchAndParse(result.url, sourcePublisherOverride = "NYT Cooking")) {
+                is FetchAndParseOutcome.Success -> _nytPreviewState.update {
+                    it?.copy(
+                        isLoading = false,
+                        title = outcome.parsed.title.ifBlank { it.title },
+                        ingredients = outcome.parsed.ingredients,
+                        instructions = outcome.parsed.instructions,
+                    )
+                }
+                is FetchAndParseOutcome.NotFound -> _nytPreviewState.update {
+                    it?.copy(isLoading = false, error = "Couldn't find a recipe there.")
+                }
+                is FetchAndParseOutcome.NetworkError -> _nytPreviewState.update {
+                    it?.copy(isLoading = false, error = "Couldn't reach that page: ${outcome.message}")
+                }
+                is FetchAndParseOutcome.ParseError -> _nytPreviewState.update {
+                    it?.copy(isLoading = false, error = outcome.message)
+                }
+            }
+        }
+    }
+
+    fun dismissNytPreview() {
+        _nytPreviewState.value = null
+    }
+
+    fun importNytPreview() {
+        val preview = _nytPreviewState.value ?: return
+        if (preview.imported || preview.isImporting) return
+        _nytPreviewState.update { it?.copy(isImporting = true, error = null) }
+        viewModelScope.launch {
+            val outcome = webRecipeImportService.importFromUrl(preview.url, sourcePublisherOverride = "NYT Cooking")
+            when (outcome) {
+                is WebImportOutcome.Success -> {
+                    _nytPreviewState.update { it?.copy(isImporting = false, imported = true) }
+                    _nytSearchState.update { it.copy(existingUrls = it.existingUrls + preview.url) }
+                }
+                is WebImportOutcome.NotFound -> _nytPreviewState.update {
+                    it?.copy(isImporting = false, error = "Couldn't find a recipe there.")
+                }
+                is WebImportOutcome.NetworkError -> _nytPreviewState.update {
+                    it?.copy(isImporting = false, error = "Couldn't reach that page: ${outcome.message}")
+                }
+                is WebImportOutcome.ParseError -> _nytPreviewState.update {
+                    it?.copy(isImporting = false, error = outcome.message)
+                }
+            }
+        }
     }
 
     // -------------------------------------------------------------------------------------

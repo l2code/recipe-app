@@ -53,6 +53,7 @@ import com.recipearchive.app.data.webimport.NytSearchResult
 fun NytSearchScreen(
     viewModel: ImportViewModel,
     onBack: () -> Unit,
+    onOpenPreview: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.nytSearchState.collectAsState()
@@ -131,7 +132,13 @@ fun NytSearchScreen(
                     state.isSearching -> LoadingBox()
                     state.searchError != null -> InfoText(state.searchError!!, isError = true)
                     state.results.isEmpty() -> InfoText("No recipes found for \"${state.query}\". Try a different search.")
-                    else -> NytResultList(state.results, state.existingUrls, state.importingUrls, viewModel::importNytResult)
+                    else -> NytResultList(
+                        results = state.results,
+                        existingUrls = state.existingUrls,
+                        importingUrls = state.importingUrls,
+                        onImport = viewModel::importNytResult,
+                        onOpenPreview = { result -> viewModel.openNytPreview(result); onOpenPreview() },
+                    )
                 }
             } else {
                 Text("Today on NYT Cooking", style = MaterialTheme.typography.titleMedium)
@@ -139,7 +146,13 @@ fun NytSearchScreen(
                     state.isFeaturedLoading -> LoadingBox()
                     state.featuredError != null -> InfoText(state.featuredError!!, isError = true)
                     state.featured.isEmpty() -> InfoText("Nothing to show right now.")
-                    else -> NytResultList(state.featured, state.existingUrls, state.importingUrls, viewModel::importNytResult)
+                    else -> NytResultList(
+                        results = state.featured,
+                        existingUrls = state.existingUrls,
+                        importingUrls = state.importingUrls,
+                        onImport = viewModel::importNytResult,
+                        onOpenPreview = { result -> viewModel.openNytPreview(result); onOpenPreview() },
+                    )
                 }
             }
         }
@@ -169,6 +182,7 @@ private fun NytResultList(
     existingUrls: Set<String>,
     importingUrls: Set<String>,
     onImport: (NytSearchResult) -> Unit,
+    onOpenPreview: (NytSearchResult) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         items(results, key = { it.url }) { result ->
@@ -177,14 +191,21 @@ private fun NytResultList(
                 alreadyImported = result.url in existingUrls,
                 isImporting = result.url in importingUrls,
                 onImport = { onImport(result) },
+                onOpenPreview = { onOpenPreview(result) },
             )
         }
     }
 }
 
 @Composable
-private fun NytResultRow(result: NytSearchResult, alreadyImported: Boolean, isImporting: Boolean, onImport: () -> Unit) {
-    Surface(shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.surfaceVariant) {
+private fun NytResultRow(
+    result: NytSearchResult,
+    alreadyImported: Boolean,
+    isImporting: Boolean,
+    onImport: () -> Unit,
+    onOpenPreview: () -> Unit,
+) {
+    Surface(onClick = onOpenPreview, shape = MaterialTheme.shapes.small, color = MaterialTheme.colorScheme.surfaceVariant) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
