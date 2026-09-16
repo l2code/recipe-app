@@ -4,6 +4,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -242,6 +243,11 @@ private fun MainScaffold(
         Row(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (expanded) {
                 NavigationRail(containerColor = MaterialTheme.colorScheme.surface) {
+                    // NavigationRail top-aligns its items by default, which reads as top-heavy
+                    // with only 6 destinations on a tall screen. Equal-weight spacers on either
+                    // side center the group vertically instead, matching Material's guidance for
+                    // rails with a small, fixed set of destinations.
+                    Spacer(Modifier.weight(1f))
                     mainDestinations.forEach { destination ->
                         NavigationRailItem(
                             selected = currentRoute == destination.route,
@@ -250,6 +256,7 @@ private fun MainScaffold(
                             label = { Text(destination.label) },
                         )
                     }
+                    Spacer(Modifier.weight(1f))
                 }
             }
             Box(modifier = Modifier.weight(1f)) { content() }
