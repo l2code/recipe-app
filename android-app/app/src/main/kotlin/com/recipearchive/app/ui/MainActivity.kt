@@ -3,16 +3,20 @@ package com.recipearchive.app.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.recipearchive.app.RecipeApplication
+import com.recipearchive.app.data.settings.ThemeMode
 import com.recipearchive.app.ui.nav.RecipeNavHost
 import com.recipearchive.app.ui.theme.RecipeArchiveTheme
 
@@ -25,7 +29,13 @@ class MainActivity : ComponentActivity() {
         val container = (application as RecipeApplication).container
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
-            RecipeArchiveApp {
+            val themeMode by container.settingsStore.themeMode.collectAsState()
+            val darkTheme = when (themeMode) {
+                ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                ThemeMode.LIGHT -> false
+                ThemeMode.DARK -> true
+            }
+            RecipeArchiveApp(darkTheme = darkTheme) {
                 RecipeNavHost(container = container, widthSizeClass = windowSizeClass.widthSizeClass)
             }
         }
@@ -48,8 +58,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun RecipeArchiveApp(content: @Composable () -> Unit) {
-    RecipeArchiveTheme {
+private fun RecipeArchiveApp(darkTheme: Boolean, content: @Composable () -> Unit) {
+    RecipeArchiveTheme(darkTheme = darkTheme) {
         Surface(modifier = Modifier.fillMaxSize()) {
             content()
         }

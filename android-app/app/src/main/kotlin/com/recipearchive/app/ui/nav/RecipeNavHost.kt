@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Kitchen
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +48,8 @@ import com.recipearchive.app.ui.detail.DetailScreen
 import com.recipearchive.app.ui.detail.DetailViewModel
 import com.recipearchive.app.ui.library.LibraryScreen
 import com.recipearchive.app.ui.library.LibraryViewModel
+import com.recipearchive.app.ui.settings.SettingsScreen
+import com.recipearchive.app.ui.settings.SettingsViewModel
 import com.recipearchive.app.ui.webimport.ImportHistoryScreen
 import com.recipearchive.app.ui.webimport.ImportScreen
 import com.recipearchive.app.ui.webimport.ImportViewModel
@@ -56,6 +61,7 @@ private const val ROUTE_PANTRY = "pantry"
 private const val ROUTE_HISTORY = "history"
 private const val ROUTE_IMPORT = "import"
 private const val ROUTE_IMPORT_HISTORY = "import_history"
+private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
 private const val ARG_RECIPE_ID = "recipeId"
@@ -85,8 +91,9 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         factory = CompanionViewModel.Factory(container.cookingCompanionRepository),
     )
     val importViewModel: ImportViewModel = viewModel(
-        factory = ImportViewModel.Factory(container.webRecipeImportService, container.credentialStore),
+        factory = ImportViewModel.Factory(container.webRecipeImportService),
     )
+    val showNavLabels by container.settingsStore.showNavLabels.collectAsState()
 
     fun navigateMain(route: String) {
         navController.navigate(route) {
@@ -95,6 +102,8 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
             restoreState = true
         }
     }
+
+    val onOpenSettings: () -> Unit = { navController.navigate(ROUTE_SETTINGS) }
 
     NavHost(
         navController = navController,
@@ -108,7 +117,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         popExitTransition = { ExitTransition.None },
     ) {
         composable(ROUTE_LIBRARY) {
-            MainScaffold(ROUTE_LIBRARY, expanded, ::navigateMain) {
+            MainScaffold(ROUTE_LIBRARY, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
                 LibraryScreen(
                     viewModel = libraryViewModel,
                     widthSizeClass = widthSizeClass,
@@ -117,7 +126,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
             }
         }
         composable(ROUTE_PLAN) {
-            MainScaffold(ROUTE_PLAN, expanded, ::navigateMain) {
+            MainScaffold(ROUTE_PLAN, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
                 MealPlanScreen(
                     viewModel = companionViewModel,
                     onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
@@ -125,13 +134,17 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
             }
         }
         composable(ROUTE_SHOPPING) {
-            MainScaffold(ROUTE_SHOPPING, expanded, ::navigateMain) { ShoppingScreen(companionViewModel) }
+            MainScaffold(ROUTE_SHOPPING, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
+                ShoppingScreen(companionViewModel)
+            }
         }
         composable(ROUTE_PANTRY) {
-            MainScaffold(ROUTE_PANTRY, expanded, ::navigateMain) { PantryScreen(companionViewModel) }
+            MainScaffold(ROUTE_PANTRY, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
+                PantryScreen(companionViewModel)
+            }
         }
         composable(ROUTE_HISTORY) {
-            MainScaffold(ROUTE_HISTORY, expanded, ::navigateMain) {
+            MainScaffold(ROUTE_HISTORY, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
                 HistoryScreen(
                     viewModel = companionViewModel,
                     onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
@@ -139,7 +152,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
             }
         }
         composable(ROUTE_IMPORT) {
-            MainScaffold(ROUTE_IMPORT, expanded, ::navigateMain) {
+            MainScaffold(ROUTE_IMPORT, expanded, showNavLabels, ::navigateMain, onOpenSettings) {
                 ImportScreen(
                     viewModel = importViewModel,
                     onImported = { recipeId -> navController.navigate("detail/$recipeId") },
@@ -152,6 +165,18 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                 viewModel = importViewModel,
                 onBack = { navController.popBackStack() },
                 onRecipeClick = { recipeId -> navController.navigate("detail/$recipeId") },
+            )
+        }
+        composable(ROUTE_SETTINGS) {
+            // Created here rather than hoisted to the top of RecipeNavHost: the factory reads
+            // container.credentialStore, which is lazy specifically so nothing touches the
+            // Android Keystore until Settings is actually opened (see AppContainer).
+            val settingsViewModel: SettingsViewModel = viewModel(
+                factory = SettingsViewModel.Factory(container.settingsStore, container.credentialStore),
+            )
+            SettingsScreen(
+                viewModel = settingsViewModel,
+                onBack = { navController.popBackStack() },
             )
         }
         composable(
@@ -221,7 +246,9 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
 private fun MainScaffold(
     currentRoute: String,
     expanded: Boolean,
+    showLabels: Boolean,
     onNavigate: (String) -> Unit,
+    onOpenSettings: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     Scaffold(
@@ -232,10 +259,21 @@ private fun MainScaffold(
                         NavigationBarItem(
                             selected = currentRoute == destination.route,
                             onClick = { onNavigate(destination.route) },
-                            icon = { Icon(destination.icon, contentDescription = null) },
-                            label = { Text(destination.label) },
+                            icon = {
+                                Icon(
+                                    destination.icon,
+                                    contentDescription = if (showLabels) null else destination.label,
+                                )
+                            },
+                            label = if (showLabels) { { Text(destination.label) } } else null,
                         )
                     }
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = onOpenSettings,
+                        icon = { Icon(Icons.Filled.Settings, contentDescription = if (showLabels) null else "Settings") },
+                        label = if (showLabels) { { Text("Settings") } } else null,
+                    )
                 }
             }
         },
@@ -252,11 +290,24 @@ private fun MainScaffold(
                         NavigationRailItem(
                             selected = currentRoute == destination.route,
                             onClick = { onNavigate(destination.route) },
-                            icon = { Icon(destination.icon, contentDescription = null) },
-                            label = { Text(destination.label) },
+                            icon = {
+                                Icon(
+                                    destination.icon,
+                                    contentDescription = if (showLabels) null else destination.label,
+                                )
+                            },
+                            label = if (showLabels) { { Text(destination.label) } } else null,
                         )
                     }
                     Spacer(Modifier.weight(1f))
+                    // Pinned below the centered group rather than part of it -- settings is a
+                    // one-off destination, not one of the app's main tabs.
+                    NavigationRailItem(
+                        selected = false,
+                        onClick = onOpenSettings,
+                        icon = { Icon(Icons.Filled.Settings, contentDescription = if (showLabels) null else "Settings") },
+                        label = if (showLabels) { { Text("Settings") } } else null,
+                    )
                 }
             }
             Box(modifier = Modifier.weight(1f)) { content() }

@@ -1,9 +1,6 @@
 package com.recipearchive.app.ui.webimport
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import com.recipearchive.app.data.local.RecipeDatabase
-import com.recipearchive.app.data.webimport.CredentialStore
 import com.recipearchive.app.data.webimport.WebRecipeImportService
 import com.recipearchive.app.testutil.MainDispatcherRule
 import com.recipearchive.app.testutil.TestDatabaseFactory
@@ -38,7 +35,6 @@ class ImportViewModelTest {
     private lateinit var database: RecipeDatabase
     private lateinit var server: MockWebServer
     private lateinit var service: WebRecipeImportService
-    private lateinit var credentialStore: CredentialStore
 
     private val recipeHtml = """
         <html><head>
@@ -59,10 +55,6 @@ class ImportViewModelTest {
         server = MockWebServer()
         server.start()
         service = WebRecipeImportService(database, httpClient = OkHttpClient(), ioDispatcher = testDispatcher)
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val prefs = context.getSharedPreferences("test_import_vm_credentials", Context.MODE_PRIVATE)
-        prefs.edit().clear().commit()
-        credentialStore = CredentialStore(prefs)
     }
 
     @After
@@ -75,7 +67,7 @@ class ImportViewModelTest {
     fun `importing a valid url clears the field and emits an Imported event`() = runTest(testDispatcher) {
         server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
         val url = server.url("/tacos").toString()
-        val viewModel = ImportViewModel(service, credentialStore)
+        val viewModel = ImportViewModel(service)
 
         val events = mutableListOf<ImportEvent>()
         val job = launch { viewModel.events.collect { events.add(it) } }
@@ -93,7 +85,7 @@ class ImportViewModelTest {
 
     @Test
     fun `importing a blank url surfaces an error instead of calling the service`() = runTest(testDispatcher) {
-        val viewModel = ImportViewModel(service, credentialStore)
+        val viewModel = ImportViewModel(service)
 
         viewModel.importRecipe()
         advanceUntilIdle()
@@ -105,7 +97,7 @@ class ImportViewModelTest {
     fun `review before import populates an editable preview without saving`() = runTest(testDispatcher) {
         server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
         val url = server.url("/tacos").toString()
-        val viewModel = ImportViewModel(service, credentialStore)
+        val viewModel = ImportViewModel(service)
 
         viewModel.onUrlChanged(url)
         viewModel.reviewBeforeImport()
@@ -121,7 +113,7 @@ class ImportViewModelTest {
     fun `confirming the preview saves the edited recipe and clears the preview`() = runTest(testDispatcher) {
         server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
         val url = server.url("/tacos").toString()
-        val viewModel = ImportViewModel(service, credentialStore)
+        val viewModel = ImportViewModel(service)
         viewModel.onUrlChanged(url)
         viewModel.reviewBeforeImport()
         advanceUntilIdle()
@@ -139,33 +131,8 @@ class ImportViewModelTest {
     }
 
     @Test
-    fun `saving nyt credentials persists them and flips the saved flag`() = runTest(testDispatcher) {
-        val viewModel = ImportViewModel(service, credentialStore)
-
-        viewModel.onNytEmailChanged("cook@example.com")
-        viewModel.onNytPasswordChanged("hunter2")
-        viewModel.saveNytCredentials()
-
-        assertTrue(viewModel.nytAccountState.value.isSaved)
-        assertTrue(credentialStore.hasCredentials())
-        assertEquals("cook@example.com", credentialStore.getEmail())
-    }
-
-    @Test
-    fun `removing nyt credentials clears the saved state`() = runTest(testDispatcher) {
-        credentialStore.saveCredentials("cook@example.com", "hunter2")
-        val viewModel = ImportViewModel(service, credentialStore)
-        assertTrue(viewModel.nytAccountState.value.isSaved)
-
-        viewModel.removeNytCredentials()
-
-        assertTrue(viewModel.nytAccountState.value.isSaved.not())
-        assertTrue(credentialStore.hasCredentials().not())
-    }
-
-    @Test
     fun `pasting text imports without a network call`() = runTest(testDispatcher) {
-        val viewModel = ImportViewModel(service, credentialStore)
+        val viewModel = ImportViewModel(service)
         val events = mutableListOf<ImportEvent>()
         val job = launch { viewModel.events.collect { events.add(it) } }
 

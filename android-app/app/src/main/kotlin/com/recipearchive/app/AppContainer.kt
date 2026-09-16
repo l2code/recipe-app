@@ -5,6 +5,7 @@ import com.recipearchive.app.data.import.ImportService
 import com.recipearchive.app.data.companion.CookingCompanionRepository
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.repository.RecipeRepository
+import com.recipearchive.app.data.settings.SettingsStore
 import com.recipearchive.app.data.webimport.CredentialStore
 import com.recipearchive.app.data.webimport.WebRecipeImportService
 
@@ -15,6 +16,7 @@ class AppContainer(context: Context) {
     val recipeRepository: RecipeRepository = RecipeRepository(database, importService)
     val cookingCompanionRepository: CookingCompanionRepository = CookingCompanionRepository(database)
     val webRecipeImportService: WebRecipeImportService = WebRecipeImportService(database)
+    val settingsStore: SettingsStore = SettingsStore(context)
 
     // Lazy: touches the Android Keystore, which isn't available until the Import screen is
     // actually opened (and isn't available at all under Robolectric's JVM test environment,
