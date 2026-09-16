@@ -98,7 +98,7 @@ fun NytSearchScreen(
                     modifier = Modifier.weight(1f),
                     placeholder = { Text("Search recipes, e.g. chicken tagine") },
                     singleLine = true,
-                    trailingIcon = if (state.hasSearched) {
+                    trailingIcon = if (state.query.isNotBlank()) {
                         {
                             IconButton(onClick = viewModel::clearNytSearch) {
                                 Icon(Icons.Filled.Close, contentDescription = "Clear search")
