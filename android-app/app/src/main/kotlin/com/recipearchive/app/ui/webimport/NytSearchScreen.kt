@@ -1,5 +1,6 @@
 package com.recipearchive.app.ui.webimport
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.webimport.NytSearchResult
 
@@ -52,6 +56,8 @@ fun NytSearchScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.nytSearchState.collectAsState()
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
         viewModel.loadNytFeaturedIfNeeded()
@@ -73,7 +79,16 @@ fun NytSearchScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(padding).padding(20.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    })
+                }
+                .padding(padding)
+                .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
