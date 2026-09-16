@@ -102,6 +102,12 @@ class WebRecipeImportService(
         return recordHistory(outcome, url, domain, outcome.title)
     }
 
+    /** Returns the subset of [urls] that are already saved in the library, for duplicate checks. */
+    suspend fun findExistingUrls(urls: List<String>): Set<String> = withContext(ioDispatcher) {
+        if (urls.isEmpty()) return@withContext emptySet()
+        database.recipeDao().getExistingSourceUrls(urls).toSet()
+    }
+
     fun observeSavedLinks(limit: Int = 10): Flow<List<SavedLinkUi>> =
         database.webImportHistoryDao().observeRecentSuccessful(limit).map { entries ->
             entries.distinctBy { it.url }.map { SavedLinkUi(it.url, it.title, it.domain, it.importedAt) }

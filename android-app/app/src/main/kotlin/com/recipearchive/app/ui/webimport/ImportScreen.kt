@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.RateReview
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -47,7 +45,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.webimport.SavedLinkUi
 
@@ -57,6 +54,7 @@ fun ImportScreen(
     viewModel: ImportViewModel,
     onImported: (String) -> Unit,
     onOpenHistory: () -> Unit,
+    onSearchNyt: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -109,6 +107,7 @@ fun ImportScreen(
                 savedLinksExpanded = uiState.savedLinksExpanded,
                 savedLinks = savedLinks,
                 onSourceSelected = viewModel::onQuickSourceSelected,
+                onSearchNyt = onSearchNyt,
                 onDismissInfo = viewModel::dismissInfoMessage,
                 onSavedLinkSelected = viewModel::importSavedLink,
             )
@@ -122,7 +121,6 @@ fun ImportScreen(
                     onConfirm = viewModel::confirmPreviewImport,
                 )
             }
-            WhatHappensNextCard()
         }
     }
 }
@@ -275,6 +273,7 @@ private fun QuickSourcesCard(
     savedLinksExpanded: Boolean,
     savedLinks: List<SavedLinkUi>,
     onSourceSelected: (QuickSource) -> Unit,
+    onSearchNyt: () -> Unit,
     onDismissInfo: () -> Unit,
     onSavedLinkSelected: (SavedLinkUi) -> Unit,
 ) {
@@ -286,14 +285,7 @@ private fun QuickSourcesCard(
         Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("Quick Sources", style = MaterialTheme.typography.titleLarge)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                QuickSourceTile(Icons.Filled.RestaurantMenu, "NYT Cooking", Modifier.weight(1f)) {
-                    onSourceSelected(QuickSource.NYT_COOKING)
-                }
-                QuickSourceTile(Icons.Filled.Public, "Any Website", Modifier.weight(1f)) {
-                    onSourceSelected(QuickSource.ANY_WEBSITE)
-                }
-            }
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                QuickSourceTile(Icons.Filled.RestaurantMenu, "Search NYT Cooking", Modifier.weight(1f), onSearchNyt)
                 QuickSourceTile(Icons.Filled.ContentPaste, "Paste Text", Modifier.weight(1f)) {
                     onSourceSelected(QuickSource.PASTE_TEXT)
                 }
@@ -368,40 +360,6 @@ private fun QuickSourceTile(icon: ImageVector, label: String, modifier: Modifier
         ) {
             Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Text(label, style = MaterialTheme.typography.labelLarge)
-        }
-    }
-}
-
-@Composable
-private fun WhatHappensNextCard() {
-    val steps = listOf(
-        "Fetch page" to "We load the page you linked to.",
-        "Parse recipe" to "We pull out the title, ingredients, and steps.",
-        "Review" to "Check the imported recipe in your library.",
-        "Save" to "It's saved alongside your archive recipes.",
-    )
-    Surface(
-        shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surface,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-    ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("What happens next", style = MaterialTheme.typography.titleLarge)
-            steps.forEachIndexed { index, (title, description) ->
-                Row(verticalAlignment = Alignment.Top) {
-                    Icon(
-                        Icons.Filled.CheckCircle,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.secondary,
-                    )
-                    Spacer(Modifier.width(10.dp))
-                    Column {
-                        Text("${index + 1}. $title", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                        Text(description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                }
-            }
         }
     }
 }

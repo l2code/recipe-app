@@ -55,6 +55,7 @@ import com.recipearchive.app.ui.settings.SettingsViewModel
 import com.recipearchive.app.ui.webimport.ImportHistoryScreen
 import com.recipearchive.app.ui.webimport.ImportScreen
 import com.recipearchive.app.ui.webimport.ImportViewModel
+import com.recipearchive.app.ui.webimport.NytSearchScreen
 
 private const val ROUTE_LIBRARY = "library"
 private const val ROUTE_PLAN = "plan"
@@ -63,6 +64,7 @@ private const val ROUTE_PANTRY = "pantry"
 private const val ROUTE_HISTORY = "history"
 private const val ROUTE_IMPORT = "import"
 private const val ROUTE_IMPORT_HISTORY = "import_history"
+private const val ROUTE_NYT_SEARCH = "nyt_search"
 private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_DETAIL = "detail/{recipeId}"
 private const val ROUTE_COOKING = "cooking/{recipeId}/{sessionId}"
@@ -97,7 +99,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
         factory = CompanionViewModel.Factory(container.cookingCompanionRepository),
     )
     val importViewModel: ImportViewModel = viewModel(
-        factory = ImportViewModel.Factory(container.webRecipeImportService),
+        factory = ImportViewModel.Factory(container.webRecipeImportService, container.nytSearchService),
     )
     val showNavLabels by container.settingsStore.showNavLabels.collectAsState()
 
@@ -163,8 +165,15 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
                     viewModel = importViewModel,
                     onImported = { recipeId -> navController.navigate("detail/$recipeId") },
                     onOpenHistory = { navController.navigate(ROUTE_IMPORT_HISTORY) },
+                    onSearchNyt = { navController.navigate(ROUTE_NYT_SEARCH) },
                 )
             }
+        }
+        composable(ROUTE_NYT_SEARCH) {
+            NytSearchScreen(
+                viewModel = importViewModel,
+                onBack = { navController.popBackStack() },
+            )
         }
         composable(ROUTE_IMPORT_HISTORY) {
             ImportHistoryScreen(

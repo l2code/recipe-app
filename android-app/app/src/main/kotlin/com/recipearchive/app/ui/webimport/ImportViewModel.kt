@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.webimport.FetchAndParseOutcome
 import com.recipearchive.app.data.webimport.ImportHistoryEntryUi
+import com.recipearchive.app.data.webimport.NytSearchOutcome
+import com.recipearchive.app.data.webimport.NytSearchResult
+import com.recipearchive.app.data.webimport.NytSearchService
 import com.recipearchive.app.data.webimport.ParsedRecipe
 import com.recipearchive.app.data.webimport.SavedLinkUi
 import com.recipearchive.app.data.webimport.WebImportOutcome
@@ -20,7 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-enum class QuickSource { NYT_COOKING, ANY_WEBSITE, PASTE_TEXT, SAVED_LINK }
+enum class QuickSource { PASTE_TEXT, SAVED_LINK }
 
 data class ImportUiState(
     val url: String = "",
@@ -30,6 +33,24 @@ data class ImportUiState(
     val pasteTextDialogOpen: Boolean = false,
     val pastedText: String = "",
     val savedLinksExpanded: Boolean = false,
+)
+
+/** Backs the full-screen "Search NYT Cooking" destination. */
+data class NytSearchUiState(
+    val query: String = "",
+    val results: List<NytSearchResult> = emptyList(),
+    val isSearching: Boolean = false,
+    val searchError: String? = null,
+    val hasSearched: Boolean = false,
+    val featured: List<NytSearchResult> = emptyList(),
+    val isFeaturedLoading: Boolean = false,
+    val featuredError: String? = null,
+    val featuredLoaded: Boolean = false,
+    // URLs already in the library -- these recipes show a disabled/checked import icon.
+    val existingUrls: Set<String> = emptySet(),
+    // URLs with an import currently in flight -- these show a spinner.
+    val importingUrls: Set<String> = emptySet(),
+    val message: String? = null,
 )
 
 data class PreviewUiState(
@@ -46,12 +67,18 @@ sealed class ImportEvent {
     data class Imported(val recipeId: String) : ImportEvent()
 }
 
-class ImportViewModel(private val webRecipeImportService: WebRecipeImportService) : ViewModel() {
+class ImportViewModel(
+    private val webRecipeImportService: WebRecipeImportService,
+    private val nytSearchService: NytSearchService = NytSearchService(),
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ImportUiState())
     val uiState: StateFlow<ImportUiState> = _uiState.asStateFlow()
 
     private val _previewState = MutableStateFlow<PreviewUiState?>(null)
     val previewState: StateFlow<PreviewUiState?> = _previewState.asStateFlow()
+
+    private val _nytSearchState = MutableStateFlow(NytSearchUiState())
+    val nytSearchState: StateFlow<NytSearchUiState> = _nytSearchState.asStateFlow()
 
     val savedLinks: StateFlow<List<SavedLinkUi>> = webRecipeImportService.observeSavedLinks()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -68,14 +95,102 @@ class ImportViewModel(private val webRecipeImportService: WebRecipeImportService
 
     fun onQuickSourceSelected(source: QuickSource) {
         when (source) {
-            QuickSource.NYT_COOKING -> _uiState.update { it.copy(infoMessage = null, savedLinksExpanded = false) }
-            QuickSource.ANY_WEBSITE -> _uiState.update { it.copy(infoMessage = null, savedLinksExpanded = false) }
             QuickSource.PASTE_TEXT -> _uiState.update { it.copy(pasteTextDialogOpen = true, infoMessage = null) }
             QuickSource.SAVED_LINK -> _uiState.update {
                 it.copy(savedLinksExpanded = !it.savedLinksExpanded, infoMessage = null)
             }
         }
     }
+
+    // --- NYT Cooking search screen -----------------------------------------------------
+
+    /** Kicks off the "today on NYT Cooking" fetch the first time the search screen is opened. */
+    fun loadNytFeaturedIfNeeded() {
+        val state = _nytSearchState.value
+        if (state.featuredLoaded || state.isFeaturedLoading) return
+        _nytSearchState.update { it.copy(isFeaturedLoading = true, featuredError = null) }
+        viewModelScope.launch {
+            when (val outcome = nytSearchService.fetchFeatured()) {
+                is NytSearchOutcome.Success -> {
+                    val existing = webRecipeImportService.findExistingUrls(outcome.results.map { it.url })
+                    _nytSearchState.update {
+                        it.copy(
+                            isFeaturedLoading = false,
+                            featured = outcome.results,
+                            featuredLoaded = true,
+                            existingUrls = it.existingUrls + existing,
+                        )
+                    }
+                }
+                is NytSearchOutcome.NetworkError -> _nytSearchState.update {
+                    it.copy(isFeaturedLoading = false, featuredLoaded = true, featuredError = "Couldn't load today's recipes: ${outcome.message}")
+                }
+            }
+        }
+    }
+
+    fun onNytSearchQueryChanged(query: String) {
+        _nytSearchState.update { it.copy(query = query) }
+    }
+
+    fun runNytSearch() {
+        val query = _nytSearchState.value.query.trim()
+        if (query.isBlank()) return
+        _nytSearchState.update { it.copy(isSearching = true, searchError = null) }
+        viewModelScope.launch {
+            when (val outcome = nytSearchService.search(query)) {
+                is NytSearchOutcome.Success -> {
+                    val existing = webRecipeImportService.findExistingUrls(outcome.results.map { it.url })
+                    _nytSearchState.update {
+                        it.copy(
+                            isSearching = false,
+                            results = outcome.results,
+                            hasSearched = true,
+                            existingUrls = it.existingUrls + existing,
+                        )
+                    }
+                }
+                is NytSearchOutcome.NetworkError -> _nytSearchState.update {
+                    it.copy(isSearching = false, hasSearched = true, searchError = "Couldn't reach NYT Cooking: ${outcome.message}")
+                }
+            }
+        }
+    }
+
+    /** One-tap import for a search/featured result. Stays on the search screen so several
+     *  recipes can be imported in a row; the row switches to a disabled/checked icon after. */
+    fun importNytResult(result: NytSearchResult) {
+        val state = _nytSearchState.value
+        if (result.url in state.existingUrls || result.url in state.importingUrls) return
+        _nytSearchState.update { it.copy(importingUrls = it.importingUrls + result.url, message = null) }
+        viewModelScope.launch {
+            val outcome = webRecipeImportService.importFromUrl(result.url, sourcePublisherOverride = "NYT Cooking")
+            _nytSearchState.update { current ->
+                val importing = current.importingUrls - result.url
+                when (outcome) {
+                    is WebImportOutcome.Success -> current.copy(
+                        importingUrls = importing,
+                        existingUrls = current.existingUrls + result.url,
+                        message = "Imported \"${outcome.title}\"",
+                    )
+                    is WebImportOutcome.NotFound -> current.copy(importingUrls = importing, message = "Couldn't find a recipe there.")
+                    is WebImportOutcome.NetworkError -> current.copy(importingUrls = importing, message = "Couldn't reach that page: ${outcome.message}")
+                    is WebImportOutcome.ParseError -> current.copy(importingUrls = importing, message = outcome.message)
+                }
+            }
+        }
+    }
+
+    fun dismissNytSearchMessage() {
+        _nytSearchState.update { it.copy(message = null) }
+    }
+
+    /** Backs out of search results to the "Today on NYT Cooking" list. */
+    fun clearNytSearch() {
+        _nytSearchState.update { it.copy(query = "", results = emptyList(), hasSearched = false, searchError = null) }
+    }
+
+    // -------------------------------------------------------------------------------------
 
     fun dismissInfoMessage() {
         _uiState.update { it.copy(infoMessage = null) }
@@ -202,11 +317,14 @@ class ImportViewModel(private val webRecipeImportService: WebRecipeImportService
         }
     }
 
-    class Factory(private val webRecipeImportService: WebRecipeImportService) : ViewModelProvider.Factory {
+    class Factory(
+        private val webRecipeImportService: WebRecipeImportService,
+        private val nytSearchService: NytSearchService,
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass.isAssignableFrom(ImportViewModel::class.java))
-            return ImportViewModel(webRecipeImportService) as T
+            return ImportViewModel(webRecipeImportService, nytSearchService) as T
         }
     }
 }
