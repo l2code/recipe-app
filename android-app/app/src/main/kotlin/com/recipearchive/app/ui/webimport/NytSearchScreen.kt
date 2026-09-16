@@ -41,7 +41,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.webimport.NytSearchResult
 
@@ -232,16 +237,21 @@ private fun NytResultRow(
                 }
             }
             Spacer(Modifier.width(10.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(result.title, style = MaterialTheme.typography.titleSmall, maxLines = 2)
-                if (result.byline != null) {
-                    Text(
-                        result.byline,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+            Text(
+                buildAnnotatedString {
+                    append(result.title)
+                    if (result.byline != null) {
+                        append("  ")
+                        withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)) {
+                            append(result.byline)
+                        }
+                    }
+                },
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
             Spacer(Modifier.width(8.dp))
             when {
                 isImporting -> CircularProgressIndicator(modifier = Modifier.size(24.dp))

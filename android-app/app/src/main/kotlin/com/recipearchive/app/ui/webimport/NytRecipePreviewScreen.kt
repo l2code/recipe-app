@@ -148,14 +148,7 @@ private fun PreviewHero(preview: NytPreviewUiState, onImport: () -> Unit) {
         color = MaterialTheme.colorScheme.surface,
     ) {
         Row(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(preview.title, style = MaterialTheme.typography.titleLarge)
-                Text(
-                    preview.byline?.let { "NYT Cooking · $it" } ?: "NYT Cooking",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            Text(preview.title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
             Spacer(Modifier.width(12.dp))
             when {
                 preview.imported -> Surface(
