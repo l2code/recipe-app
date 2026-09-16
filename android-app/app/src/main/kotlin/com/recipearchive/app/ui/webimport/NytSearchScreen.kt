@@ -243,7 +243,7 @@ private fun NytResultRow(
                     if (result.byline != null) {
                         append("  ")
                         withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                            append(result.byline)
+                            append("(${result.byline})")
                         }
                     }
                 },
