@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.recipearchive.app.data.settings.ThemeMode
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +58,7 @@ fun SettingsScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text("Settings", style = MaterialTheme.typography.titleMedium) },
+                title = { Text("Settings", style = MaterialTheme.typography.titleSmall) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -107,7 +108,7 @@ private fun NytAccountCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.RestaurantMenu, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(8.dp))
-                Text("NYT Cooking account", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                Text("NYT Cooking account", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
                 Surface(
                     shape = MaterialTheme.shapes.small,
                     color = if (state.isSaved) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceVariant,
@@ -115,7 +116,7 @@ private fun NytAccountCard(
                     Text(
                         if (state.isSaved) "Saved" else "Not connected",
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
             }
@@ -123,7 +124,8 @@ private fun NytAccountCard(
                 value = state.email,
                 onValueChange = onEmailChanged,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Email") },
+                label = { Text("Email", style = MaterialTheme.typography.bodySmall) },
+                textStyle = MaterialTheme.typography.bodySmall,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             )
@@ -131,27 +133,34 @@ private fun NytAccountCard(
                 value = state.password,
                 onValueChange = onPasswordChanged,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Password") },
+                label = { Text("Password", style = MaterialTheme.typography.bodySmall) },
+                textStyle = MaterialTheme.typography.bodySmall,
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
             if (state.statusMessage != null) {
-                Text(state.statusMessage, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                Text(state.statusMessage, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                OutlinedButton(onClick = onTestLogin, modifier = Modifier.weight(1f)) { Text("Test Login") }
-                Button(onClick = onSave, modifier = Modifier.weight(1f)) { Text("Save Credentials") }
+                OutlinedButton(onClick = onTestLogin, modifier = Modifier.weight(1f)) {
+                    Text("Test Login", style = MaterialTheme.typography.labelMedium)
+                }
+                Button(onClick = onSave, modifier = Modifier.weight(1f)) {
+                    Text("Save Credentials", style = MaterialTheme.typography.labelMedium)
+                }
             }
             Text(
                 "Credentials are stored securely on this device for your reference. We never sign in to " +
                     "NYT Cooking -- recipe pages are fetched from the public page, the same content their " +
                     "site serves to search engines.",
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 13.sp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             if (state.isSaved) {
-                TextButton(onClick = onRemove) { Text("Remove Credentials") }
+                TextButton(onClick = onRemove) {
+                    Text("Remove Credentials", style = MaterialTheme.typography.labelMedium)
+                }
             }
         }
     }
@@ -165,10 +174,10 @@ private fun AppearanceCard(themeMode: ThemeMode, onThemeModeSelected: (ThemeMode
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Appearance", style = MaterialTheme.typography.titleMedium)
+            Text("Appearance", style = MaterialTheme.typography.titleSmall)
             Text(
                 "Choose how the app looks.",
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 8.dp),
             )
@@ -194,7 +203,7 @@ private fun ThemeOption(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(selected = value == selected, onClick = { onSelected(value) })
-        Text(label, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
+        Text(label, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
     }
 }
 
@@ -206,16 +215,16 @@ private fun NavigationCard(showNavLabels: Boolean, onShowNavLabelsChanged: (Bool
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Navigation", style = MaterialTheme.typography.titleMedium)
+            Text("Navigation", style = MaterialTheme.typography.titleSmall)
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Show labels under icons", style = MaterialTheme.typography.bodyMedium)
+                    Text("Show labels under icons", style = MaterialTheme.typography.bodySmall)
                     Text(
                         "Turn off for a more compact menu.",
-                        style = MaterialTheme.typography.labelSmall,
+                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 13.sp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

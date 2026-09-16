@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -30,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -68,6 +70,10 @@ private const val ARG_RECIPE_ID = "recipeId"
 private const val ARG_SESSION_ID = "sessionId"
 
 private data class MainDestination(val route: String, val label: String, val icon: ImageVector)
+
+// Without a label underneath, the item has room to spare -- a bigger glyph fills it
+// instead of leaving the icon looking small and lost in the extra whitespace.
+private val NAV_ICON_SIZE_COMPACT = 28.dp
 
 private val mainDestinations = listOf(
     MainDestination(ROUTE_LIBRARY, "Recipes", Icons.AutoMirrored.Filled.MenuBook),
@@ -263,6 +269,7 @@ private fun MainScaffold(
                                 Icon(
                                     destination.icon,
                                     contentDescription = if (showLabels) null else destination.label,
+                                    modifier = if (showLabels) Modifier else Modifier.size(NAV_ICON_SIZE_COMPACT),
                                 )
                             },
                             label = if (showLabels) { { Text(destination.label) } } else null,
@@ -271,7 +278,13 @@ private fun MainScaffold(
                     NavigationBarItem(
                         selected = false,
                         onClick = onOpenSettings,
-                        icon = { Icon(Icons.Filled.Settings, contentDescription = if (showLabels) null else "Settings") },
+                        icon = {
+                            Icon(
+                                Icons.Filled.Settings,
+                                contentDescription = if (showLabels) null else "Settings",
+                                modifier = if (showLabels) Modifier else Modifier.size(NAV_ICON_SIZE_COMPACT),
+                            )
+                        },
                         label = if (showLabels) { { Text("Settings") } } else null,
                     )
                 }
@@ -294,6 +307,7 @@ private fun MainScaffold(
                                 Icon(
                                     destination.icon,
                                     contentDescription = if (showLabels) null else destination.label,
+                                    modifier = if (showLabels) Modifier else Modifier.size(NAV_ICON_SIZE_COMPACT),
                                 )
                             },
                             label = if (showLabels) { { Text(destination.label) } } else null,
@@ -305,7 +319,13 @@ private fun MainScaffold(
                     NavigationRailItem(
                         selected = false,
                         onClick = onOpenSettings,
-                        icon = { Icon(Icons.Filled.Settings, contentDescription = if (showLabels) null else "Settings") },
+                        icon = {
+                            Icon(
+                                Icons.Filled.Settings,
+                                contentDescription = if (showLabels) null else "Settings",
+                                modifier = if (showLabels) Modifier else Modifier.size(NAV_ICON_SIZE_COMPACT),
+                            )
+                        },
                         label = if (showLabels) { { Text("Settings") } } else null,
                     )
                 }
