@@ -25,6 +25,8 @@ import kotlinx.coroutines.launch
 
 enum class QuickSource { PASTE_TEXT, SAVED_LINK }
 
+enum class NytSortOrder { NONE, TITLE_ASC, TITLE_DESC, REVIEWS_ASC, REVIEWS_DESC }
+
 data class ImportUiState(
     val url: String = "",
     val isLoading: Boolean = false,
@@ -42,17 +44,14 @@ data class NytSearchUiState(
     val isSearching: Boolean = false,
     val searchError: String? = null,
     val hasSearched: Boolean = false,
-    val featured: List<NytSearchResult> = emptyList(),
-    val isFeaturedLoading: Boolean = false,
-    val featuredError: String? = null,
-    val featuredLoaded: Boolean = false,
     // URLs already in the library -- these recipes show a disabled/checked import icon.
     val existingUrls: Set<String> = emptySet(),
     // URLs with an import currently in flight -- these show a spinner.
     val importingUrls: Set<String> = emptySet(),
     val message: String? = null,
-    // Minimum star rating to show, applied client-side to both lists below; 0 = no filter.
+    // Minimum star rating to show, applied client-side; 0 = no filter.
     val minRating: Int = 0,
+    val sortOrder: NytSortOrder = NytSortOrder.NONE,
 )
 
 /** Backs the read-only "view before importing" screen opened from a search/featured row. */
@@ -122,31 +121,6 @@ class ImportViewModel(
 
     // --- NYT Cooking search screen -----------------------------------------------------
 
-    /** Kicks off the "today on NYT Cooking" fetch the first time the search screen is opened. */
-    fun loadNytFeaturedIfNeeded() {
-        val state = _nytSearchState.value
-        if (state.featuredLoaded || state.isFeaturedLoading) return
-        _nytSearchState.update { it.copy(isFeaturedLoading = true, featuredError = null) }
-        viewModelScope.launch {
-            when (val outcome = nytSearchService.fetchFeatured()) {
-                is NytSearchOutcome.Success -> {
-                    val existing = webRecipeImportService.findExistingUrls(outcome.results.map { it.url })
-                    _nytSearchState.update {
-                        it.copy(
-                            isFeaturedLoading = false,
-                            featured = outcome.results,
-                            featuredLoaded = true,
-                            existingUrls = it.existingUrls + existing,
-                        )
-                    }
-                }
-                is NytSearchOutcome.NetworkError -> _nytSearchState.update {
-                    it.copy(isFeaturedLoading = false, featuredLoaded = true, featuredError = "Couldn't load today's recipes: ${outcome.message}")
-                }
-            }
-        }
-    }
-
     fun onNytSearchQueryChanged(query: String) {
         _nytSearchState.update { it.copy(query = query) }
     }
@@ -203,7 +177,7 @@ class ImportViewModel(
         _nytSearchState.update { it.copy(message = null) }
     }
 
-    /** Backs out of search results to the "Today on NYT Cooking" list. */
+    /** Clears the current search back to the empty pre-search state. */
     fun clearNytSearch() {
         _nytSearchState.update { it.copy(query = "", results = emptyList(), hasSearched = false, searchError = null) }
     }
@@ -211,6 +185,10 @@ class ImportViewModel(
     /** Minimum star rating to show, applied client-side; pass 0 to clear the filter. */
     fun setNytMinRating(rating: Int) {
         _nytSearchState.update { it.copy(minRating = rating) }
+    }
+
+    fun setNytSortOrder(order: NytSortOrder) {
+        _nytSearchState.update { it.copy(sortOrder = order) }
     }
 
     /** Opens the read-only preview for a search/featured row and fetches its full recipe. */

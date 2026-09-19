@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
@@ -25,11 +25,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -37,9 +39,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -57,10 +61,10 @@ import androidx.compose.ui.unit.dp
 import com.recipearchive.app.data.webimport.NytSearchResult
 
 /**
- * Full-screen NYT Cooking search: a search field over a "Today on NYT Cooking" list
- * pulled from their homepage, replaced by search results once a query runs. Every row
- * gets a one-tap import icon; recipes already in the library show a disabled checkmark
- * instead so the same recipe can't be imported twice.
+ * Full-screen NYT Cooking search. Every row gets a one-tap import icon; recipes already
+ * in the library show a disabled checkmark instead so the same recipe can't be imported
+ * twice. Rating filter and sort order are both applied client-side, since NYT's own
+ * search page doesn't support either.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,10 +77,6 @@ fun NytSearchScreen(
     val state by viewModel.nytSearchState.collectAsState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-
-    LaunchedEffect(Unit) {
-        viewModel.loadNytFeaturedIfNeeded()
-    }
 
     Scaffold(
         modifier = modifier,
@@ -106,12 +106,16 @@ fun NytSearchScreen(
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 OutlinedTextField(
                     value = state.query,
                     onValueChange = viewModel::onNytSearchQueryChanged,
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Search recipes, e.g. chicken tagine") },
+                    placeholder = { Text("Search recipes…") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     keyboardActions = KeyboardActions(onSearch = {
@@ -131,8 +135,18 @@ fun NytSearchScreen(
                 IconButton(onClick = viewModel::runNytSearch, enabled = state.query.isNotBlank() && !state.isSearching) {
                     Icon(Icons.Filled.Search, contentDescription = "Search")
                 }
+                Spacer(Modifier.width(4.dp))
+                DropdownSelector(
+                    selectedLabel = RATING_OPTIONS.first { it.first == state.minRating }.second,
+                    options = RATING_OPTIONS,
+                    onSelected = viewModel::setNytMinRating,
+                )
+                DropdownSelector(
+                    selectedLabel = SORT_OPTIONS.first { it.first == state.sortOrder }.second,
+                    options = SORT_OPTIONS,
+                    onSelected = viewModel::setNytSortOrder,
+                )
             }
-            RatingFilterRow(selected = state.minRating, onSelected = viewModel::setNytMinRating)
             if (state.message != null) {
                 Surface(
                     shape = MaterialTheme.shapes.small,
@@ -146,13 +160,18 @@ fun NytSearchScreen(
                     )
                 }
             }
-            if (state.hasSearched) {
+            if (!state.hasSearched) {
+                InfoText("Search NYT Cooking above to find a recipe to import.")
+            } else {
                 Text("Search results", style = MaterialTheme.typography.titleMedium)
-                val filtered = state.results.filter { (it.rating ?: 0) >= state.minRating }
+                val visible = sortResults(
+                    state.results.filter { (it.rating ?: 0) >= state.minRating },
+                    state.sortOrder,
+                )
                 when {
                     state.isSearching -> LoadingBox()
                     state.searchError != null -> InfoText(state.searchError!!, isError = true)
-                    filtered.isEmpty() -> InfoText(
+                    visible.isEmpty() -> InfoText(
                         if (state.minRating > 0) {
                             "No ${state.minRating}+ star recipes found for \"${state.query}\"."
                         } else {
@@ -160,24 +179,7 @@ fun NytSearchScreen(
                         },
                     )
                     else -> NytResultList(
-                        results = filtered,
-                        existingUrls = state.existingUrls,
-                        importingUrls = state.importingUrls,
-                        onImport = viewModel::importNytResult,
-                        onOpenPreview = { result -> viewModel.openNytPreview(result); onOpenPreview() },
-                    )
-                }
-            } else {
-                Text("Today on NYT Cooking", style = MaterialTheme.typography.titleMedium)
-                val filtered = state.featured.filter { (it.rating ?: 0) >= state.minRating }
-                when {
-                    state.isFeaturedLoading -> LoadingBox()
-                    state.featuredError != null -> InfoText(state.featuredError!!, isError = true)
-                    filtered.isEmpty() -> InfoText(
-                        if (state.minRating > 0) "No ${state.minRating}+ star recipes right now." else "Nothing to show right now.",
-                    )
-                    else -> NytResultList(
-                        results = filtered,
+                        results = visible,
                         existingUrls = state.existingUrls,
                         importingUrls = state.importingUrls,
                         onImport = viewModel::importNytResult,
@@ -189,11 +191,43 @@ fun NytSearchScreen(
     }
 }
 
+private val RATING_OPTIONS = listOf(
+    0 to "All ratings",
+    5 to "5★",
+    4 to "4★+",
+    3 to "3★+",
+    2 to "2★+",
+    1 to "1★+",
+)
+
+private val SORT_OPTIONS = listOf(
+    NytSortOrder.NONE to "Sort",
+    NytSortOrder.TITLE_ASC to "A–Z",
+    NytSortOrder.TITLE_DESC to "Z–A",
+    NytSortOrder.REVIEWS_DESC to "Most reviews",
+    NytSortOrder.REVIEWS_ASC to "Fewest reviews",
+)
+
+private fun sortResults(results: List<NytSearchResult>, order: NytSortOrder): List<NytSearchResult> = when (order) {
+    NytSortOrder.NONE -> results
+    NytSortOrder.TITLE_ASC -> results.sortedBy { it.title.lowercase() }
+    NytSortOrder.TITLE_DESC -> results.sortedByDescending { it.title.lowercase() }
+    NytSortOrder.REVIEWS_ASC -> results.sortedBy { it.reviewCount ?: 0 }
+    NytSortOrder.REVIEWS_DESC -> results.sortedByDescending { it.reviewCount ?: 0 }
+}
+
 @Composable
-private fun RatingFilterRow(selected: Int, onSelected: (Int) -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        listOf(0 to "All", 3 to "3★+", 4 to "4★+", 5 to "5★").forEach { (rating, label) ->
-            FilterChip(selected = selected == rating, onClick = { onSelected(rating) }, label = { Text(label) })
+private fun <T> DropdownSelector(selectedLabel: String, options: List<Pair<T, String>>, onSelected: (T) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        OutlinedButton(onClick = { expanded = true }) {
+            Text(selectedLabel)
+            Icon(Icons.Filled.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp))
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            options.forEach { (value, label) ->
+                DropdownMenuItem(text = { Text(label) }, onClick = { onSelected(value); expanded = false })
+            }
         }
     }
 }
@@ -263,25 +297,24 @@ private fun NytResultRow(
                 }
             }
             Spacer(Modifier.width(10.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    buildAnnotatedString {
-                        append(result.title)
-                        if (result.byline != null) {
-                            append("  ")
-                            withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                                append("(${result.byline})")
-                            }
+            Text(
+                buildAnnotatedString {
+                    append(result.title)
+                    if (result.byline != null) {
+                        append("  ")
+                        withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)) {
+                            append("(${result.byline})")
                         }
-                    },
-                    style = MaterialTheme.typography.titleSmall,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                if (result.rating != null) {
-                    Spacer(Modifier.height(2.dp))
-                    RatingStars(result.rating, result.reviewCount)
-                }
+                    }
+                },
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            if (result.rating != null) {
+                Spacer(Modifier.width(8.dp))
+                RatingStars(result.rating, result.reviewCount)
             }
             Spacer(Modifier.width(8.dp))
             when {
@@ -323,6 +356,7 @@ private fun RatingStars(rating: Int, reviewCount: Int?) {
                 "(${"%,d".format(reviewCount)})",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
             )
         }
     }
