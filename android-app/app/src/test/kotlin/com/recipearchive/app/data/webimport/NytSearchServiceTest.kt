@@ -16,11 +16,21 @@ class NytSearchServiceTest {
     private lateinit var service: NytSearchService
 
     // Mirrors the real card markup: an <a href="/recipes/..."> wrapping an <img>, an
-    // <h3> title, and a <p> byline, in that order -- see NytSearchService's kdoc.
-    private fun cardHtml(id: String, title: String, byline: String) = """
+    // <h3> title, and a <p> byline, in that order -- see NytSearchService's kdoc. Real
+    // cards also carry an accessible rating caption sentence like the one reproduced
+    // here when a rating/review count is supplied.
+    private fun cardHtml(id: String, title: String, byline: String, reviewCount: Int? = null, rating: Int? = null) = """
         <li><div class="recipecard_recipeCard"><article>
           <a href="/recipes/$id"><figure><img alt="$title" src="https://static01.nyt.com/images/$id.jpg"/></figure>
-          <section><h3 class="atoms_cardTitle">$title</h3><p class="recipecard_byline">$byline</p></section></a>
+          <section><h3 class="atoms_cardTitle">$title</h3><p class="recipecard_byline">$byline</p>
+          ${
+        if (reviewCount != null && rating != null) {
+            """<div class="recipecard_recipeCardRating"><span class="recipecard_ratingCaption">$reviewCount ratings with an average rating of $rating out of 5 stars</span></div>"""
+        } else {
+            ""
+        }
+    }
+          </section></a>
         </article></div></li>
     """.trimIndent()
 
@@ -55,6 +65,31 @@ class NytSearchServiceTest {
         assertTrue(results[0].url.endsWith("/recipes/101-roast-chicken"))
         assertEquals("Mark Bittman", results[0].byline)
         assertTrue(results[0].imageUrl!!.contains("101-roast-chicken.jpg"))
+    }
+
+    @Test
+    fun `search parses review count and star rating from the rating caption`() = runTest {
+        val html = "<html><body>" +
+            cardHtml("101-roast-chicken", "Roast Chicken", "Mark Bittman", reviewCount = 13880, rating = 5) +
+            "</body></html>"
+        server.enqueue(MockResponse().setBody(html).setResponseCode(200))
+
+        val outcome = service.search("chicken") as NytSearchOutcome.Success
+
+        assertEquals(1, outcome.results.size)
+        assertEquals(5, outcome.results[0].rating)
+        assertEquals(13880, outcome.results[0].reviewCount)
+    }
+
+    @Test
+    fun `a card with no rating caption leaves rating and reviewCount null`() = runTest {
+        val html = "<html><body>" + cardHtml("101-roast-chicken", "Roast Chicken", "Mark Bittman") + "</body></html>"
+        server.enqueue(MockResponse().setBody(html).setResponseCode(200))
+
+        val outcome = service.search("chicken") as NytSearchOutcome.Success
+
+        assertEquals(null, outcome.results[0].rating)
+        assertEquals(null, outcome.results[0].reviewCount)
     }
 
     @Test

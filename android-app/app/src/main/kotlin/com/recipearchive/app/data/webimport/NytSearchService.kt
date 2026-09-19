@@ -14,6 +14,8 @@ data class NytSearchResult(
     val url: String,
     val imageUrl: String?,
     val byline: String?,
+    val rating: Int? = null,
+    val reviewCount: Int? = null,
 )
 
 sealed class NytSearchOutcome {
@@ -91,12 +93,20 @@ class NytSearchService(
             if (title.isBlank()) continue
             val imageUrl = anchor.selectFirst("img")?.attr("abs:src")?.takeIf { it.isNotBlank() }
             val byline = anchor.selectFirst("p")?.text()?.trim()?.takeIf { it.isNotBlank() }
-            results.add(NytSearchResult(title, href, imageUrl, byline))
+            val ratingMatch = RATING_REGEX.find(anchor.text())
+            val reviewCount = ratingMatch?.groupValues?.get(1)?.replace(",", "")?.toIntOrNull()
+            val rating = ratingMatch?.groupValues?.get(2)?.toIntOrNull()
+            results.add(NytSearchResult(title, href, imageUrl, byline, rating, reviewCount))
         }
         return results
     }
 
     companion object {
         private const val USER_AGENT = "Mozilla/5.0 (compatible; RecipeArchiveApp/1.0)"
+
+        // Matches the accessible rating caption NYT renders on every rated card, e.g.
+        // "13,880 ratings with an average rating of 5 out of 5 stars". Reading this
+        // sentence is more stable than depending on the hashed CSS classes around it.
+        private val RATING_REGEX = Regex("([\\d,]+) ratings? with an average rating of (\\d+) out of 5 stars")
     }
 }

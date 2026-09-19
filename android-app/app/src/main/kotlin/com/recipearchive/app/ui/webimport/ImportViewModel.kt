@@ -51,6 +51,8 @@ data class NytSearchUiState(
     // URLs with an import currently in flight -- these show a spinner.
     val importingUrls: Set<String> = emptySet(),
     val message: String? = null,
+    // Minimum star rating to show, applied client-side to both lists below; 0 = no filter.
+    val minRating: Int = 0,
 )
 
 /** Backs the read-only "view before importing" screen opened from a search/featured row. */
@@ -204,6 +206,11 @@ class ImportViewModel(
     /** Backs out of search results to the "Today on NYT Cooking" list. */
     fun clearNytSearch() {
         _nytSearchState.update { it.copy(query = "", results = emptyList(), hasSearched = false, searchError = null) }
+    }
+
+    /** Minimum star rating to show, applied client-side; pass 0 to clear the filter. */
+    fun setNytMinRating(rating: Int) {
+        _nytSearchState.update { it.copy(minRating = rating) }
     }
 
     /** Opens the read-only preview for a search/featured row and fetches its full recipe. */
