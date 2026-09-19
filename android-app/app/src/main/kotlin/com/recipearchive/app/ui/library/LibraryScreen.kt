@@ -89,18 +89,11 @@ fun LibraryScreen(
             Column {
                 TopAppBar(
                     title = {
-                        Column {
-                            Text(
-                                "My Recipe Box",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            )
-                            Text(
-                                "Family favorites, notes and discoveries",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.75f),
-                            )
-                        }
+                        Text(
+                            "Recipe Box",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        )
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                 )
