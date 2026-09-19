@@ -224,7 +224,12 @@ private fun <T> DropdownSelector(selectedLabel: String, options: List<Pair<T, St
             Text(selectedLabel)
             Icon(Icons.Filled.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp))
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+        ) {
             options.forEach { (value, label) ->
                 DropdownMenuItem(text = { Text(label) }, onClick = { onSelected(value); expanded = false })
             }
