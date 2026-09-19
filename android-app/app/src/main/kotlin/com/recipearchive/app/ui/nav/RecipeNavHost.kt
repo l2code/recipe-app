@@ -312,7 +312,10 @@ private fun MainScaffold(
     ) { padding ->
         Row(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (expanded) {
-                NavigationRail(containerColor = MaterialTheme.colorScheme.surface) {
+                // Matches each screen's own TopAppBar color -- previously the rail stayed plain
+                // white while the bar next to it went green, leaving an uneven top edge where
+                // the two met.
+                NavigationRail(containerColor = MaterialTheme.colorScheme.primaryContainer) {
                     // NavigationRail top-aligns its items by default, which reads as top-heavy
                     // with only 6 destinations on a tall screen. Equal-weight spacers on either
                     // side center the group vertically instead, matching Material's guidance for
