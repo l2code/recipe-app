@@ -44,6 +44,10 @@ data class NytSearchUiState(
     val isSearching: Boolean = false,
     val searchError: String? = null,
     val hasSearched: Boolean = false,
+    val featured: List<NytSearchResult> = emptyList(),
+    val isFeaturedLoading: Boolean = false,
+    val featuredError: String? = null,
+    val featuredLoaded: Boolean = false,
     // URLs already in the library -- these recipes show a disabled/checked import icon.
     val existingUrls: Set<String> = emptySet(),
     // URLs with an import currently in flight -- these show a spinner.
@@ -120,6 +124,31 @@ class ImportViewModel(
     }
 
     // --- NYT Cooking search screen -----------------------------------------------------
+
+    /** Kicks off the "today on NYT Cooking" fetch the first time the search screen is opened. */
+    fun loadNytFeaturedIfNeeded() {
+        val state = _nytSearchState.value
+        if (state.featuredLoaded || state.isFeaturedLoading) return
+        _nytSearchState.update { it.copy(isFeaturedLoading = true, featuredError = null) }
+        viewModelScope.launch {
+            when (val outcome = nytSearchService.fetchFeatured()) {
+                is NytSearchOutcome.Success -> {
+                    val existing = webRecipeImportService.findExistingUrls(outcome.results.map { it.url })
+                    _nytSearchState.update {
+                        it.copy(
+                            isFeaturedLoading = false,
+                            featured = outcome.results,
+                            featuredLoaded = true,
+                            existingUrls = it.existingUrls + existing,
+                        )
+                    }
+                }
+                is NytSearchOutcome.NetworkError -> _nytSearchState.update {
+                    it.copy(isFeaturedLoading = false, featuredLoaded = true, featuredError = "Couldn't load today's recipes: ${outcome.message}")
+                }
+            }
+        }
+    }
 
     fun onNytSearchQueryChanged(query: String) {
         _nytSearchState.update { it.copy(query = query) }

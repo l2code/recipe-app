@@ -34,8 +34,7 @@ class NytSearchServiceTest {
         </article></div></li>
     """.trimIndent()
 
-    // Some cards (e.g. a homepage hero, were this service ever pointed at one) have no
-    // <h3> -- title only via img alt.
+    // The homepage's "Recipe of the Day" hero has no <h3> -- title only via img alt.
     private val noTitleTagHtml = """
         <div><a href="/recipes/999-hero-recipe"><img alt="Hero Recipe" src="https://static01.nyt.com/images/999.jpg"/></a></div>
     """.trimIndent()
@@ -122,6 +121,16 @@ class NytSearchServiceTest {
 
         assertEquals(1, outcome.results.size)
         assertEquals("Hero Recipe", outcome.results[0].title)
+    }
+
+    @Test
+    fun `fetchFeatured caps results at the requested limit`() = runTest {
+        val many = (1..20).joinToString("") { cardHtml("$it-recipe-$it", "Recipe $it", "Author") }
+        server.enqueue(MockResponse().setBody("<html><body>$many</body></html>").setResponseCode(200))
+
+        val outcome = service.fetchFeatured(limit = 5) as NytSearchOutcome.Success
+
+        assertEquals(5, outcome.results.size)
     }
 
     @Test

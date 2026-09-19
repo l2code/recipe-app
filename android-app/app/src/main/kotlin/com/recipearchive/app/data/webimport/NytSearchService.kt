@@ -24,17 +24,20 @@ sealed class NytSearchOutcome {
 }
 
 /**
- * Fetches NYT Cooking's public search results and scrapes the server-rendered recipe
- * cards from the page. Like [RecipeJsonLdParser], this only reads what the page already
- * sends an anonymous visitor -- no sign-in involved, and nothing to do with the
- * credentials saved in Settings.
+ * Fetches NYT Cooking's public search results and homepage, and scrapes the
+ * server-rendered recipe cards from each. Like [RecipeJsonLdParser], this only reads
+ * what the page already sends an anonymous visitor -- no sign-in involved, and nothing
+ * to do with the credentials saved in Settings.
  *
- * The search page doesn't embed JSON-LD the way individual recipe pages do, so this
- * parses the rendered card markup directly: every result card is built from the same
+ * Neither page embeds JSON-LD the way individual recipe pages do, so this parses the
+ * rendered card markup directly: every recipe card on both pages -- search results,
+ * "Recipe of the Day", and the homepage's various carousels -- is built from the same
  * component, rendered as an `<a href="/recipes/...">` wrapping an image, an `<h3>`
- * title, and a `<p>` byline, in that order. Card class names are CSS-module hashes that
- * can change on any NYT deploy, so this deliberately selects by tag/position within the
- * anchor rather than by class name.
+ * title, and a `<p>` byline, in that order. Card class names are CSS-module hashes
+ * that can change on any NYT deploy, so this deliberately selects by tag/position
+ * within the anchor rather than by class name. The one exception is the homepage's
+ * hero "Recipe of the Day" card, which uses a different layout with no `<h3>`; that
+ * one is still captured via its `<img alt>` as a title fallback.
  */
 class NytSearchService(
     private val httpClient: OkHttpClient = OkHttpClient(),
@@ -50,6 +53,14 @@ class NytSearchService(
             .build()
 
         fetchAndParse(url.toString())
+    }
+
+    /** Fetches the NYT Cooking homepage and returns the recipe cards it highlights right now. */
+    suspend fun fetchFeatured(limit: Int = 15): NytSearchOutcome = withContext(ioDispatcher) {
+        when (val outcome = fetchAndParse(baseUrl)) {
+            is NytSearchOutcome.Success -> NytSearchOutcome.Success(outcome.results.take(limit))
+            is NytSearchOutcome.NetworkError -> outcome
+        }
     }
 
     private fun fetchAndParse(url: String): NytSearchOutcome {

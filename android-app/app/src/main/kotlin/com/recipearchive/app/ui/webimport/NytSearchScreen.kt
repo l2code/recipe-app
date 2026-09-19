@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,6 +78,10 @@ fun NytSearchScreen(
     val state by viewModel.nytSearchState.collectAsState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(Unit) {
+        viewModel.loadNytFeaturedIfNeeded()
+    }
 
     Scaffold(
         modifier = modifier,
@@ -161,11 +166,29 @@ fun NytSearchScreen(
                 }
             }
             if (!state.hasSearched) {
-                InfoText("Search NYT Cooking above to find a recipe to import.")
+                Text("Today on NYT Cooking", style = MaterialTheme.typography.titleMedium)
+                val visible = sortResults(
+                    state.featured.filter { matchesRatingFilter(it, state.minRating) },
+                    state.sortOrder,
+                )
+                when {
+                    state.isFeaturedLoading -> LoadingBox()
+                    state.featuredError != null -> InfoText(state.featuredError!!, isError = true)
+                    visible.isEmpty() -> InfoText(
+                        if (state.minRating > 0) "No ${state.minRating}+ star recipes right now." else "Nothing to show right now.",
+                    )
+                    else -> NytResultList(
+                        results = visible,
+                        existingUrls = state.existingUrls,
+                        importingUrls = state.importingUrls,
+                        onImport = viewModel::importNytResult,
+                        onOpenPreview = { result -> viewModel.openNytPreview(result); onOpenPreview() },
+                    )
+                }
             } else {
                 Text("Search results", style = MaterialTheme.typography.titleMedium)
                 val visible = sortResults(
-                    state.results.filter { (it.rating ?: 0) >= state.minRating },
+                    state.results.filter { matchesRatingFilter(it, state.minRating) },
                     state.sortOrder,
                 )
                 when {
@@ -192,13 +215,20 @@ fun NytSearchScreen(
 }
 
 private val RATING_OPTIONS = listOf(
-    0 to "All ratings",
+    0 to "Ratings",
     5 to "5★",
     4 to "4★+",
     3 to "3★+",
     2 to "2★+",
     1 to "1★+",
 )
+
+// Recipes with no rating at all are treated as meeting the 1★+ tier (and the unfiltered
+// "Ratings" default) -- only the 2+ tiers actually require a real rating.
+private fun matchesRatingFilter(result: NytSearchResult, minRating: Int): Boolean {
+    val rating = result.rating ?: return minRating <= 1
+    return rating >= minRating
+}
 
 private val SORT_OPTIONS = listOf(
     NytSortOrder.NONE to "Sort",
