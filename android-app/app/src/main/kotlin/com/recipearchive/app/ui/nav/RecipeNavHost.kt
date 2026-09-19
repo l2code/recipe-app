@@ -2,12 +2,16 @@ package com.recipearchive.app.ui.nav
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -28,9 +32,14 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -78,6 +87,10 @@ private data class MainDestination(val route: String, val label: String, val ico
 // Without a label underneath, the item has room to spare -- a bigger glyph fills it
 // instead of leaving the icon looking small and lost in the extra whitespace.
 private val NAV_ICON_SIZE_COMPACT = 28.dp
+
+// Matches Material3's default (small) TopAppBar height, so the green strip painted above
+// the nav rail lines up exactly with each screen's own TopAppBar next to it.
+private val TOP_APP_BAR_HEIGHT = 64.dp
 
 private val mainDestinations = listOf(
     MainDestination(ROUTE_LIBRARY, "Recipes", Icons.AutoMirrored.Filled.MenuBook),
@@ -312,10 +325,25 @@ private fun MainScaffold(
     ) { padding ->
         Row(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (expanded) {
-                // Matches each screen's own TopAppBar color -- previously the rail stayed plain
-                // white while the bar next to it went green, leaving an uneven top edge where
-                // the two met.
-                NavigationRail(containerColor = MaterialTheme.colorScheme.primaryContainer) {
+                // A green strip matching each screen's own TopAppBar, painted above the (plain
+                // white) rail so the header reads as one continuous bar the full width of the
+                // screen instead of stopping at the content column. Sized off the rail's own
+                // measured width rather than fillMaxWidth(): fillMaxWidth() here would resolve
+                // against the whole Row (rail + content combined), not just this column, which
+                // silently squeezed the content pane to zero width the first time this was tried.
+                var railWidth by remember { mutableStateOf(0.dp) }
+                val density = LocalDensity.current
+                Column {
+                    Box(
+                        modifier = Modifier.width(railWidth).height(TOP_APP_BAR_HEIGHT)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                    )
+                    NavigationRail(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        modifier = Modifier.weight(1f).onGloballyPositioned {
+                            railWidth = with(density) { it.size.width.toDp() }
+                        },
+                    ) {
                     // NavigationRail top-aligns its items by default, which reads as top-heavy
                     // with only 6 destinations on a tall screen. Equal-weight spacers on either
                     // side center the group vertically instead, matching Material's guidance for
@@ -350,6 +378,7 @@ private fun MainScaffold(
                         },
                         label = if (showLabels) { { Text("Settings") } } else null,
                     )
+                    }
                 }
             }
             Box(modifier = Modifier.weight(1f)) { content() }
