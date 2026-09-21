@@ -6,6 +6,8 @@ import com.recipearchive.app.data.companion.CookingCompanionRepository
 import com.recipearchive.app.data.local.RecipeDatabase
 import com.recipearchive.app.data.repository.RecipeRepository
 import com.recipearchive.app.data.settings.SettingsStore
+import com.recipearchive.app.data.sync.ServerCredentialStore
+import com.recipearchive.app.data.sync.ServerSyncService
 import com.recipearchive.app.data.webimport.CredentialStore
 import com.recipearchive.app.data.webimport.NytSearchService
 import com.recipearchive.app.data.webimport.WebRecipeImportService
@@ -24,4 +26,10 @@ class AppContainer(context: Context) {
     // actually opened (and isn't available at all under Robolectric's JVM test environment,
     // where every test otherwise instantiates the real Application/AppContainer on startup).
     val credentialStore: CredentialStore by lazy { CredentialStore.create(context) }
+
+    // Lazy for the same reason as credentialStore above -- touches the Android Keystore.
+    val serverCredentialStore: ServerCredentialStore by lazy { ServerCredentialStore.create(context) }
+
+    // Lazy because it depends on serverCredentialStore above.
+    val serverSyncService: ServerSyncService by lazy { ServerSyncService(database, serverCredentialStore) }
 }

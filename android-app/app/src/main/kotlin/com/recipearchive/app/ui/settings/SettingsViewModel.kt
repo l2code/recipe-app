@@ -5,7 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.settings.SettingsStore
 import com.recipearchive.app.data.settings.ThemeMode
+import com.recipearchive.app.data.sync.PullPendingOutcome
+import com.recipearchive.app.data.sync.PushMirrorOutcome
+import com.recipearchive.app.data.sync.ServerCredentialStore
+import com.recipearchive.app.data.sync.ServerSyncService
 import com.recipearchive.app.data.webimport.CredentialStore
+import com.recipearchive.app.data.webimport.ParsedRecipe
+import com.recipearchive.app.data.webimport.WebImportOutcome
 import com.recipearchive.app.data.webimport.WebRecipeImportService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,10 +33,26 @@ data class NytRatingSyncUiState(
     val resultMessage: String? = null,
 )
 
+data class ServerSyncCredentialsUiState(
+    val serverUrl: String = "",
+    val username: String = "",
+    val password: String = "",
+    val isSaved: Boolean = false,
+    val statusMessage: String? = null,
+)
+
+data class ServerSyncUiState(
+    val isSyncing: Boolean = false,
+    val statusText: String? = null,
+    val resultMessage: String? = null,
+)
+
 class SettingsViewModel(
     private val settingsStore: SettingsStore,
     private val credentialStore: CredentialStore,
     private val webRecipeImportService: WebRecipeImportService,
+    private val serverCredentialStore: ServerCredentialStore,
+    private val serverSyncService: ServerSyncService,
 ) : ViewModel() {
     val themeMode: StateFlow<ThemeMode> = settingsStore.themeMode
     val showNavLabels: StateFlow<Boolean> = settingsStore.showNavLabels
@@ -46,6 +68,19 @@ class SettingsViewModel(
 
     private val _nytRatingSyncState = MutableStateFlow(NytRatingSyncUiState())
     val nytRatingSyncState: StateFlow<NytRatingSyncUiState> = _nytRatingSyncState.asStateFlow()
+
+    private val _serverCredentialsState = MutableStateFlow(
+        ServerSyncCredentialsUiState(
+            serverUrl = serverCredentialStore.getServerUrl().orEmpty(),
+            username = serverCredentialStore.getUsername().orEmpty(),
+            password = serverCredentialStore.getPassword().orEmpty(),
+            isSaved = serverCredentialStore.hasCredentials(),
+        ),
+    )
+    val serverCredentialsState: StateFlow<ServerSyncCredentialsUiState> = _serverCredentialsState.asStateFlow()
+
+    private val _serverSyncState = MutableStateFlow(ServerSyncUiState())
+    val serverSyncState: StateFlow<ServerSyncUiState> = _serverSyncState.asStateFlow()
 
     fun setThemeMode(mode: ThemeMode) = settingsStore.setThemeMode(mode)
     fun setShowNavLabels(show: Boolean) = settingsStore.setShowNavLabels(show)
@@ -124,15 +159,137 @@ class SettingsViewModel(
         _nytRatingSyncState.update { it.copy(resultMessage = null) }
     }
 
+    fun onServerUrlChanged(url: String) {
+        _serverCredentialsState.update { it.copy(serverUrl = url, statusMessage = null) }
+    }
+
+    fun onServerUsernameChanged(username: String) {
+        _serverCredentialsState.update { it.copy(username = username, statusMessage = null) }
+    }
+
+    fun onServerPasswordChanged(password: String) {
+        _serverCredentialsState.update { it.copy(password = password, statusMessage = null) }
+    }
+
+    fun saveServerCredentials() {
+        val state = _serverCredentialsState.value
+        if (state.serverUrl.isBlank() || state.username.isBlank() || state.password.isBlank()) {
+            _serverCredentialsState.update {
+                it.copy(statusMessage = "Enter a server URL, username, and password to save.")
+            }
+            return
+        }
+        val serverUrl = state.serverUrl.trim().trimEnd('/')
+        serverCredentialStore.saveCredentials(serverUrl, state.username.trim(), state.password)
+        _serverCredentialsState.update {
+            it.copy(serverUrl = serverUrl, isSaved = true, statusMessage = "Server connection saved.")
+        }
+    }
+
+    fun removeServerCredentials() {
+        serverCredentialStore.clearCredentials()
+        _serverCredentialsState.value = ServerSyncCredentialsUiState()
+    }
+
+    /**
+     * Pushes the full local library to the home server's mirror, then pulls down any recipes
+     * added from the web-add page and imports them via the same [WebRecipeImportService] path
+     * URL imports already use, then acks the ones that imported cleanly. The server can never
+     * reach the tablet on its own (not reliably on, no public address), so every step here is
+     * initiated by the app.
+     */
+    fun syncWithServer() {
+        if (_serverSyncState.value.isSyncing) return
+        if (!serverCredentialStore.hasCredentials()) {
+            _serverSyncState.update { it.copy(resultMessage = "Connect to a home server below first.") }
+            return
+        }
+        viewModelScope.launch {
+            _serverSyncState.update {
+                it.copy(isSyncing = true, statusText = "Pushing your library to the server…", resultMessage = null)
+            }
+
+            val pushMessage = when (val outcome = serverSyncService.pushMirror()) {
+                is PushMirrorOutcome.Success -> "Pushed ${outcome.count} recipes."
+                is PushMirrorOutcome.NotConfigured -> {
+                    finishServerSync(outcome.message)
+                    return@launch
+                }
+                is PushMirrorOutcome.Failure -> {
+                    finishServerSync("Sync failed: ${outcome.message}")
+                    return@launch
+                }
+            }
+
+            _serverSyncState.update { it.copy(statusText = "Checking for recipes added from the web…") }
+            val pending = when (val outcome = serverSyncService.pullPending()) {
+                is PullPendingOutcome.Success -> outcome.recipes
+                is PullPendingOutcome.NotConfigured -> {
+                    finishServerSync("$pushMessage ${outcome.message}")
+                    return@launch
+                }
+                is PullPendingOutcome.Failure -> {
+                    finishServerSync("$pushMessage Couldn't check for new recipes: ${outcome.message}")
+                    return@launch
+                }
+            }
+
+            if (pending.isEmpty()) {
+                finishServerSync(pushMessage)
+                return@launch
+            }
+
+            _serverSyncState.update { it.copy(statusText = "Importing ${pending.size} recipe(s) from the web…") }
+            val importedIds = pending.filter { item ->
+                val parsed = ParsedRecipe(
+                    title = item.title,
+                    ingredients = item.ingredients,
+                    instructions = item.instructions,
+                    imageUrl = item.imageUrl,
+                    recipeYield = null,
+                )
+                val outcome = webRecipeImportService.saveParsedRecipe(parsed, item.sourceUrl, item.sourceDomain, item.sourcePublisher)
+                outcome is WebImportOutcome.Success
+            }.map { it.id }
+
+            if (importedIds.isNotEmpty()) {
+                serverSyncService.ackImported(importedIds)
+            }
+
+            val importMessage = if (importedIds.size == pending.size) {
+                "Imported ${importedIds.size} new recipe${if (importedIds.size == 1) "" else "s"}."
+            } else {
+                "Imported ${importedIds.size} of ${pending.size} new recipes."
+            }
+            finishServerSync("$pushMessage $importMessage")
+        }
+    }
+
+    private fun finishServerSync(resultMessage: String) {
+        _serverSyncState.update { it.copy(isSyncing = false, statusText = null, resultMessage = resultMessage) }
+    }
+
+    fun dismissServerSyncMessage() {
+        _serverSyncState.update { it.copy(resultMessage = null) }
+    }
+
     class Factory(
         private val settingsStore: SettingsStore,
         private val credentialStore: CredentialStore,
         private val webRecipeImportService: WebRecipeImportService,
+        private val serverCredentialStore: ServerCredentialStore,
+        private val serverSyncService: ServerSyncService,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass.isAssignableFrom(SettingsViewModel::class.java))
-            return SettingsViewModel(settingsStore, credentialStore, webRecipeImportService) as T
+            return SettingsViewModel(
+                settingsStore,
+                credentialStore,
+                webRecipeImportService,
+                serverCredentialStore,
+                serverSyncService,
+            ) as T
         }
     }
 }

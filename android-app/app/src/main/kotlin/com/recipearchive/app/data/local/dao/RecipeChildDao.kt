@@ -40,6 +40,9 @@ interface InstructionDao {
 
     @Query("SELECT * FROM instructions WHERE recipeId = :recipeId ORDER BY displayOrder ASC")
     fun observeForRecipe(recipeId: String): Flow<List<InstructionEntity>>
+
+    @Query("SELECT * FROM instructions WHERE recipeId = :recipeId ORDER BY displayOrder ASC")
+    suspend fun getForRecipe(recipeId: String): List<InstructionEntity>
 }
 
 @Dao

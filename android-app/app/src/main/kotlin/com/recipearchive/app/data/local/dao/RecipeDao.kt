@@ -32,6 +32,9 @@ interface RecipeDao {
     @Query("SELECT id FROM recipes")
     suspend fun getAllIds(): List<String>
 
+    @Query("SELECT * FROM recipes")
+    suspend fun getAll(): List<RecipeEntity>
+
     @Query("SELECT * FROM recipes WHERE sourceDomain = 'cooking.nytimes.com' OR sourceUrl LIKE '%cooking.nytimes.com%'")
     suspend fun getNytCookingRecipes(): List<RecipeEntity>
 

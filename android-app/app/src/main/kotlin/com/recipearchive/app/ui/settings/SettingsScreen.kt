@@ -15,8 +15,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -55,6 +57,8 @@ fun SettingsScreen(
     val showNavLabels by viewModel.showNavLabels.collectAsState()
     val nytAccountState by viewModel.nytAccountState.collectAsState()
     val nytRatingSyncState by viewModel.nytRatingSyncState.collectAsState()
+    val serverCredentialsState by viewModel.serverCredentialsState.collectAsState()
+    val serverSyncState by viewModel.serverSyncState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -99,6 +103,144 @@ fun SettingsScreen(
                 onSync = viewModel::syncNytRatings,
                 onDismissMessage = viewModel::dismissNytRatingSyncMessage,
             )
+            HomeServerConnectionCard(
+                state = serverCredentialsState,
+                onServerUrlChanged = viewModel::onServerUrlChanged,
+                onUsernameChanged = viewModel::onServerUsernameChanged,
+                onPasswordChanged = viewModel::onServerPasswordChanged,
+                onSave = viewModel::saveServerCredentials,
+                onRemove = viewModel::removeServerCredentials,
+            )
+            HomeServerSyncCard(
+                state = serverSyncState,
+                onSync = viewModel::syncWithServer,
+                onDismissMessage = viewModel::dismissServerSyncMessage,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeServerConnectionCard(
+    state: ServerSyncCredentialsUiState,
+    onServerUrlChanged: (String) -> Unit,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onSave: () -> Unit,
+    onRemove: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Home, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(8.dp))
+                Text("Home server", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = if (state.isSaved) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                ) {
+                    Text(
+                        if (state.isSaved) "Connected" else "Not connected",
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            }
+            Text(
+                "Connect to the recipe-sync web page running on your home server to add recipes " +
+                    "remotely and browse your library from a browser.",
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 13.sp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            OutlinedTextField(
+                value = state.serverUrl,
+                onValueChange = onServerUrlChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Server URL", style = MaterialTheme.typography.bodySmall) },
+                placeholder = { Text("https://pi5.example.ts.net:8444", style = MaterialTheme.typography.bodySmall) },
+                textStyle = MaterialTheme.typography.bodySmall,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+            )
+            OutlinedTextField(
+                value = state.username,
+                onValueChange = onUsernameChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Username", style = MaterialTheme.typography.bodySmall) },
+                textStyle = MaterialTheme.typography.bodySmall,
+                singleLine = true,
+            )
+            OutlinedTextField(
+                value = state.password,
+                onValueChange = onPasswordChanged,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Password", style = MaterialTheme.typography.bodySmall) },
+                textStyle = MaterialTheme.typography.bodySmall,
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            )
+            if (state.statusMessage != null) {
+                Text(state.statusMessage, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
+            Button(onClick = onSave) {
+                Text("Save Connection", style = MaterialTheme.typography.labelMedium)
+            }
+            if (state.isSaved) {
+                TextButton(onClick = onRemove) {
+                    Text("Remove Connection", style = MaterialTheme.typography.labelMedium)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HomeServerSyncCard(
+    state: ServerSyncUiState,
+    onSync: () -> Unit,
+    onDismissMessage: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Sync, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(8.dp))
+                Text("Sync with home server", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+            }
+            Text(
+                "Pushes your full library to the home server so it's browsable from the web page.",
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 13.sp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (state.isSyncing && state.statusText != null) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                Text(state.statusText, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (state.resultMessage != null) {
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    onClick = onDismissMessage,
+                ) {
+                    Text(
+                        state.resultMessage,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            }
+            Button(onClick = onSync, enabled = !state.isSyncing) {
+                Text(if (state.isSyncing) "Syncing…" else "Sync with home server", style = MaterialTheme.typography.labelMedium)
+            }
         }
     }
 }
