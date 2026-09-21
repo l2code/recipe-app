@@ -464,6 +464,16 @@ private fun RecipeMetadata(
         )
         Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
         RatingRow(detail.appState?.personalRating, onRatingChanged)
+        detail.appState?.nytRating?.let { nytRating ->
+            Text("·", color = MaterialTheme.colorScheme.outline, modifier = Modifier.align(Alignment.CenterVertically))
+            val reviewCount = detail.appState.nytReviewCount
+            Text(
+                "NYT ${ratingStars(nytRating)}" + (reviewCount?.let { " (${"%,d".format(it)})" } ?: ""),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.CenterVertically),
+            )
+        }
         if (companion.madeCount > 0) {
             Text("· Made ${companion.madeCount}×", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(Alignment.CenterVertically))
             lastMade?.let {

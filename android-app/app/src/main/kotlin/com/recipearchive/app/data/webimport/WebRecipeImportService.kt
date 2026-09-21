@@ -108,6 +108,35 @@ class WebRecipeImportService(
         database.recipeDao().getExistingSourceUrls(urls).toSet()
     }
 
+    /** IDs of every saved recipe sourced from NYT Cooking, for a rating-sync run's progress. */
+    suspend fun getNytCookingRecipeIds(): List<String> = withContext(ioDispatcher) {
+        database.recipeDao().getNytCookingRecipes().map { it.id }
+    }
+
+    /**
+     * Re-fetches one already-saved NYT Cooking recipe's page and updates just its public
+     * rating/review count in [RecipeAppStateEntity] -- deliberately never touches the recipe's
+     * own title/ingredients/instructions, so a rating refresh can't clobber previously-corrected
+     * archive content or a user's own edits. Kept separate from personalRating throughout.
+     */
+    suspend fun syncNytRating(recipeId: String): Boolean = withContext(ioDispatcher) {
+        val recipe = database.recipeDao().getById(recipeId) ?: return@withContext false
+        if (recipe.sourceUrl.isBlank()) return@withContext false
+        val html = try {
+            fetch(recipe.sourceUrl)
+        } catch (e: IOException) {
+            return@withContext false
+        }
+        val parsed = try {
+            parser.parse(html)
+        } catch (e: Exception) {
+            return@withContext false
+        }
+        if (parsed?.rating == null) return@withContext false
+        database.recipeAppStateDao().setNytRating(recipeId, parsed.rating, parsed.reviewCount)
+        true
+    }
+
     fun observeSavedLinks(limit: Int = 10): Flow<List<SavedLinkUi>> =
         database.webImportHistoryDao().observeRecentSuccessful(limit).map { entries ->
             entries.distinctBy { it.url }.map { SavedLinkUi(it.url, it.title, it.domain, it.importedAt) }

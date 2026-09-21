@@ -63,7 +63,18 @@ object RecipeJsonLdParser {
         val instructions = extractInstructions(obj["recipeInstructions"])
         val image = extractImage(obj["image"])
         val yieldText = extractYield(obj["recipeYield"])
-        return ParsedRecipe(title, ingredients, instructions, image, yieldText)
+        val (rating, reviewCount) = extractAggregateRating(obj["aggregateRating"])
+        return ParsedRecipe(title, ingredients, instructions, image, yieldText, rating, reviewCount)
+    }
+
+    // schema.org's AggregateRating carries ratingCount and/or reviewCount (sites populate
+    // whichever they actually have); ratingValue is a plain number, rounded here to match
+    // the whole-star display every site (NYT included) shows next to it.
+    private fun extractAggregateRating(element: JsonElement?): Pair<Int?, Int?> {
+        val obj = element as? JsonObject ?: return null to null
+        val rating = (obj["ratingValue"] as? JsonPrimitive)?.contentOrNull?.toDoubleOrNull()?.let { Math.round(it).toInt() }
+        val reviewCount = ((obj["ratingCount"] ?: obj["reviewCount"]) as? JsonPrimitive)?.contentOrNull?.toIntOrNull()
+        return rating to reviewCount
     }
 
     private fun extractStringList(element: JsonElement?): List<String> = when (element) {

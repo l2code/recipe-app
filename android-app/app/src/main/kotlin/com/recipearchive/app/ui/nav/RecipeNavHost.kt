@@ -210,7 +210,7 @@ fun RecipeNavHost(container: AppContainer, widthSizeClass: WindowWidthSizeClass)
             // container.credentialStore, which is lazy specifically so nothing touches the
             // Android Keystore until Settings is actually opened (see AppContainer).
             val settingsViewModel: SettingsViewModel = viewModel(
-                factory = SettingsViewModel.Factory(container.settingsStore, container.credentialStore),
+                factory = SettingsViewModel.Factory(container.settingsStore, container.credentialStore, container.webRecipeImportService),
             )
             SettingsScreen(
                 viewModel = settingsViewModel,

@@ -29,4 +29,8 @@ data class RecipeAppStateEntity(
     val categoryIsUserSet: Boolean = false,
     val importedNotesReviewStatus: String = "pending",
     val updatedAt: Long = 0,
+    // Public NYT Cooking rating/review count, synced periodically from the recipe's own
+    // page -- kept separate from personalRating, which is the user's own 1-5 star rating.
+    val nytRating: Int? = null,
+    val nytReviewCount: Int? = null,
 )

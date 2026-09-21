@@ -7,6 +7,8 @@ data class ParsedRecipe(
     val instructions: List<String>,
     val imageUrl: String?,
     val recipeYield: String?,
+    val rating: Int? = null,
+    val reviewCount: Int? = null,
 ) {
     val isEmpty: Boolean
         get() = title.isBlank() && ingredients.isEmpty() && instructions.isEmpty()

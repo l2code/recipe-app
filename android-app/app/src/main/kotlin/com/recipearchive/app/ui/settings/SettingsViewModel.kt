@@ -2,13 +2,16 @@ package com.recipearchive.app.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.recipearchive.app.data.settings.SettingsStore
 import com.recipearchive.app.data.settings.ThemeMode
 import com.recipearchive.app.data.webimport.CredentialStore
+import com.recipearchive.app.data.webimport.WebRecipeImportService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class NytAccountUiState(
     val email: String = "",
@@ -17,9 +20,17 @@ data class NytAccountUiState(
     val statusMessage: String? = null,
 )
 
+data class NytRatingSyncUiState(
+    val isSyncing: Boolean = false,
+    val completed: Int = 0,
+    val total: Int = 0,
+    val resultMessage: String? = null,
+)
+
 class SettingsViewModel(
     private val settingsStore: SettingsStore,
     private val credentialStore: CredentialStore,
+    private val webRecipeImportService: WebRecipeImportService,
 ) : ViewModel() {
     val themeMode: StateFlow<ThemeMode> = settingsStore.themeMode
     val showNavLabels: StateFlow<Boolean> = settingsStore.showNavLabels
@@ -32,6 +43,9 @@ class SettingsViewModel(
         ),
     )
     val nytAccountState: StateFlow<NytAccountUiState> = _nytAccountState.asStateFlow()
+
+    private val _nytRatingSyncState = MutableStateFlow(NytRatingSyncUiState())
+    val nytRatingSyncState: StateFlow<NytRatingSyncUiState> = _nytRatingSyncState.asStateFlow()
 
     fun setThemeMode(mode: ThemeMode) = settingsStore.setThemeMode(mode)
     fun setShowNavLabels(show: Boolean) = settingsStore.setShowNavLabels(show)
@@ -73,14 +87,52 @@ class SettingsViewModel(
         _nytAccountState.value = NytAccountUiState()
     }
 
+    /**
+     * Refreshes the public star rating/review count for every saved NYT Cooking recipe, one at
+     * a time. Deliberately separate from personalRating (the user's own rating) -- this only
+     * ever writes nytRating/nytReviewCount, never touches personalRating, recipe content, or
+     * library sort order (which stays keyed on personalRating; see LibraryViewModel).
+     */
+    fun syncNytRatings() {
+        if (_nytRatingSyncState.value.isSyncing) return
+        viewModelScope.launch {
+            val ids = webRecipeImportService.getNytCookingRecipeIds()
+            if (ids.isEmpty()) {
+                _nytRatingSyncState.update {
+                    it.copy(resultMessage = "No NYT Cooking recipes in your library yet.")
+                }
+                return@launch
+            }
+            _nytRatingSyncState.update { it.copy(isSyncing = true, completed = 0, total = ids.size, resultMessage = null) }
+            var updated = 0
+            ids.forEachIndexed { index, id ->
+                if (webRecipeImportService.syncNytRating(id)) updated++
+                _nytRatingSyncState.update { it.copy(completed = index + 1) }
+            }
+            val failed = ids.size - updated
+            _nytRatingSyncState.update {
+                it.copy(
+                    isSyncing = false,
+                    resultMessage = "Updated $updated of ${ids.size} recipes" +
+                        if (failed > 0) " ($failed couldn't be reached or had no rating)." else ".",
+                )
+            }
+        }
+    }
+
+    fun dismissNytRatingSyncMessage() {
+        _nytRatingSyncState.update { it.copy(resultMessage = null) }
+    }
+
     class Factory(
         private val settingsStore: SettingsStore,
         private val credentialStore: CredentialStore,
+        private val webRecipeImportService: WebRecipeImportService,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass.isAssignableFrom(SettingsViewModel::class.java))
-            return SettingsViewModel(settingsStore, credentialStore) as T
+            return SettingsViewModel(settingsStore, credentialStore, webRecipeImportService) as T
         }
     }
 }

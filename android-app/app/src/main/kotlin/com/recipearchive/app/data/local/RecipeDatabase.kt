@@ -65,7 +65,7 @@ import com.recipearchive.app.data.local.entity.WebImportHistoryEntity
         MealPlanEntryEntity::class,
         WebImportHistoryEntity::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -254,6 +254,13 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE recipe_app_state ADD COLUMN nytRating INTEGER")
+                db.execSQL("ALTER TABLE recipe_app_state ADD COLUMN nytReviewCount INTEGER")
+            }
+        }
+
         @Volatile private var instance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase =
@@ -263,7 +270,10 @@ abstract class RecipeDatabase : RoomDatabase() {
 
         private fun build(context: Context): RecipeDatabase =
             Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, DATABASE_NAME)
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+                .addMigrations(
+                    MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7,
+                    MIGRATION_7_8,
+                )
                 .build()
     }
 }

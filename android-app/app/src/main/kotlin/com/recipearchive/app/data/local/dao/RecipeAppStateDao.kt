@@ -38,6 +38,11 @@ interface RecipeAppStateDao {
     @Query("UPDATE recipe_app_state SET personalRating = :rating, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setRating(recipeId: String, rating: Int?, updatedAt: Long)
 
+    // Deliberately doesn't touch updatedAt: that column drives "recently edited" style app
+    // bookkeeping for user-made changes, and a background NYT rating sync isn't one.
+    @Query("UPDATE recipe_app_state SET nytRating = :rating, nytReviewCount = :reviewCount WHERE recipeId = :recipeId")
+    suspend fun setNytRating(recipeId: String, rating: Int?, reviewCount: Int?)
+
     @Query("UPDATE recipe_app_state SET category = :category, categoryIsUserSet = 1, updatedAt = :updatedAt WHERE recipeId = :recipeId")
     suspend fun setCategory(recipeId: String, category: String?, updatedAt: Long)
 

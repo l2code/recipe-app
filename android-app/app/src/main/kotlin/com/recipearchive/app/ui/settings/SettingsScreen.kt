@@ -16,10 +16,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.RestaurantMenu
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -52,6 +54,7 @@ fun SettingsScreen(
     val themeMode by viewModel.themeMode.collectAsState()
     val showNavLabels by viewModel.showNavLabels.collectAsState()
     val nytAccountState by viewModel.nytAccountState.collectAsState()
+    val nytRatingSyncState by viewModel.nytRatingSyncState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -90,6 +93,11 @@ fun SettingsScreen(
                 onSave = viewModel::saveNytCredentials,
                 onTestLogin = viewModel::testNytLogin,
                 onRemove = viewModel::removeNytCredentials,
+            )
+            NytRatingSyncCard(
+                state = nytRatingSyncState,
+                onSync = viewModel::syncNytRatings,
+                onDismissMessage = viewModel::dismissNytRatingSyncMessage,
             )
         }
     }
@@ -166,6 +174,61 @@ private fun NytAccountCard(
                 TextButton(onClick = onRemove) {
                     Text("Remove Credentials", style = MaterialTheme.typography.labelMedium)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun NytRatingSyncCard(
+    state: NytRatingSyncUiState,
+    onSync: () -> Unit,
+    onDismissMessage: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(8.dp))
+                Text("NYT Cooking ratings", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+            }
+            Text(
+                "Pulls the current public star rating and review count for every NYT Cooking " +
+                    "recipe in your library. Kept separate from your own rating -- sorting by rating " +
+                    "still uses yours.",
+                style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp, lineHeight = 13.sp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (state.isSyncing) {
+                LinearProgressIndicator(
+                    progress = { if (state.total > 0) state.completed / state.total.toFloat() else 0f },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    "Syncing ${state.completed} of ${state.total}…",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (state.resultMessage != null) {
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    onClick = onDismissMessage,
+                ) {
+                    Text(
+                        state.resultMessage,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            }
+            Button(onClick = onSync, enabled = !state.isSyncing) {
+                Text(if (state.isSyncing) "Syncing…" else "Sync ratings now", style = MaterialTheme.typography.labelMedium)
             }
         }
     }

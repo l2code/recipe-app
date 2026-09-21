@@ -32,6 +32,9 @@ interface RecipeDao {
     @Query("SELECT id FROM recipes")
     suspend fun getAllIds(): List<String>
 
+    @Query("SELECT * FROM recipes WHERE sourceDomain = 'cooking.nytimes.com' OR sourceUrl LIKE '%cooking.nytimes.com%'")
+    suspend fun getNytCookingRecipes(): List<RecipeEntity>
+
     // Excludes recipes saved via the URL/paste-text importer (arrangementStatus = 'web_import'):
     // those never appear in the offline archive bundle, so ImportService's "delete recipes that
     // disappeared from the bundle" sync must never consider them, or it would wipe every

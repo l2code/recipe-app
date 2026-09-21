@@ -102,6 +102,67 @@ class RecipeJsonLdParserTest {
     }
 
     @Test
+    fun `parses aggregateRating into a rounded rating and review count`() {
+        val html = """
+            <html><head>
+            <script type="application/ld+json">
+            {
+              "@type": "Recipe",
+              "name": "Rated Recipe",
+              "recipeIngredient": ["1 onion"],
+              "recipeInstructions": ["Cook it."],
+              "aggregateRating": {"@type": "AggregateRating", "ratingValue": 4.6, "ratingCount": 13880}
+            }
+            </script>
+            </head><body></body></html>
+        """.trimIndent()
+
+        val parsed = RecipeJsonLdParser.parse(html)
+
+        assertNotNull(parsed)
+        assertEquals(5, parsed!!.rating)
+        assertEquals(13880, parsed.reviewCount)
+    }
+
+    @Test
+    fun `falls back to reviewCount when ratingCount is absent`() {
+        val html = """
+            <html><head>
+            <script type="application/ld+json">
+            {
+              "@type": "Recipe",
+              "name": "Rated Recipe",
+              "recipeIngredient": ["1 onion"],
+              "recipeInstructions": ["Cook it."],
+              "aggregateRating": {"@type": "AggregateRating", "ratingValue": 4, "reviewCount": 42}
+            }
+            </script>
+            </head><body></body></html>
+        """.trimIndent()
+
+        val parsed = RecipeJsonLdParser.parse(html)
+
+        assertEquals(4, parsed!!.rating)
+        assertEquals(42, parsed.reviewCount)
+    }
+
+    @Test
+    fun `rating and reviewCount are null when there is no aggregateRating`() {
+        val html = """
+            <html><head>
+            <script type="application/ld+json">
+            {"@type": "Recipe", "name": "Unrated Recipe", "recipeIngredient": ["1 onion"], "recipeInstructions": ["Cook it."]}
+            </script>
+            </head><body></body></html>
+        """.trimIndent()
+
+        val parsed = RecipeJsonLdParser.parse(html)
+
+        assertNull(parsed!!.rating)
+        assertNull(parsed.reviewCount)
+    }
+
+    @Test
     fun `returns null when the page has no recipe data`() {
         val html = """
             <html><head>

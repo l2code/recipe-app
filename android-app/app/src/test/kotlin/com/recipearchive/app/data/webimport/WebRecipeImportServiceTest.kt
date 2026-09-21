@@ -1,6 +1,8 @@
 package com.recipearchive.app.data.webimport
 
 import com.recipearchive.app.data.local.RecipeDatabase
+import com.recipearchive.app.data.local.entity.RecipeAppStateEntity
+import com.recipearchive.app.data.local.entity.RecipeEntity
 import com.recipearchive.app.testutil.TestDatabaseFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -35,6 +37,47 @@ class WebRecipeImportServiceTest {
         </script>
         </head><body></body></html>
     """.trimIndent()
+
+    private fun ratedRecipeHtml(title: String, rating: Int, reviewCount: Int) = """
+        <html><head>
+        <script type="application/ld+json">
+        {
+          "@type": "Recipe",
+          "name": "$title",
+          "recipeIngredient": ["8 tortillas"],
+          "recipeInstructions": ["Brown the beef."],
+          "aggregateRating": {"@type": "AggregateRating", "ratingValue": $rating, "ratingCount": $reviewCount}
+        }
+        </script>
+        </head><body></body></html>
+    """.trimIndent()
+
+    private suspend fun insertRecipe(
+        id: String,
+        sourceUrl: String,
+        title: String = "Test Recipe",
+        sourceDomain: String = "cooking.nytimes.com",
+    ) {
+        database.recipeDao().insert(
+            RecipeEntity(
+                id = id,
+                title = title,
+                rawText = title,
+                wordCount = 1,
+                arrangementStatus = "web_import",
+                duplicateStatus = "",
+                sourcePublisher = "NYT Cooking",
+                sourceDomain = sourceDomain,
+                sourceUrl = sourceUrl,
+                sourceStatus = "confirmed",
+                importSchemaVersion = 0,
+                importGeneratedAt = "",
+                createdAt = 0,
+                lastImportedAt = 0,
+            ),
+        )
+        database.recipeAppStateDao().insertDefaultIfMissing(RecipeAppStateEntity(recipeId = id))
+    }
 
     @Before
     fun setUp() {
@@ -205,5 +248,62 @@ class WebRecipeImportServiceTest {
         val history = service.observeHistory().first()
         assertEquals(1, history.size)
         assertEquals("Weeknight Tacos (edited)", history.first().title)
+    }
+
+    @Test
+    fun `getNytCookingRecipeIds returns only recipes sourced from cooking-nytimes-com`() = runTest {
+        insertRecipe(id = "r1", sourceUrl = "https://cooking.nytimes.com/recipes/1-test", sourceDomain = "cooking.nytimes.com")
+        insertRecipe(id = "r2", sourceUrl = "https://example.com/recipes/2-test", sourceDomain = "example.com")
+
+        val ids = service.getNytCookingRecipeIds()
+
+        assertEquals(listOf("r1"), ids)
+    }
+
+    @Test
+    fun `syncNytRating updates the app state's nytRating without touching the recipe's own content`() = runTest {
+        server.enqueue(MockResponse().setBody(ratedRecipeHtml("Weeknight Tacos", 5, 12345)).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+        insertRecipe(id = "r1", sourceUrl = url, title = "Original Title")
+
+        val updated = service.syncNytRating("r1")
+
+        assertTrue(updated)
+        val state = database.recipeAppStateDao().getForRecipe("r1")
+        assertEquals(5, state?.nytRating)
+        assertEquals(12345, state?.nytReviewCount)
+        // The recipe's own saved title/content is untouched by a rating-only sync.
+        assertEquals("Original Title", database.recipeDao().getById("r1")?.title)
+    }
+
+    @Test
+    fun `syncNytRating leaves personalRating untouched`() = runTest {
+        server.enqueue(MockResponse().setBody(ratedRecipeHtml("Weeknight Tacos", 4, 500)).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+        insertRecipe(id = "r1", sourceUrl = url)
+        database.recipeAppStateDao().setRating("r1", 2, 0)
+
+        service.syncNytRating("r1")
+
+        val state = database.recipeAppStateDao().getForRecipe("r1")
+        assertEquals(4, state?.nytRating)
+        assertEquals(2, state?.personalRating)
+    }
+
+    @Test
+    fun `syncNytRating returns false when the page has no rating data`() = runTest {
+        server.enqueue(MockResponse().setBody(recipeHtml).setResponseCode(200))
+        val url = server.url("/tacos").toString()
+        insertRecipe(id = "r1", sourceUrl = url)
+
+        val updated = service.syncNytRating("r1")
+
+        assertTrue(updated.not())
+        assertEquals(null, database.recipeAppStateDao().getForRecipe("r1")?.nytRating)
+    }
+
+    @Test
+    fun `syncNytRating returns false for an unknown recipe id`() = runTest {
+        assertTrue(service.syncNytRating("does-not-exist").not())
     }
 }
